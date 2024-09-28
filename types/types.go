@@ -1,16 +1,18 @@
 package types
 
+import "time"
+
 type UserStore interface {
-	GetUserByEmail(email string) (*User, error)
+	//GetUserByEmail(email string) (*User, error)
 }
 
 type User struct {
-	ID        int    `json:"id"`
-	FirstName string `json:"firstName"`
-	LastName  string `json:"lastName"`
-	Email     string `json:"email"`
-	Password  string `json:"password"`
-	CreatedAt string `json:"createdAt"`
+	ID        int       `gorm:"primaryKey;autoIncrement" json:"id"`
+	FirstName string    `json:"firstName"`
+	LastName  string    `json:"lastName"`
+	Email     string    `json:"email"`
+	Password  string    `json:"password"`
+	CreatedAt time.Time `gorm:"autoCreateTime" json:"createdAt"`
 }
 
 type RegisterUserPayLoad struct {

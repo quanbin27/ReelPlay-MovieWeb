@@ -3,7 +3,6 @@ package user
 import (
 	"github.com/labstack/echo/v4"
 	"github.com/quanbin27/ReelPlay/types"
-	"net/http"
 )
 
 type Handler struct {
@@ -21,13 +20,13 @@ func (h *Handler) handleLogin(c echo.Context) error {
 	return nil
 }
 func (h *Handler) handleRegister(c echo.Context) error {
-	var payload types.RegisterUserPayLoad
-	if err := c.Bind(payload); err != nil {
-		return c.String(http.StatusBadRequest, "bad request")
-	}
-	_, err := h.store.GetUserByEmail(payload.Email)
-	if err == nil {
-		return c.String(http.StatusBadRequest, "email already taken")
-	}
+	//var payload types.RegisterUserPayLoad
+	//if err := c.Bind(payload); err != nil {
+	//	return c.String(http.StatusBadRequest, "bad request")
+	//}
+	//_, err := h.store.GetUserByEmail(payload.Email)
+	//if err == nil {
+	//	return c.String(http.StatusBadRequest, "email already exists")
+	//}
 	return nil
 }

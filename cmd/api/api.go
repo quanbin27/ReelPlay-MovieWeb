@@ -1,19 +1,19 @@
 package api
 
 import (
-	"database/sql"
 	"github.com/labstack/echo/v4"
 	"github.com/quanbin27/ReelPlay/server/user"
+	"gorm.io/gorm"
 	"log"
 	"net/http"
 )
 
 type APIServer struct {
 	address string
-	db      *sql.DB
+	db      *gorm.DB
 }
 
-func NewAPIServer(addr string, db *sql.DB) *APIServer {
+func NewAPIServer(addr string, db *gorm.DB) *APIServer {
 	return &APIServer{
 		address: addr,
 		db:      db,
