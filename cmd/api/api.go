@@ -21,7 +21,7 @@ func NewAPIServer(addr string, db *gorm.DB) *APIServer {
 }
 func (s *APIServer) Run() error {
 	e := echo.New()
-	subrouter := e.Group("/api/vi")
+	subrouter := e.Group("/api/v1")
 	userStore := user.NewStore(s.db)
 	userHander := user.NewHandler(userStore)
 	userHander.RegisterRoutes(subrouter)
