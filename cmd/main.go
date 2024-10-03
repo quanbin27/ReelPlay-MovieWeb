@@ -16,7 +16,7 @@ func main() {
 		log.Fatal(err)
 	}
 	initStorage(db)
-	db.AutoMigrate(&types.User{})
+	db.AutoMigrate(&types.User{}, types.Movie{}, types.Episode{})
 	server := api.NewAPIServer(":8080", db)
 	if err := server.Run(); err != nil {
 		log.Fatal(err)
