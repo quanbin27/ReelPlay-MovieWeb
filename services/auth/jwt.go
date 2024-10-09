@@ -52,7 +52,7 @@ func WithJWTAuth(store types.UserStore) echo.MiddlewareFunc {
 			}
 
 			// Lấy thông tin người dùng từ store
-			u, err := store.GetUserByID(int64(userID))
+			u, err := store.GetUserByID(userID)
 			if err != nil {
 				return c.JSON(http.StatusUnauthorized, map[string]string{"error": "invalid user"})
 			}

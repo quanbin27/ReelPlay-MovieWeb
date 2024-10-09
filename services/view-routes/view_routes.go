@@ -22,4 +22,5 @@ func (h *Handler) RegisterRoutes(e *echo.Echo) {
 	e.File("/faq", "templates/faq.html")
 	e.File("/contacts", "templates/contacts.html")
 	e.File("/privacy", "templates/privacy.html")
+	e.File("/detail", "templates/details.html")
 }

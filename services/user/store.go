@@ -21,7 +21,7 @@ func (store *Store) GetUserByEmail(email string) (*types.User, error) {
 	}
 	return &user, nil
 }
-func (store *Store) GetUserByID(id int64) (*types.User, error) {
+func (store *Store) GetUserByID(id int) (*types.User, error) {
 	var user types.User
 	result := store.db.Where("id = ?", id).First(&user)
 	if result.Error != nil {

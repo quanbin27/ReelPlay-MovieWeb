@@ -1425,18 +1425,24 @@ body::-webkit-scrollbar-thumb {
 }
 .item__cover {
   display: flex;
-  flex-direction: row;
   justify-content: center;
   align-items: center;
   position: relative;
   border-radius: 8px;
   overflow: hidden;
   background-color: #000;
+  width: 100%;
+  height: 300px;
 }
+
 .item__cover img {
   width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
   transition: opacity 0.4s;
 }
+
 .item__cover:hover img {
   opacity: 0.5;
 }

@@ -4,18 +4,22 @@ import "time"
 
 type UserStore interface {
 	GetUserByEmail(email string) (*User, error)
-	GetUserByID(id int64) (*User, error)
+	GetUserByID(id int) (*User, error)
 	CreateUser(user *User) error
 }
 type MovieStore interface {
 	GetMoviesWithPagination(offset, limit int) ([]MovieResponse, error)
+	GetMovieById(id string) (MovieResponse, error)
 }
 type EpisodeStore interface {
 	GetEpisodeById(id int) (*Episode, error)
 }
 type RateStore interface{}
 type FavoriteStore interface{}
-type CommentStore interface{}
+type CommentStore interface {
+	CreateComment(content string, movieID int, userID int) (*Comment, error)
+	GetCommentsByMovieID(movieID int) ([]Comment, error)
+}
 type CategoryStore interface{}
 type ActorStore interface{}
 type DirectorStore interface{}
@@ -99,7 +103,20 @@ type Comment struct {
 	Content   string    `gorm:"not null" json:"content"`
 	UserID    int       `gorm:"not null;uniqueIndex:idx_user_movie;constraint:OnUpdate:CASCADE,OnDelete:CASCADE" json:"user_id"`
 	MovieID   int       `gorm:"not null;uniqueIndex:idx_user_movie;constraint:OnUpdate:CASCADE,OnDelete:CASCADE" json:"movie_id"`
-	CreatedAt time.Time `gorm:"autoCreateTime" json:"createdAt"`
+	CreatedAt time.Time `gorm:"not null;uniqueIndex:idx_user_movie;AutoCreateTime" json:"createdAt"`
+}
+type CreateCommentRequest struct {
+	Content string `json:"content" `
+	MovieID int    `json:"movie_id" `
+	UserID  int    `json:"user_id" `
+}
+type CommentResponse struct {
+	ID        int    `json:"id"`
+	MovieID   int    `json:"movie_id"`
+	UserID    int    `json:"user_id"`
+	UserName  string `json:"user_name"` // This will hold the user's name
+	Content   string `json:"content"`
+	CreatedAt string `json:"created_at"`
 }
 type Favourite struct {
 	UserID    int       `gorm:"not null;primaryKey:idx_user_movie;constraint:OnUpdate:CASCADE,OnDelete:CASCADE" json:"user_id"`
@@ -107,8 +124,9 @@ type Favourite struct {
 	CreatedAt time.Time `gorm:"autoCreateTime" json:"createdAt"`
 }
 type Rate struct {
-	UserID    int       `gorm:"not null;primaryKey:idx_user_movie;constraint:OnUpdate:CASCADE,OnDelete:CASCADE" json:"user_id"`
-	MovieID   int       `gorm:"not null;primaryKey:idx_user_movie;constraint:OnUpdate:CASCADE,OnDelete:CASCADE" json:"movie_id"`
-	Rate      int       `gorm:"not null" json:"rate"`
+	UserID  int `gorm:"not null;primaryKey:idx_user_movie;constraint:OnUpdate:CASCADE,OnDelete:CASCADE" json:"user_id"`
+	MovieID int `gorm:"not null;primaryKey:idx_user_movie;constraint:OnUpdate:CASCADE,OnDelete:CASCADE" json:"movie_id"`
+	Rate    int `gorm:"not null" json:"rate"`
+
 	CreatedAt time.Time `gorm:"autoCreateTime" json:"createdAt"`
 }

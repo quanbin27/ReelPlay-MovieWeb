@@ -19,10 +19,15 @@ func NewHandler(moviestore types.MovieStore, categorystore types.CategoryStore, 
 }
 func (h *Handler) RegisterRoutes(e *echo.Group) {
 	e.GET("/movies", h.GetMovies)
-	e.GET("/movie", h.GetMoviestest)
+	e.GET("/movie/:id", h.GetMovieByID)
 }
-func (h *Handler) GetMoviestest(c echo.Context) error {
-	return c.String(http.StatusOK, "Movies")
+func (h *Handler) GetMovieByID(c echo.Context) error {
+	id := c.Param("id")
+	movieResponse, err := h.MovieStore.GetMovieById(id)
+	if err != nil {
+		return c.JSON(http.StatusInternalServerError, err)
+	}
+	return c.JSON(http.StatusOK, movieResponse)
 }
 func (h *Handler) GetMovies(c echo.Context) error {
 
