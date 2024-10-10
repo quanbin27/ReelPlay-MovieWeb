@@ -228,6 +228,8 @@
 	<section class="section section--details">
 		<div class="container">
 			<div class="row">
+				<div id="bookmarkMessage" class="message col-12" style="color: white"></div>
+
 				<div class="col-12">
 					<h1 class="section__title section__title--head" id="movie-title">Movie Title</h1>
 				</div>
@@ -238,9 +240,15 @@
 							<div class="col-12 col-sm-5 col-md-5 col-lg-4 col-xl-6 col-xxl-5">
 								<div class="item__cover">
 									<img id="movie-thumbnail" src="" alt="">
-									<span class="item__rate item__rate--green" id="movie-rate">8.4</span>
-									<button class="item__favorite item__favorite--static" type="button"><i class="ti ti-bookmark"></i></button>
+									<span class="item__rate item__rate--green" id="movie-rate"></span>
+									<button id="bookmarkBtn" class="item__favorite unbookmarked" type="button">
+										<i class="ti ti-bookmark"></i>
+									</button>
+
 								</div>
+								<button id="watchMovieBtn" class="plan__btn" type="button">
+									Watch Movie
+								</button>
 							</div>
 
 							<div class="col-12 col-md-7 col-lg-8 col-xl-6 col-xxl-7">
@@ -689,7 +697,7 @@
 										<i class="ti ti-player-play-filled"></i>
 									</a>
 									<span class="item__rate item__rate--green">8.4</span>
-									<button class="item__favorite" type="button"><i class="ti ti-bookmark"></i></button>
+									<button class="item__favorite" id="bookmark-btn" type="button"><i class="ti ti-bookmark"></i></button>
 								</div>
 								<div class="item__content">
 									<h3 class="item__title"><a href="details.html">I Dream in Another Language</a></h3>
@@ -1107,8 +1115,164 @@
 			fetchComments();
 			document.getElementById('more-comments').addEventListener('click', loadMoreComments);
 		});
+		// Giả sử bạn có một hàm để lấy User ID
+		// Hàm tạo bookmark
+		async function createBookmark(movieId) {
+			const userId = parseInt(getUserIdFromToken(),10);
+			const body = {
+				user_id: userId,
+				movie_id: movieId
+			};
+
+			try {
+				const response = await fetch(`http://localhost:8080/api/v1/movie/${movieId}/bookmark`, {
+					method: 'POST',
+					headers: {
+						'Content-Type': 'application/json',
+						'Authorization': `Bearer ${localStorage.getItem('token')}`
+					},
+					body: JSON.stringify(body)
+				});
+
+				if (response.ok) {
+					document.getElementById('bookmarkBtn').classList.add('bookmarked');
+					document.getElementById('bookmarkBtn').classList.remove('unbookmarked');
+					showMessage("Bookmark added!");
+				} else {
+					const errorResponse = await response.json();
+					showMessage(errorResponse.message);
+				}
+			} catch (error) {
+				console.error("Error creating bookmark:", error);
+				showMessage("An error occurred while adding bookmark.");
+			}
+		}
+
+		// Hàm hủy bookmark
+		async function cancelBookmark(movieId) {
+			const userId = parseInt(getUserIdFromToken(),10);
+			const body = {
+				user_id: userId,
+				movie_id: movieId
+			};
+
+			try {
+				const response = await fetch(`http://localhost:8080/api/v1/movie/${movieId}/bookmark`, {
+					method: 'DELETE',
+					headers: {
+						'Content-Type': 'application/json',
+						'Authorization': `Bearer ${localStorage.getItem('token')}`
+					},
+					body: JSON.stringify(body)
+				});
+
+				if (response.ok) {
+					const bookmarkBtn = document.getElementById('bookmarkBtn');
+					document.getElementById('bookmarkBtn').classList.add('unbookmarked');
+					document.getElementById('bookmarkBtn').classList.remove('bookmarked');
+					showMessage("Bookmark removed!");
+				} else {
+					const errorResponse = await response.json();
+					showMessage(errorResponse.message);
+				}
+			} catch (error) {
+				console.error("Error cancelling bookmark:", error);
+				showMessage("An error occurred while removing bookmark.");
+			}
+		}
+
+		// Hàm kiểm tra trạng thái bookmark
+		async function checkBookmarkStatus(movieId) {
+			const userId = getUserIdFromToken();
+			if (!userId) {
+				// Nếu người dùng chưa đăng nhập, hiển thị chưa bookmark và dừng xử lý
+				const bookmarkBtn = document.getElementById('bookmarkBtn');
+				bookmarkBtn.classList.add('unbookmarked');
+				return;
+			}
+
+			try {
+				const response = await fetch(`http://localhost:8080/api/v1/movie/${movieId}/bookmark/exist`, {
+					method: 'POST',
+					headers: {
+						'Content-Type': 'application/json',
+						'Authorization': `Bearer ${localStorage.getItem('token')}` // Gửi token nếu có
+					},
+					body: JSON.stringify({
+						movie_id: movieId,
+						user_id: parseInt(userId,10)
+					})
+				});
+
+				if (!response.ok) {
+					throw new Error('Failed to check bookmark status');
+				}
+
+				const result = await response.json();
+				const bookmarkBtn = document.getElementById('bookmarkBtn');
+
+				if (result) {
+					bookmarkBtn.classList.remove('unbookmarked');
+					bookmarkBtn.classList.add('bookmarked');
+				} else {
+					bookmarkBtn.classList.remove('bookmarked');
+					bookmarkBtn.classList.add('unbookmarked');
+				}
+			} catch (error) {
+				console.error('Error checking bookmark status:', error);
+			}
+		}
 
 
+		// Hàm hiển thị thông báo
+		function showMessage(message) {
+			const messageDiv = document.getElementById('bookmarkMessage');
+			messageDiv.textContent = message;
+
+			// Tự động xóa thông báo sau 3 giây
+			setTimeout(() => {
+				messageDiv.textContent = '';
+			}, 3000);
+		}
+
+		// Thêm sự kiện cho nút bookmark
+		document.getElementById('bookmarkBtn').addEventListener('click', async () => {
+			const movieId = parseInt(getMovieIdFromURL(),10); // Thay đổi giá trị này cho ID phim bạn muốn
+
+			const userId = getUserIdFromToken();
+			console.log('User ID:', userId);
+			console.log('Movie ID:', movieId);
+			if (!userId) {
+				// Nếu người dùng chưa đăng nhập, chuyển đến trang đăng nhập
+				window.location.href = '/signin'; // Đường dẫn đến trang đăng nhập của bạn
+				return;
+			}
+
+			const bookmarkBtn = document.getElementById('bookmarkBtn');
+
+			if (bookmarkBtn.classList.contains('unbookmarked')) {
+				// Nếu chưa bookmark, thực hiện tạo bookmark
+				await createBookmark(movieId);
+			} else {
+				// Nếu đã bookmark, thực hiện hủy bookmark
+				await cancelBookmark(movieId);
+			}
+		});
+
+		// Kiểm tra trạng thái bookmark khi tải trang
+		document.addEventListener('DOMContentLoaded', () => {
+			const movieId = parseInt(getMovieIdFromURL(),10);
+			checkBookmarkStatus(movieId);
+		});
+		document.getElementById('watchMovieBtn').addEventListener('click', () => {
+			const movieId = getMovieIdFromURL(); // Hoặc lấy movieId từ một nguồn khác nếu có
+			if (movieId) {
+				// Chuyển hướng đến trang xem phim, giả sử có đường dẫn là '/watch/:movieId'
+				window.location.href = `/watch?movieId=${movieId}`;
+			} else {
+				showMessage('Movie ID not found!');
+			}
+		});
 	</script>
 </body>
 

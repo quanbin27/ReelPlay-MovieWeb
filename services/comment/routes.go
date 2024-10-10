@@ -24,14 +24,10 @@ func (h *Handler) RegisterRoutes(e *echo.Group) {
 func (h *Handler) Create(c echo.Context) error {
 	req := new(types.CreateCommentRequest)
 
-	// Parse và validate request body
 	if err := c.Bind(req); err != nil {
 		return c.JSON(http.StatusBadRequest, map[string]string{"error": "Invalid input"})
 	}
 
-	//if err := c.Validate(req); err != nil {
-	//	return c.JSON(http.StatusBadRequest, map[string]string{"error": err.Error()})
-	//}
 	comment, err := h.cmtStore.CreateComment(req.Content, req.MovieID, req.UserID)
 	if err != nil {
 		return c.JSON(http.StatusInternalServerError, map[string]string{"message": "Failed to create comment"})

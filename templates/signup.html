@@ -35,21 +35,24 @@
 				<div class="col-12">
 					<div class="sign__content">
 						<!-- registration form -->
-						<form action="#" class="sign__form">
-							<a href="index.html" class="sign__logo">
+						<form id="signupForm" class="sign__form">
+							<a href="/index" class="sign__logo">
 								<img src="img/logo.svg" alt="">
 							</a>
 
 							<div class="sign__group">
-								<input type="text" class="sign__input" placeholder="Name">
+								<input type="text" id="firstName" class="sign__input" placeholder="First Name" required>
+							</div>
+							<div class="sign__group">
+								<input type="text" id="lastName" class="sign__input" placeholder="Last Name" required>
 							</div>
 
 							<div class="sign__group">
-								<input type="text" class="sign__input" placeholder="Email">
+								<input type="email" id="email" class="sign__input" placeholder="Email" required>
 							</div>
 
 							<div class="sign__group">
-								<input type="password" class="sign__input" placeholder="Password">
+								<input type="password" id="password" class="sign__input" placeholder="Password" required>
 							</div>
 
 							<div class="sign__group sign__group--checkbox">
@@ -57,7 +60,7 @@
 								<label for="remember">I agree to the <a href="privacy.html">Privacy Policy</a></label>
 							</div>
 
-							<button class="sign__btn" type="button">Sign up</button>
+							<button class="sign__btn" type="button" id="signUpButton">Sign up</button>
 
 							<span class="sign__delimiter">or</span>
 
@@ -67,8 +70,12 @@
 								<a class="gl" href="#">Sign up with<i class="ti ti-brand-google"></i></a>
 							</div>
 
-							<span class="sign__text">Already have an account? <a href="signin.html">Sign in!</a></span>
+							<span class="sign__text">Already have an account? <a href="/signin">Sign in!</a></span>
+
+							<!-- Div to show signup messages -->
+							<div id="signupMessage"></div>
 						</form>
+
 						<!-- registration form -->
 					</div>
 				</div>
@@ -85,6 +92,67 @@
 	<script src="js/photoswipe.min.js"></script>
 	<script src="js/photoswipe-ui-default.min.js"></script>
 	<script src="js/main.js"></script>
+	<script>
+		document.getElementById('signUpButton').addEventListener('click', async () => {
+			// Lấy giá trị từ các input trong form
+			const firstName = document.getElementById('firstName').value;
+			const lastName = document.getElementById('lastName').value;
+			const email = document.getElementById('email').value;
+			const password = document.getElementById('password').value;
+
+			// Kiểm tra xem tất cả các trường đã được nhập đầy đủ hay chưa
+			if (!firstName || !lastName || !email || !password) {
+				showMessage('Please fill out all fields');
+				return;
+			}
+
+			const requestBody = {
+				firstName: firstName,
+				lastName: lastName,
+				email: email,
+				password: password
+			};
+
+			try {
+				// Gửi yêu cầu POST tới API để đăng ký
+				const response = await fetch('http://localhost:8080/api/v1/register', {
+					method: 'POST',
+					headers: {
+						'Content-Type': 'application/json'
+					},
+					body: JSON.stringify(requestBody)
+				});
+
+				if (response.ok) {
+					// Đăng ký thành công
+					showMessage('Signup successful! Redirecting to login...', true);
+					setTimeout(() => {
+						window.location.href = '/signin';  // Chuyển hướng đến trang đăng nhập
+					}, 2000);
+				} else {
+					// Lấy thông báo lỗi từ phản hồi của server
+					const errorData = await response.json();
+					showMessage(errorData.message || 'Signup failed, please try again.');
+				}
+			} catch (error) {
+				console.error('Error during signup:', error);
+				showMessage('An error occurred. Please try again later.');
+			}
+		});
+
+		// Hàm hiển thị thông báo
+		function showMessage(message, success = false) {
+			const messageDiv = document.getElementById('signupMessage');
+			messageDiv.textContent = message;
+			messageDiv.style.color = success ? 'green' : 'red';
+
+			// Tự động ẩn thông báo sau 5 giây
+			setTimeout(() => {
+				messageDiv.textContent = '';
+			}, 5000);
+		}
+
+	</script>
 </body>
 
 <!-- Mirrored from hotflix.volkovdesign.com/main/signup.html by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 01 Oct 2024 14:32:58 GMT -->

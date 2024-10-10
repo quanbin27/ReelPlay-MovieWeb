@@ -3,6 +3,7 @@ package api
 import (
 	"github.com/labstack/echo/v4"
 	"github.com/quanbin27/ReelPlay/services/actor"
+	"github.com/quanbin27/ReelPlay/services/bookmark"
 	"github.com/quanbin27/ReelPlay/services/category"
 	"github.com/quanbin27/ReelPlay/services/comment"
 	"github.com/quanbin27/ReelPlay/services/director"
@@ -38,11 +39,14 @@ func (s *APIServer) Run() error {
 	categoryStore := category.NewStore(s.db)
 	actorStore := actor.NewStore(s.db)
 	cmtStore := comment.NewStore(s.db)
+	bookmarkStore := bookmark.NewStore(s.db)
 	directorStore := director.NewStore(s.db)
 	userHandler := user.NewHandler(userStore)
 	movieHandler := movie.NewHandler(movieStore, categoryStore, actorStore, directorStore)
 	episodeHandler := episode.NewHandler(episodeStore, userStore)
 	cmtHandler := comment.NewHandler(cmtStore, userStore)
+	bookmarkHandler := bookmark.NewHandler(bookmarkStore, userStore)
+	bookmarkHandler.RegisterRoutes(subrouter)
 	cmtHandler.RegisterRoutes(subrouter)
 	episodeHandler.RegisterRoutes(subrouter)
 	userHandler.RegisterRoutes(subrouter)

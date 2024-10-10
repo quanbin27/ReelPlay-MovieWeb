@@ -15,7 +15,12 @@ type EpisodeStore interface {
 	GetEpisodeById(id int) (*Episode, error)
 }
 type RateStore interface{}
-type FavoriteStore interface{}
+type BookmarkStore interface {
+	GetBookmarksByUser(userId int) ([]Bookmark, error)
+	IsBookmark(movieId int, userId int) bool
+	CreateBookmark(movieId int, userId int) error
+	CancelBookmark(movieId int, userId int) error
+}
 type CommentStore interface {
 	CreateComment(content string, movieID int, userID int) (*Comment, error)
 	GetCommentsByMovieID(movieID int) ([]Comment, error)
@@ -118,10 +123,14 @@ type CommentResponse struct {
 	Content   string `json:"content"`
 	CreatedAt string `json:"created_at"`
 }
-type Favourite struct {
+type Bookmark struct {
 	UserID    int       `gorm:"not null;primaryKey:idx_user_movie;constraint:OnUpdate:CASCADE,OnDelete:CASCADE" json:"user_id"`
 	MovieID   int       `gorm:"not null;primaryKey:idx_user_movie;constraint:OnUpdate:CASCADE,OnDelete:CASCADE" json:"movie_id"`
 	CreatedAt time.Time `gorm:"autoCreateTime" json:"createdAt"`
+}
+type CreateBookmarkRequest struct {
+	MovieID int `json:"movie_id" `
+	UserID  int `json:"user_id" `
 }
 type Rate struct {
 	UserID  int `gorm:"not null;primaryKey:idx_user_movie;constraint:OnUpdate:CASCADE,OnDelete:CASCADE" json:"user_id"`

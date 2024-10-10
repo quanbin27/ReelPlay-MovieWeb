@@ -21,6 +21,7 @@
 	<!-- Favicons -->
 	<link rel="icon" type="image/png" href="icon/favicon-32x32.png" sizes="32x32">
 	<link rel="apple-touch-icon" href="icon/favicon-32x32.png">
+	<script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
 
 	<meta name="description" content="Online Movies, TV Shows & Cinema HTML Template">
 	<meta name="keywords" content="">
@@ -209,20 +210,14 @@
 				<!-- player -->
 				<div class="col-12 col-xl-6">
 					<div class="section__player">
-						<video controls crossorigin playsinline poster="../../cdn.plyr.io/static/demo/View_From_A_Blue_Moon_Trailer-HD.jpg" id="player">
-							<!-- Video files -->
-							<source src="https://cdn.plyr.io/static/demo/View_From_A_Blue_Moon_Trailer-576p.mp4" type="video/mp4" size="576">
-							<source src="https://cdn.plyr.io/static/demo/View_From_A_Blue_Moon_Trailer-720p.mp4" type="video/mp4" size="720">
-							<source src="https://cdn.plyr.io/static/demo/View_From_A_Blue_Moon_Trailer-1080p.mp4" type="video/mp4" size="1080">
+						<iframe src="https://vip.opstream11.com/share/1dfee3c9e50a46ef252b411f747472dc"
+								width="100%" height="500" frameborder="0" allowfullscreen>
+						</iframe>
 
-							<!-- Caption files -->
-							<track kind="captions" label="English" srclang="en" src="https://cdn.plyr.io/static/demo/View_From_A_Blue_Moon_Trailer-HD.en.vtt"
-							    default>
-							<track kind="captions" label="Français" srclang="fr" src="https://cdn.plyr.io/static/demo/View_From_A_Blue_Moon_Trailer-HD.fr.vtt">
-
-							<!-- Fallback for browsers that don't support the <video> element -->
-							<a href="https://cdn.plyr.io/static/demo/View_From_A_Blue_Moon_Trailer-576p.mp4" download>Download</a>
+						<video id="video-player" controls width="100%" height="400">
+							Your browser does not support the video tag.
 						</video>
+
 					</div>
 
 					<div class="section__item-filter">
@@ -864,6 +859,29 @@
 	<script src="js/photoswipe.min.js"></script>
 	<script src="js/photoswipe-ui-default.min.js"></script>
 	<script src="js/main.js"></script>
+	<script>
+		document.addEventListener('DOMContentLoaded', function() {
+			const video = document.getElementById('video-player');
+			const videoSrc = 'https://vip.opstream14.com/20220317/1337_792537bb/index.m3u8'; // URL của video HLS
+
+			if (Hls.isSupported()) {
+				var hls = new Hls();
+				hls.loadSource(videoSrc);
+				hls.attachMedia(video);
+				hls.on(Hls.Events.MANIFEST_PARSED, function() {
+					video.play();
+				});
+			} else if (video.canPlayType('application/vnd.apple.mpegurl')) {
+				video.src = videoSrc;
+				video.addEventListener('loadedmetadata', function() {
+					video.play();
+				});
+			} else {
+				console.error('HLS không được hỗ trợ trên trình duyệt này.');
+			}
+		});
+
+	</script>
 </body>
 
 <!-- Mirrored from hotflix.volkovdesign.com/main/details2.html by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 01 Oct 2024 14:32:55 GMT -->

@@ -1591,6 +1591,12 @@ body::-webkit-scrollbar-thumb {
 .item__favorite:hover {
   color: #f9ab00;
 }
+.item__favorite.bookmarked {
+  color: #f9ab00;
+}
+.item__favorite.unbookmarked {
+  color: #fff;
+}
 .item__favorite--active {
   color: #f9ab00;
 }
