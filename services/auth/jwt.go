@@ -12,8 +12,8 @@ import (
 	"time"
 )
 
-func CreateJWT(secret []byte, userID int) (string, error) {
-	expiration := time.Second * time.Duration(config.Envs.JWTExpirationInSeconds)
+func CreateJWT(secret []byte, userID int, seconds int64) (string, error) {
+	expiration := time.Second * time.Duration(seconds)
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims{
 		"user_id":   strconv.Itoa(userID),
 		"expiredAt": time.Now().Add(expiration).Unix(),
@@ -36,7 +36,7 @@ func WithJWTAuth(store types.UserStore) echo.MiddlewareFunc {
 			}
 
 			// Xác thực token
-			token, err := validateJWT(tokenString)
+			token, err := ValidateJWT(tokenString)
 			if err != nil {
 				return c.JSON(http.StatusUnauthorized, map[string]string{"error": err.Error()})
 			}
@@ -65,7 +65,7 @@ func WithJWTAuth(store types.UserStore) echo.MiddlewareFunc {
 		}
 	}
 }
-func validateJWT(tokenString string) (*jwt.Token, error) {
+func ValidateJWT(tokenString string) (*jwt.Token, error) {
 	return jwt.Parse(tokenString, func(token *jwt.Token) (interface{}, error) {
 		if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
 			return nil, fmt.Errorf("unexpected signing method: %v", token.Header["alg"])

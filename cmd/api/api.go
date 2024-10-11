@@ -2,11 +2,13 @@ package api
 
 import (
 	"github.com/labstack/echo/v4"
+	"github.com/quanbin27/ReelPlay/config"
 	"github.com/quanbin27/ReelPlay/services/actor"
 	"github.com/quanbin27/ReelPlay/services/bookmark"
 	"github.com/quanbin27/ReelPlay/services/category"
 	"github.com/quanbin27/ReelPlay/services/comment"
 	"github.com/quanbin27/ReelPlay/services/director"
+	"github.com/quanbin27/ReelPlay/services/email"
 	"github.com/quanbin27/ReelPlay/services/episode"
 	"github.com/quanbin27/ReelPlay/services/movie"
 	"github.com/quanbin27/ReelPlay/services/user"
@@ -41,7 +43,8 @@ func (s *APIServer) Run() error {
 	cmtStore := comment.NewStore(s.db)
 	bookmarkStore := bookmark.NewStore(s.db)
 	directorStore := director.NewStore(s.db)
-	userHandler := user.NewHandler(userStore)
+	emailService := email.NewEmailService("smtp.gmail.com", 587, config.Envs.EmailUsername, config.Envs.Emailpassword, config.Envs.Emailfrom)
+	userHandler := user.NewHandler(userStore, emailService)
 	movieHandler := movie.NewHandler(movieStore, categoryStore, actorStore, directorStore)
 	episodeHandler := episode.NewHandler(episodeStore, userStore)
 	cmtHandler := comment.NewHandler(cmtStore, userStore)

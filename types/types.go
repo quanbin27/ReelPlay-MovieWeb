@@ -6,6 +6,10 @@ type UserStore interface {
 	GetUserByEmail(email string) (*User, error)
 	GetUserByID(id int) (*User, error)
 	CreateUser(user *User) error
+	UpdatePassword(userID int, newPassword string) error
+}
+type EmailService interface {
+	SendResetPasswordEmail(to, resetLink string) error
 }
 type MovieStore interface {
 	GetMoviesWithPagination(offset, limit int) ([]MovieResponse, error)

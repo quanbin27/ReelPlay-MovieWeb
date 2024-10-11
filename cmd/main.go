@@ -15,6 +15,7 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
+
 	initStorage(db)
 	db.AutoMigrate(&types.User{}, types.Movie{}, types.Episode{}, types.Bookmark{}, types.Comment{}, types.Rate{}, types.Director{}, types.Actor{}, types.Category{})
 	server := api.NewAPIServer(":8080", db)

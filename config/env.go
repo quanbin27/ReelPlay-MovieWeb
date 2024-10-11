@@ -12,6 +12,9 @@ type Config struct {
 	DSN                    string
 	JWTExpirationInSeconds int64
 	JWTSecret              string
+	EmailUsername          string
+	Emailpassword          string
+	Emailfrom              string
 }
 
 var Envs = initConfig()
@@ -24,6 +27,9 @@ func initConfig() Config {
 		DSN:                    getEnv("DSN", "root:27052002@tcp(127.0.0.1:3306)/ReelPlay?charset=utf8mb4&parseTime=True&loc=Local"),
 		JWTExpirationInSeconds: getEnvAsInt("JWT_EXPIRATION", 3600*24*7),
 		JWTSecret:              getEnv("JWT_SECRET", "not-secret-anymore?"),
+		EmailUsername:          getEnv("EMAIL_USERNAME", ""),
+		Emailpassword:          getEnv("EMAIL_PASSWORD", ""),
+		Emailfrom:              getEnv("EMAIL_FROM", ""),
 	}
 }
 func getEnv(key, fallback string) string {
