@@ -25,7 +25,6 @@ func (h *Handler) RateMovie(c echo.Context) error {
 	userId, _ := strconv.Atoi(c.QueryParam("user_id"))
 	movieId, _ := strconv.Atoi(c.Param("movieId"))
 	ratingValue, _ := strconv.Atoi(c.FormValue("rate"))
-	print(userId, movieId, ratingValue)
 	// Check if user has already rated the movie
 	existingRating, err := h.rateStore.GetUserMovieRating(userId, movieId)
 	if err != nil && err.Error() != "record not found" {
