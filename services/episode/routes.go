@@ -19,7 +19,31 @@ func NewHandler(episodeStore types.EpisodeStore, userStore types.UserStore) *Han
 func (h *Handler) RegisterRoutes(e *echo.Group) {
 	g := e.Group("", auth.WithJWTAuth(h.userStore))
 	g.GET("/episode/:id", h.GetEpisodeById)
+	g.GET("/movie/:movieId/episode/:episodeNumber", h.GetEpisodeByMovieAndEpisodeId)
+
 }
+func (h *Handler) GetEpisodeByMovieAndEpisodeId(c echo.Context) error {
+	movieIdStr := c.Param("movieId")
+	episodeNumberStr := c.Param("episodeNumber")
+
+	movieId, err := strconv.Atoi(movieIdStr)
+	if err != nil {
+		return c.JSON(http.StatusBadRequest, echo.Map{"error": "Invalid movie ID"})
+	}
+
+	episodeNumber, err := strconv.Atoi(episodeNumberStr)
+	if err != nil {
+		return c.JSON(http.StatusBadRequest, echo.Map{"error": "Invalid episode number"})
+	}
+
+	episode, err := h.episodeStore.GetEpisodeByMovieAndEpisodeId(movieId, episodeNumber)
+	if err != nil {
+		return c.JSON(http.StatusNotFound, echo.Map{"error": err.Error()})
+	}
+
+	return c.JSON(http.StatusOK, episode)
+}
+
 func (h *Handler) GetEpisodeById(c echo.Context) error {
 	idStr := c.Param("id")
 	id, err := strconv.Atoi(idStr)

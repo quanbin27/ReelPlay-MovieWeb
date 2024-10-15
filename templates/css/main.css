@@ -1241,6 +1241,7 @@ body::-webkit-scrollbar-thumb {
   .section--notitle {
     padding-top: 46px;
   }
+
   .section--pt {
     padding-top: 0;
   }
@@ -4480,4 +4481,60 @@ body::-webkit-scrollbar-thumb {
   height: 4px !important;
   border-radius: 4px !important;
   cursor: pointer;
+}
+/* CSS cho container chứa các nút */
+.episode-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: left;
+  margin-top: 20px;
+}
+
+/* CSS cho các nút tập phim */
+.section__item-buttons {
+  background-color: #1a191f;
+  border: 2px solid white;
+  border-radius: 5px;
+  color: white;
+  padding: 10px 8px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  width: 108px;
+}
+#video-player {
+  width: 100%; /* Chiều rộng video chiếm toàn bộ chiều ngang của container */
+  height: auto; /* Tự động điều chỉnh chiều cao để giữ tỷ lệ khung hình */
+  max-width: 800px; /* Đặt chiều rộng tối đa của video */
+}
+
+.section__item-buttons:hover {
+  background-color: #1a191f;
+}
+
+.section__item-buttons:active {
+  background-color: #1a191f;
+  transform: scale(0.98);
+}
+
+.section__item-buttons:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(255, 127, 80, 0.5);
+}
+
+/* CSS cho tập phim đang chiếu */
+.playing-episode {
+  background-color: darkgray; /* Màu xanh lá cây để nổi bật tập phim đang chiếu */
+  color: white;
+}
+
+/* Responsive: Chỉnh nút hiển thị đẹp hơn trên các màn hình nhỏ */
+@media (max-width: 768px) {
+  .section__item-buttons {
+    width: 100%;
+    margin-bottom: 10px;
+  }
 }

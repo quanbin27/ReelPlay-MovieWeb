@@ -51,7 +51,6 @@ func (h *Handler) IsBookmark(c echo.Context) error {
 		print(err)
 		return c.JSON(http.StatusBadRequest, map[string]string{"error": "Invalid input"})
 	}
-	print(req.MovieID, "  ", req.UserID)
 	result := h.bookmarkStore.IsBookmark(req.MovieID, req.UserID)
 	return c.JSON(http.StatusOK, result)
 }

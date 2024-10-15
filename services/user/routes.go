@@ -36,7 +36,6 @@ func (h *Handler) ResetPassword(c echo.Context) error {
 	if err := c.Bind(&req); err != nil {
 		return c.JSON(http.StatusBadRequest, map[string]string{"error": "Invalid input"})
 	}
-
 	token, err := auth.ValidateJWT(req.Token)
 	if err != nil {
 		return c.JSON(http.StatusUnauthorized, map[string]string{"error": err.Error()})

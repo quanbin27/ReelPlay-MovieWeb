@@ -63,7 +63,7 @@
 									<li><a href="catalog.html">Catalog style 1</a></li>
 									<li><a href="catalog2.html">Catalog style 2</a></li>
 									<li><a href="details.html">Details Movie</a></li>
-									<li><a href="details2.html">Details TV Series</a></li>
+									<li><a href="watch.html">Details TV Series</a></li>
 								</ul>
 							</li>
 							<!-- end dropdown -->
@@ -284,7 +284,7 @@
 
 					<!-- Thông báo nếu không có trailer -->
 					<div id="no-trailer-message" style="display: none;">
-						<p>Trailer chưa có sẵn cho phim này.</p>
+						<p>Trailer is not available.</p>
 					</div>
 				</div>
 
@@ -944,9 +944,11 @@
 			document.getElementById('movie-description').innerText = movie.description;
 			document.getElementById('movie-language').innerText = movie.language; // Bạn cần thêm trường này vào HTML nếu cần
 			document.getElementById('movie-country').innerText = movie.country;
-			document.getElementById('movie-actor').innerText = movie.actor.join(', ');
-			document.getElementById('movie-director').innerText = movie.director.join(', ');
-			document.getElementById('movie-category').innerText = movie.category.join(', ');
+			document.getElementById('movie-actor').innerText = movie.actor ? movie.actor.join(', ') : 'Updating';
+			document.getElementById('movie-director').innerText = movie.director ? movie.director.join(', ') : 'Updating';
+			document.getElementById('movie-category').innerText = movie.category ? movie.category.join(', ') : 'Updating';
+
+
 
 			// Cập nhật video trailer
 			if (movie.trailer) {
@@ -1268,7 +1270,7 @@
 			const movieId = getMovieIdFromURL(); // Hoặc lấy movieId từ một nguồn khác nếu có
 			if (movieId) {
 				// Chuyển hướng đến trang xem phim, giả sử có đường dẫn là '/watch/:movieId'
-				window.location.href = `/watch?movieId=${movieId}`;
+				window.location.href = `/watch?movieId=${movieId}&episode=1`;
 			} else {
 				showMessage('Movie ID not found!');
 			}

@@ -22,7 +22,7 @@ func (store *Store) GetUserByEmail(email string) (*types.User, error) {
 	return &user, nil
 }
 func (s *Store) UpdatePassword(userID int, newPassword string) error {
-	return s.db.Where("id = ?", userID).Update("password", newPassword).Error
+	return s.db.Model(&types.User{}).Where("id = ?", userID).Update("password", newPassword).Error
 }
 
 func (store *Store) GetUserByID(id int) (*types.User, error) {

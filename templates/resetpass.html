@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Mirrored from hotflix.volkovdesign.com/main/forgot.html by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 01 Oct 2024 14:32:58 GMT -->
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/splide.min.css">
+    <link rel="stylesheet" href="css/slimselect.css">
+    <link rel="stylesheet" href="css/plyr.css">
+    <link rel="stylesheet" href="css/photoswipe.css">
+    <link rel="stylesheet" href="css/default-skin.css">
+    <link rel="stylesheet" href="css/main.css">
+
+    <!-- Icon font -->
+    <link rel="stylesheet" href="webfont/tabler-icons.min.css">
+
+    <!-- Favicons -->
+    <link rel="icon" type="image/png" href="icon/favicon-32x32.png" sizes="32x32">
+    <link rel="apple-touch-icon" href="icon/favicon-32x32.png">
+
+    <meta name="description" content="Online Movies, TV Shows & Cinema HTML Template">
+    <meta name="keywords" content="">
+    <meta name="author" content="Dmitry Volkov">
+    <title>HotFlix – Online Movies, TV Shows & Cinema HTML Template</title>
+</head>
+
+<body>
+<div class="sign section--bg" data-bg="img/bg/section__bg.jpg">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="sign__content">
+                    <!-- forgot form -->
+                    <form action="#" class="sign__form" id="reset-password-form">
+                        <a href="index.html" class="sign__logo">
+                            <img src="img/logo.svg" alt="">
+                        </a>
+
+                        <div class="sign__group">
+                            <input type="password" class="sign__input" id="newPassword" placeholder="New Password" required>
+                        </div>
+
+                        <button class="sign__btn" type="button" id="sendBtn">Send</button>
+
+                        <div id="message" style="color: green; margin-top: 10px;"></div>
+                        <div id="error-message" style="color: red; margin-top: 10px;"></div>
+
+                        <a href="/signin" id="loginBtn" class="sign__btn" style="display: none;text-align: center;">Go to Login</a>
+                    </form>
+
+                    <!-- end forgot form -->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- JS -->
+<script src="js/bootstrap.bundle.min.js"></script>
+<script src="js/splide.min.js"></script>
+<script src="js/slimselect.min.js"></script>
+<script src="js/smooth-scrollbar.js"></script>
+<script src="js/plyr.min.js"></script>
+<script src="js/photoswipe.min.js"></script>
+<script src="js/photoswipe-ui-default.min.js"></script>
+<script src="js/main.js"></script>
+<script>
+    // Lấy token từ URL
+    function getTokenFromURL() {
+        const urlParams = new URLSearchParams(window.location.search);
+        return urlParams.get('token');
+    }
+
+    document.getElementById('sendBtn').addEventListener('click', async function() {
+        const newPassword = document.getElementById('newPassword').value;
+        const messageDiv = document.getElementById('message');
+        const errorMessageDiv = document.getElementById('error-message');
+        const loginBtn = document.getElementById('loginBtn');
+        const token = getTokenFromURL(); // Lấy token từ URL
+
+        // Xóa các thông báo trước đó (nếu có)
+        messageDiv.textContent = '';
+        errorMessageDiv.textContent = '';
+
+        // Kiểm tra nếu password rỗng
+        if (!newPassword) {
+            errorMessageDiv.textContent = 'Please enter a new password.';
+            return;
+        }
+
+        const body = {
+            token: token,
+            new_password: newPassword
+        };
+
+        try {
+            const response = await fetch('http://localhost:8080/api/v1/reset-password', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(body)
+            });
+
+            if (response.ok) {
+                const result = await response.json();
+                messageDiv.textContent = 'Your password has been updated successfully!';
+                loginBtn.style.display = 'block'; // Hiển thị nút chuyển tới trang login
+            } else {
+                const errorResponse = await response.json();
+                errorMessageDiv.textContent = errorResponse.message || 'Failed to reset password. Please try again.';
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            errorMessageDiv.textContent = 'An error occurred while resetting your password. Please try again.';
+        }
+    });
+
+</script>
+</body>
+
+<!-- Mirrored from hotflix.volkovdesign.com/main/forgot.html by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 01 Oct 2024 14:32:58 GMT -->
+</html>
