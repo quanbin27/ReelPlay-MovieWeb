@@ -135,7 +135,6 @@ func (h *Handler) ForgotPassword(c echo.Context) error {
 	}
 
 	resetLink := fmt.Sprintf("http://localhost:8080/reset-password?token=%s", token)
-	print(resetLink)
 	// Gửi email với link reset mật khẩu
 	err = h.emailService.SendResetPasswordEmail(req.Email, resetLink)
 	if err != nil {

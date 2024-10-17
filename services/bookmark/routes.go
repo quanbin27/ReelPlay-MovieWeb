@@ -48,7 +48,6 @@ func (h *Handler) IsBookmark(c echo.Context) error {
 	req := new(types.CreateBookmarkRequest)
 
 	if err := c.Bind(req); err != nil {
-		print(err)
 		return c.JSON(http.StatusBadRequest, map[string]string{"error": "Invalid input"})
 	}
 	result := h.bookmarkStore.IsBookmark(req.MovieID, req.UserID)

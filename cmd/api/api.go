@@ -6,6 +6,7 @@ import (
 	"github.com/quanbin27/ReelPlay/services/actor"
 	"github.com/quanbin27/ReelPlay/services/bookmark"
 	"github.com/quanbin27/ReelPlay/services/category"
+	"github.com/quanbin27/ReelPlay/services/category_fit"
 	"github.com/quanbin27/ReelPlay/services/comment"
 	"github.com/quanbin27/ReelPlay/services/director"
 	"github.com/quanbin27/ReelPlay/services/email"
@@ -14,7 +15,7 @@ import (
 	"github.com/quanbin27/ReelPlay/services/rate"
 	"github.com/quanbin27/ReelPlay/services/user"
 	"github.com/quanbin27/ReelPlay/services/user_watched"
-	view_routes "github.com/quanbin27/ReelPlay/services/view-routes"
+	view_routes "github.com/quanbin27/ReelPlay/services/view_routes"
 	"gorm.io/gorm"
 	"log"
 	"net/http"
@@ -47,12 +48,15 @@ func (s *APIServer) Run() error {
 	directorStore := director.NewStore(s.db)
 	userWatchedStore := user_watched.NewStore(s.db)
 	rateStore := rate.NewStore(s.db)
+	categoryFitStore := category_fit.NewStore(s.db)
 	emailService := email.NewEmailService("smtp.gmail.com", 587, config.Envs.EmailUsername, config.Envs.Emailpassword, config.Envs.Emailfrom)
 	userHandler := user.NewHandler(userStore, emailService)
 	userWatchedHandler := user_watched.NewHandler(userStore, userWatchedStore)
 	movieHandler := movie.NewHandler(movieStore, categoryStore, actorStore, directorStore)
 	episodeHandler := episode.NewHandler(episodeStore, userStore)
 	cmtHandler := comment.NewHandler(cmtStore, userStore)
+	categoryFitHandler := category_fit.NewHandler(categoryFitStore, userStore)
+	categoryFitHandler.RegisterRoutes(subrouter)
 	rateHandler := rate.NewHandler(rateStore, userStore)
 	bookmarkHandler := bookmark.NewHandler(bookmarkStore, userStore)
 	bookmarkHandler.RegisterRoutes(subrouter)

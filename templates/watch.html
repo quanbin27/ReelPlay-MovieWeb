@@ -202,6 +202,43 @@
 							</div>
 						</div>
 					</div>
+					<div class="rating-container">
+						<h3 class="rating-header">Rate this movie</h3>
+						<div class="star-rating-wrapper">
+							<div class="star-rating">
+								<span class="star" data-value="1">&#9733;</span>
+								<span class="star" data-value="2">&#9733;</span>
+								<span class="star" data-value="3">&#9733;</span>
+								<span class="star" data-value="4">&#9733;</span>
+								<span class="star" data-value="5">&#9733;</span>
+								<span class="star" data-value="6">&#9733;</span>
+								<span class="star" data-value="7">&#9733;</span>
+								<span class="star" data-value="8">&#9733;</span>
+								<span class="star" data-value="9">&#9733;</span>
+								<span class="star" data-value="10">&#9733;</span>
+							</div>
+							<button id="submit-rating" class="submit-rating-btn">Submit Rating</button>
+						</div>
+					</div>
+					<div class="rating-fit-container">
+						<h3 class="rating-header">How Well Does the Category Fit?</h3>
+						<div class="star-rating-wrapper">
+							<div class="star-fit-rating">
+								<span class="star-fit" data-value="1">&#9733;</span>
+								<span class="star-fit" data-value="2">&#9733;</span>
+								<span class="star-fit" data-value="3">&#9733;</span>
+								<span class="star-fit" data-value="4">&#9733;</span>
+								<span class="star-fit" data-value="5">&#9733;</span>
+								<span class="star-fit" data-value="6">&#9733;</span>
+								<span class="star-fit" data-value="7">&#9733;</span>
+								<span class="star-fit" data-value="8">&#9733;</span>
+								<span class="star-fit" data-value="9">&#9733;</span>
+								<span class="star-fit" data-value="10">&#9733;</span>
+							</div>
+							<button id="submit-fit-rating" class="submit-rating-btn">Submit Rating</button>
+						</div>
+					</div>
+
 				</div>
 				<!-- end content -->
 
@@ -1219,6 +1256,140 @@
 			const movieId = parseInt(getMovieIdFromURL(),10);
 			checkBookmarkStatus(movieId);
 		});
+		document.addEventListener('DOMContentLoaded', function () {
+			const stars = document.querySelectorAll('.star');
+			let selectedRating = 0;
+
+			// Sự kiện khi người dùng click vào một ngôi sao
+			stars.forEach(star => {
+				star.addEventListener('click', function () {
+					selectedRating = parseInt(this.getAttribute('data-value'));
+					updateStarRating(selectedRating);
+				});
+			});
+
+			// Cập nhật màu ngôi sao khi được chọn
+			function updateStarRating(rating) {
+				stars.forEach(star => {
+					star.classList.remove('selected');
+				});
+				for (let i = 0; i < rating; i++) {
+					stars[i].classList.add('selected');
+				}
+			}
+
+			// Lấy movieId từ URL và userId từ token
+			const movieId = getMovieIdFromURL(); // Giả sử bạn đã có hàm này
+			const userId = getUserIdFromToken(); // Giả sử bạn đã có hàm này
+
+			// Sự kiện khi người dùng bấm nút Submit
+			document.getElementById('submit-rating').addEventListener('click', async function () {
+				if (selectedRating === 0) {
+					alert('Please select a rating before submitting.');
+					return;
+				}
+
+				try {
+					const response = await fetch(`http://localhost:8080/api/v1/movie/${movieId}/rate`, {
+						method: 'POST',
+						headers: {
+							'Content-Type': 'application/x-www-form-urlencoded',
+							'Authorization': `Bearer ${localStorage.getItem('token')}`
+						},
+						body: `user_id=${userId}&rate=${selectedRating}`
+					});
+
+					if (response.ok) {
+						alert('Thank you for your rating!');
+					} else {
+						const errorData = await response.json();
+						alert(`Error: ${errorData.error}`);
+					}
+				} catch (error) {
+					console.error('Error:', error);
+					alert('Failed to submit rating. Please try again later.');
+				}
+			});
+		});
+		document.addEventListener('DOMContentLoaded', async function() {
+			const starRatingEl = document.querySelector('.star-fit-rating');
+			const submitBtn = document.getElementById('submit-fit-rating');
+
+			let selectedRating = 0; // Biến lưu rating mà người dùng chọn
+			let categories = [];
+
+			// Lấy userId từ URL
+			const userId = getUserIdFromToken();
+
+			const movieId = getMovieIdFromURL();
+
+			// Gọi API để lấy các thể loại của phim
+			async function fetchCategories() {
+				try {
+					const response = await fetch(`http://localhost:8080/api/v1/movie/${movieId}/category`, {
+						headers: {
+							'Authorization': `Bearer ${localStorage.getItem('token')}`,
+							'Content-Type': 'application/json',
+						},
+					});
+					categories = await response.json(); // Lưu danh sách thể loại vào biến categories
+				} catch (error) {
+					console.error('Error fetching categories:', error);
+				}
+			}
+
+			// Thêm sự kiện click vào mỗi ngôi sao để chọn rating
+			starRatingEl.addEventListener('click', function(event) {
+				if (event.target.classList.contains('star-fit')) {
+					selectedRating = parseInt(event.target.getAttribute('data-value'));
+					console.log("fit:",selectedRating);// Chuyển đổi thành số nguyên
+					highlightStars(selectedRating);
+				}
+			});
+
+			// Hàm để làm nổi bật các sao theo rating
+			function highlightStars(rating) {
+				const stars = starRatingEl.querySelectorAll('.star-fit');
+				stars.forEach(star => {
+					// Xóa lớp 'selected' khỏi tất cả các sao
+					star.classList.remove('selected');
+					// Chỉ thêm lớp 'selected' cho những sao nhỏ hơn hoặc bằng rating
+					if (parseInt(star.getAttribute('data-value')) <= rating) {
+						star.classList.add('selected');
+					}
+				});
+			}
+
+			// Khi nhấn nút "Submit Rating"
+			submitBtn.addEventListener('click', async function() {
+				if (selectedRating > 0 && categories.length > 0) {
+					// Gửi request cho mỗi thể loại
+					for (const categoryId of categories) {
+						try {
+							const response = await fetch(`http://localhost:8080/api/v1/user/${userId}/category-fit`, {
+								method: 'POST',
+								headers: {
+									'Authorization': `Bearer ${localStorage.getItem('token')}`,
+									'Content-Type': 'application/x-www-form-urlencoded',
+								},
+								body: `category_id=${parseInt(categoryId)}&fit_rate=${selectedRating}`,
+							});
+							const result = await response.json();
+							console.log(`Rating for category ${categoryId} saved:`, result);
+						} catch (error) {
+							console.error(`Error saving rating for category ${categoryId}:`, error);
+						}
+					}
+					alert('Rating for all categories submitted!');
+				} else {
+					alert('Please select a rating before submitting.');
+				}
+			});
+
+			// Gọi API để lấy các thể loại khi trang được tải
+			await fetchCategories();
+		});
+
 	</script>
 </body>
 

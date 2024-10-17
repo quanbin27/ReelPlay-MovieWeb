@@ -21,8 +21,7 @@ func (h *Handler) RegisterRoutes(e *echo.Group) {
 	e.POST("/movie/:movieId/rate", h.RateMovie, auth.WithJWTAuth(h.userStore)) // Create or update movie rating
 }
 func (h *Handler) RateMovie(c echo.Context) error {
-	print("vao day")
-	userId, _ := strconv.Atoi(c.QueryParam("user_id"))
+	userId, _ := strconv.Atoi(c.FormValue("user_id"))
 	movieId, _ := strconv.Atoi(c.Param("movieId"))
 	ratingValue, _ := strconv.Atoi(c.FormValue("rate"))
 	// Check if user has already rated the movie

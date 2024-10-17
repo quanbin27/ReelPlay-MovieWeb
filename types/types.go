@@ -7,6 +7,11 @@ type WatchStore interface {
 	GetWatchPosition(userId, episodeId int) (int, error)
 	CreateUserWatched(userId int, episodeId int) error
 }
+type CategoryFitStore interface {
+	GetUserCategoryFit(userID int, categoryID int) (*CategoryFit, error)
+	CreateCategoryFit(fit *CategoryFit) error
+	UpdateCategoryFit(fit *CategoryFit) error
+}
 type UserStore interface {
 	GetUserByEmail(email string) (*User, error)
 	GetUserByID(id int) (*User, error)
@@ -18,7 +23,8 @@ type EmailService interface {
 }
 type MovieStore interface {
 	GetMoviesWithPagination(offset, limit int) ([]MovieResponse, error)
-	GetMovieById(id string) (MovieResponse, error)
+	GetMovieById(id int) (MovieResponse, error)
+	GetCategories(id int) ([]int, error)
 }
 type EpisodeStore interface {
 	GetEpisodeByMovieAndEpisodeId(movieId, episodeNumber int) (*Episode, error)
@@ -97,7 +103,7 @@ type User struct {
 	LastName  string    `json:"lastName"`
 	Email     string    `json:"email"`
 	Password  string    `json:"password"`
-	CreatedAt time.Time `gorm:"autoCreateTime" json:"createdAt"`
+	CreatedAt time.Time `gorm:"autoCreateTime" json:"created_at"`
 }
 
 // Movie struct
@@ -116,8 +122,8 @@ type Movie struct {
 	Category    []Category `gorm:"many2many:movie_category"`
 	Actor       []Actor    `gorm:"many2many:movie_actor"`
 	Director    []Director `gorm:"many2many:movie_director"`
-	CreatedAt   time.Time  `gorm:"autoCreateTime" json:"createdAt"`
-	UpdatedAt   time.Time  `gorm:"autoUpdateTime" json:"updatedAt"`
+	CreatedAt   time.Time  `gorm:"autoCreateTime" json:"created_at"`
+	UpdatedAt   time.Time  `gorm:"autoUpdateTime" json:"updated_at"`
 }
 
 // Episode struct
@@ -128,8 +134,8 @@ type Episode struct {
 	Source        string    `json:"source"`
 	Duration      int       `json:"duration"`
 	Quality       string    `json:"quality"`
-	CreatedAt     time.Time `gorm:"autoCreateTime" json:"createdAt"`
-	UpdatedAt     time.Time `gorm:"autoUpdateTime" json:"updatedAt"`
+	CreatedAt     time.Time `gorm:"autoCreateTime" json:"created_at"`
+	UpdatedAt     time.Time `gorm:"autoUpdateTime" json:"updated_at"`
 	Movie         Movie     `gorm:"foreignKey:MovieID"`
 }
 
@@ -137,7 +143,7 @@ type Episode struct {
 type Bookmark struct {
 	UserID    int       `gorm:"not null;primaryKey:idx_user_movie;constraint:OnUpdate:CASCADE,OnDelete:CASCADE" json:"user_id"`
 	MovieID   int       `gorm:"not null;primaryKey:idx_user_movie;constraint:OnUpdate:CASCADE,OnDelete:CASCADE" json:"movie_id"`
-	CreatedAt time.Time `gorm:"autoCreateTime" json:"createdAt"`
+	CreatedAt time.Time `gorm:"autoCreateTime" json:"created_at"`
 	User      User      `gorm:"foreignKey:UserID;references:ID;constraint:OnUpdate:CASCADE,OnDelete:CASCADE"`
 	Movie     Movie     `gorm:"foreignKey:MovieID;references:ID;constraint:OnUpdate:CASCADE,OnDelete:CASCADE"`
 }
@@ -148,7 +154,7 @@ type Comment struct {
 	Content   string    `gorm:"not null" json:"content"`
 	UserID    int       `gorm:"not null;foreignKey:UserID;references:ID;constraint:OnUpdate:CASCADE,OnDelete:CASCADE" json:"user_id"`
 	MovieID   int       `gorm:"not null;foreignKey:MovieID;references:ID;constraint:OnUpdate:CASCADE,OnDelete:CASCADE" json:"movie_id"`
-	CreatedAt time.Time `gorm:"autoCreateTime" json:"createdAt"`
+	CreatedAt time.Time `gorm:"autoCreateTime" json:"created_at"`
 	User      User      `gorm:"foreignKey:UserID"`
 	Movie     Movie     `gorm:"foreignKey:MovieID"`
 }
@@ -158,10 +164,21 @@ type Rate struct {
 	UserID    int       `gorm:"not null;primaryKey:idx_user_movie;constraint:OnUpdate:CASCADE,OnDelete:CASCADE" json:"user_id"`
 	MovieID   int       `gorm:"not null;primaryKey:idx_user_movie;constraint:OnUpdate:CASCADE,OnDelete:CASCADE" json:"movie_id"`
 	Rate      int       `gorm:"not null" json:"rate"`
-	CreatedAt time.Time `gorm:"autoCreateTime" json:"createdAt"`
+	CreatedAt time.Time `gorm:"autoCreateTime" json:"created_at"`
 	UpdatedAt time.Time `gorm:"autoUpdateTime" json:"updated_at"`
 	User      User      `gorm:"foreignKey:UserID;references:ID;constraint:OnUpdate:CASCADE,OnDelete:CASCADE"`
 	Movie     Movie     `gorm:"foreignKey:MovieID;references:ID;constraint:OnUpdate:CASCADE,OnDelete:CASCADE"`
+}
+
+// Category Fit Struct
+type CategoryFit struct {
+	UserID     int       `gorm:"not null;primaryKey:idx_user_category;constraint:OnUpdate:CASCADE,OnDelete:CASCADE" json:"user_id"`
+	CategoryID int       `gorm:"not null;primaryKey:idx_user_category;constraint:OnUpdate:CASCADE,OnDelete:CASCADE" json:"category_id"`
+	FitRate    float32   `gorm:"not null" json:"fit_rate"`
+	CreatedAt  time.Time `gorm:"autoCreateTime" json:"created_at"`
+	UpdatedAt  time.Time `gorm:"autoUpdateTime" json:"updated_at"`
+	User       User      `gorm:"foreignKey:UserID;references:ID;constraint:OnUpdate:CASCADE,OnDelete:CASCADE"`
+	Category   Category  `gorm:"foreignKey:CategoryID;references:ID;constraint:OnUpdate:CASCADE,OnDelete:CASCADE"`
 }
 
 // Director struct

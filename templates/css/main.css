@@ -4505,6 +4505,72 @@ body::-webkit-scrollbar-thumb {
   text-align: center;
   width: 108px;
 }
+.rating-container {
+  margin: 20px 0;
+  text-align: center;
+}
+
+.rating-header {
+  font-size: 1.45rem; /* Điều chỉnh kích thước chữ của tiêu đề */
+  margin-bottom: 10px; /* Tạo khoảng cách giữa tiêu đề và phần đánh giá */
+  color: white;
+}
+
+.star-rating-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px; /* Tạo khoảng cách giữa các phần tử */
+}
+
+.star-rating {
+  display: flex;
+  gap: 10px;
+}
+.star-fit-rating {
+  display: flex;
+  gap: 10px;
+}
+
+.star {
+  font-size: 1.35rem; /* Kích thước của ngôi sao */
+  cursor: pointer;
+  color: #ccc; /* Màu ngôi sao chưa được chọn */
+}
+.star-fit {
+  font-size: 1.35rem; /* Kích thước của ngôi sao */
+  cursor: pointer;
+  color: #ccc; /* Màu ngôi sao chưa được chọn */
+}
+
+.star.selected,
+.star:hover {
+  color: gold; /* Màu vàng khi chọn */
+}
+.star-fit.selected,
+.star-fit:hover {
+  color: gold; /* Màu vàng khi chọn */
+}
+
+.submit-rating-btn {
+  background-color: #1a191f;
+  border: 2px solid white;
+  border-radius: 5px;
+  color: white;
+  padding: 10px 8px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  width: 108px;
+}
+
+.submit-rating-btn:hover {
+  background-color: #0056b3;
+}
+
+
 #video-player {
   width: 100%; /* Chiều rộng video chiếm toàn bộ chiều ngang của container */
   height: auto; /* Tự động điều chỉnh chiều cao để giữ tỷ lệ khung hình */

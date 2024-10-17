@@ -51,7 +51,19 @@ func (s *Store) GetMoviesWithPagination(offset, limit int) ([]types.MovieRespons
 
 	return movieResponses, nil
 }
-func (s *Store) GetMovieById(id string) (types.MovieResponse, error) {
+func (s *Store) GetCategories(id int) ([]int, error) {
+	var movie types.Movie
+	result := s.db.Preload("Category").Where("id = ?", id).First(&movie)
+	if result.Error != nil {
+		return nil, result.Error
+	}
+	var categories []int
+	for _, category := range movie.Category {
+		categories = append(categories, category.ID)
+	}
+	return categories, nil
+}
+func (s *Store) GetMovieById(id int) (types.MovieResponse, error) {
 	var movie types.Movie
 	result := s.db.Preload("Actor").Preload("Category").Preload("Director").Where("id = ?", id).First(&movie)
 	if result.Error != nil {
