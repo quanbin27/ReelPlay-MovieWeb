@@ -36,7 +36,7 @@
 				<div class="col-12">
 					<div class="header__content">
 						<!-- header logo -->
-						<a href="index.html" class="header__logo">
+						<a href="/index" class="header__logo">
 							<img src="img/logo.svg" alt="">
 						</a>
 						<!-- end header logo -->
@@ -45,7 +45,7 @@
 						<ul class="header__nav">
 							<!-- dropdown -->
 							<li class="header__nav-item">
-								<a class="header__nav-link" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Home <i class="ti ti-chevron-down"></i></a>
+								<a class="header__nav-link" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Category <i class="ti ti-chevron-down"></i></a>
 
 								<ul class="dropdown-menu header__dropdown-menu">
 									<li><a href="index.html">Home style 1</a></li>
@@ -57,11 +57,11 @@
 
 							<!-- dropdown -->
 							<li class="header__nav-item">
-								<a class="header__nav-link" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Catalog <i class="ti ti-chevron-down"></i></a>
+								<a class="header__nav-link" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Country <i class="ti ti-chevron-down"></i></a>
 
 								<ul class="dropdown-menu header__dropdown-menu">
 									<li><a href="catalog.html">Catalog style 1</a></li>
-									<li><a href="catalog2.html">Catalog style 2</a></li>
+									<li><a href="search-results.html">Catalog style 2</a></li>
 									<li><a href="details.html">Details Movie</a></li>
 									<li><a href="watch.html">Details TV Series</a></li>
 								</ul>
@@ -69,12 +69,12 @@
 							<!-- end dropdown -->
 
 							<li class="header__nav-item">
-								<a href="pricing.html" class="header__nav-link">Pricing plan</a>
+								<a href="pricing.html" class="header__nav-link">New movies</a>
 							</li>
 
 							<!-- dropdown -->
 							<li class="header__nav-item">
-								<a class="header__nav-link" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Pages <i class="ti ti-chevron-down"></i></a>
+								<a class="header__nav-link" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Top movies <i class="ti ti-chevron-down"></i></a>
 
 								<ul class="dropdown-menu header__dropdown-menu">
 									<li><a href="about.html">About Us</a></li>
@@ -106,8 +106,8 @@
 						<!-- header auth -->
 						<div class="header__auth">
 							<form action="#" class="header__search">
-								<input class="header__search-input" type="text" placeholder="Search...">
-								<button class="header__search-button" type="button">
+								<input class="header__search-input" id="search-input" type="text" placeholder="Search...">
+								<button class="header__search-button" type="button" id="search-btn">
 									<i class="ti ti-search"></i>
 								</button>
 								<button class="header__search-close" type="button">
@@ -115,20 +115,21 @@
 								</button>
 							</form>
 
+
 							<button class="header__search-btn" type="button">
 								<i class="ti ti-search"></i>
 							</button>
 
 							<!-- dropdown -->
-							<div class="header__lang">
-								<a class="header__nav-link" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">EN <i class="ti ti-chevron-down"></i></a>
+							<!--							<div class="header__lang">-->
+							<!--								<a class="header__nav-link" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">EN <i class="ti ti-chevron-down"></i></a>-->
 
-								<ul class="dropdown-menu header__dropdown-menu">
-									<li><a href="#">English</a></li>
-									<li><a href="#">Spanish</a></li>
-									<li><a href="#">French</a></li>
-								</ul>
-							</div>
+							<!--								<ul class="dropdown-menu header__dropdown-menu">-->
+							<!--									<li><a href="#">English</a></li>-->
+							<!--									<li><a href="#">Spanish</a></li>-->
+							<!--									<li><a href="#">French</a></li>-->
+							<!--								</ul>-->
+							<!--							</div>-->
 							<!-- end dropdown -->
 
 							<!-- dropdown -->
@@ -171,7 +172,7 @@
 				<div class="col-12">
 					<div class="section__wrap">
 						<!-- section title -->
-						<h1 class="section__title section__title--head">My HotFlix</h1>
+						<h1 class="section__title section__title--head">My Profile</h1>
 						<!-- end section title -->
 
 						<!-- breadcrumbs -->
@@ -200,8 +201,8 @@
 									<img src="img/user.svg" alt="">
 								</div>
 								<div class="profile__meta">
-									<h3>John Doe</h3>
-									<span>HOTFLIX ID: 78123</span>
+									<h3>Quan Vo</h3>
+									<span>Reelplay ID: </span>
 								</div>
 							</div>
 
@@ -997,7 +998,7 @@
 
 									<div class="col-12 col-md-6 col-lg-12 col-xl-6">
 										<div class="sign__group">
-											<label class="sign__label" for="username">Username</label>
+											<label class="sign__label" for="username">First Name</label>
 											<input id="username" type="text" name="username" class="sign__input" placeholder="User 123">
 										</div>
 									</div>
@@ -1011,7 +1012,7 @@
 
 									<div class="col-12 col-md-6 col-lg-12 col-xl-6">
 										<div class="sign__group">
-											<label class="sign__label" for="fname">Name</label>
+											<label class="sign__label" for="fname">Last Name</label>
 											<input id="fname" type="text" name="fname" class="sign__input" placeholder="John Doe">
 										</div>
 									</div>
@@ -1063,17 +1064,17 @@
 										</div>
 									</div>
 
-									<div class="col-12 col-md-6 col-lg-12 col-xl-6">
-										<div class="sign__group">
-											<label class="sign__label" for="select">Select</label>
-											<select name="select" id="select" class="sign__select">
-												<option value="0">Option</option>
-												<option value="1">Option 2</option>
-												<option value="2">Option 3</option>
-												<option value="3">Option 4</option>
-											</select>
-										</div>
-									</div>
+<!--									<div class="col-12 col-md-6 col-lg-12 col-xl-6">-->
+<!--										<div class="sign__group">-->
+<!--											<label class="sign__label" for="select">Select</label>-->
+<!--											<select name="select" id="select" class="sign__select">-->
+<!--												<option value="0">Option</option>-->
+<!--												<option value="1">Option 2</option>-->
+<!--												<option value="2">Option 3</option>-->
+<!--												<option value="3">Option 4</option>-->
+<!--											</select>-->
+<!--										</div>-->
+<!--									</div>-->
 
 									<div class="col-12">
 										<button class="sign__btn sign__btn--small" type="button">Change</button>
@@ -1100,7 +1101,6 @@
 							<img src="img/logo.svg" alt="">
 						</a>
 
-						<span class="footer__copyright">© HOTFLIX, 2019—2024 <br> Create by <a href="https://themeforest.net/user/dmitryvolkov/portfolio" target="_blank">Dmitry Volkov</a></span>
 
 						<nav class="footer__nav">
 							<a href="about.html">About Us</a>

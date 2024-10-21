@@ -1,12 +1,17 @@
 package view_routes
 
-import "github.com/labstack/echo/v4"
+import (
+	"github.com/labstack/echo/v4"
+	"github.com/quanbin27/ReelPlay/types"
+	"net/http"
+)
 
 type Handler struct {
+	userStore types.UserStore
 }
 
-func NewHandler() *Handler {
-	return &Handler{}
+func NewHandler(userStore types.UserStore) *Handler {
+	return &Handler{userStore}
 }
 func (h *Handler) RegisterRoutes(e *echo.Echo) {
 	e.Static("/", "templates/")
@@ -24,5 +29,17 @@ func (h *Handler) RegisterRoutes(e *echo.Echo) {
 	e.File("/privacy", "templates/privacy.html")
 	e.File("/detail", "templates/details.html")
 	e.File("/reset-password", "templates/resetpass.html")
-	e.File("/watch", "templates/watch.html")
+	//e.GET("/validate-token", validate, auth.WithJWTAuth(h.userStore))
+
+	e.GET("/watch", func(c echo.Context) error {
+		println("Voa day")
+		return c.File("templates/watch.html")
+	})
+	e.File("/search", "templates/search-results.html")
+	a := e.Group("/admin")
+	a.Static("/", "templates/admin/")
+	a.File("/index", "templates/admin/index.html")
+}
+func validate(c echo.Context) error {
+	return c.JSON(http.StatusOK, map[string]string{"status": "valid"})
 }

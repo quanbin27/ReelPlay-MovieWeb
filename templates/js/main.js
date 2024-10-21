@@ -601,3 +601,4 @@
 	}
 
 })(window, document);
+// Thêm đoạn code này vào file JavaScript chung của bạn

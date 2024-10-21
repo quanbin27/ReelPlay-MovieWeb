@@ -107,6 +107,7 @@ func (h *Handler) handleRegister(c echo.Context) error {
 		LastName:  payload.LastName,
 		Email:     payload.Email,
 		Password:  hashedPassword,
+		RoleID:    1,
 	}
 	err = h.store.CreateUser(&user)
 	if err != nil {

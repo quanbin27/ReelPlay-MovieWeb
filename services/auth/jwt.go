@@ -59,7 +59,6 @@ func WithJWTAuth(store types.UserStore) echo.MiddlewareFunc {
 
 			// Lưu thông tin người dùng vào context
 			c.Set("user", &u)
-
 			// Gọi hàm tiếp theo
 			return next(c) // Tiếp tục xử lý yêu cầu
 		}

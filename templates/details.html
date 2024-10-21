@@ -36,7 +36,7 @@
 				<div class="col-12">
 					<div class="header__content">
 						<!-- header logo -->
-						<a href="index.html" class="header__logo">
+						<a href="/index" class="header__logo">
 							<img src="img/logo.svg" alt="">
 						</a>
 						<!-- end header logo -->
@@ -45,7 +45,7 @@
 						<ul class="header__nav">
 							<!-- dropdown -->
 							<li class="header__nav-item">
-								<a class="header__nav-link" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Home <i class="ti ti-chevron-down"></i></a>
+								<a class="header__nav-link" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Category <i class="ti ti-chevron-down"></i></a>
 
 								<ul class="dropdown-menu header__dropdown-menu">
 									<li><a href="index.html">Home style 1</a></li>
@@ -57,11 +57,11 @@
 
 							<!-- dropdown -->
 							<li class="header__nav-item">
-								<a class="header__nav-link" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Catalog <i class="ti ti-chevron-down"></i></a>
+								<a class="header__nav-link" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Country <i class="ti ti-chevron-down"></i></a>
 
 								<ul class="dropdown-menu header__dropdown-menu">
 									<li><a href="catalog.html">Catalog style 1</a></li>
-									<li><a href="catalog2.html">Catalog style 2</a></li>
+									<li><a href="search-results.html">Catalog style 2</a></li>
 									<li><a href="details.html">Details Movie</a></li>
 									<li><a href="watch.html">Details TV Series</a></li>
 								</ul>
@@ -69,12 +69,12 @@
 							<!-- end dropdown -->
 
 							<li class="header__nav-item">
-								<a href="pricing.html" class="header__nav-link">Pricing plan</a>
+								<a href="pricing.html" class="header__nav-link">New movies</a>
 							</li>
 
 							<!-- dropdown -->
 							<li class="header__nav-item">
-								<a class="header__nav-link" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Pages <i class="ti ti-chevron-down"></i></a>
+								<a class="header__nav-link" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Top movies <i class="ti ti-chevron-down"></i></a>
 
 								<ul class="dropdown-menu header__dropdown-menu">
 									<li><a href="about.html">About Us</a></li>
@@ -106,8 +106,8 @@
 						<!-- header auth -->
 						<div class="header__auth">
 							<form action="#" class="header__search">
-								<input class="header__search-input" type="text" placeholder="Search...">
-								<button class="header__search-button" type="button">
+								<input class="header__search-input" id="search-input" type="text" placeholder="Search...">
+								<button class="header__search-button" type="button" id="search-btn">
 									<i class="ti ti-search"></i>
 								</button>
 								<button class="header__search-close" type="button">
@@ -115,26 +115,39 @@
 								</button>
 							</form>
 
+
 							<button class="header__search-btn" type="button">
 								<i class="ti ti-search"></i>
 							</button>
 
 							<!-- dropdown -->
-							<div class="header__lang">
-								<a class="header__nav-link" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">EN <i class="ti ti-chevron-down"></i></a>
+							<!--							<div class="header__lang">-->
+							<!--								<a class="header__nav-link" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">EN <i class="ti ti-chevron-down"></i></a>-->
 
-								<ul class="dropdown-menu header__dropdown-menu">
-									<li><a href="#">English</a></li>
-									<li><a href="#">Spanish</a></li>
-									<li><a href="#">French</a></li>
+							<!--								<ul class="dropdown-menu header__dropdown-menu">-->
+							<!--									<li><a href="#">English</a></li>-->
+							<!--									<li><a href="#">Spanish</a></li>-->
+							<!--									<li><a href="#">French</a></li>-->
+							<!--								</ul>-->
+							<!--							</div>-->
+							<!-- end dropdown -->
+
+							<!-- dropdown -->
+							<div class="header__profile">
+								<a class="header__sign-in header__sign-in--user" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+									<i class="ti ti-user"></i>
+									<span>Nickname</span>
+								</a>
+
+								<ul class="dropdown-menu dropdown-menu-end header__dropdown-menu header__dropdown-menu--user">
+									<li><a href="profile.html"><i class="ti ti-ghost"></i>Profile</a></li>
+									<li><a href="profile.html"><i class="ti ti-stereo-glasses"></i>Subscription</a></li>
+									<li><a href="profile.html"><i class="ti ti-bookmark"></i>Favorites</a></li>
+									<li><a href="profile.html"><i class="ti ti-settings"></i>Settings</a></li>
+									<li><a href="#"><i class="ti ti-logout"></i>Logout</a></li>
 								</ul>
 							</div>
 							<!-- end dropdown -->
-
-							<a href="signin.html" class="header__sign-in">
-								<i class="ti ti-login"></i>
-								<span>sign in</span>
-							</a>
 						</div>
 						<!-- end header auth -->
 
@@ -283,7 +296,7 @@
 					</iframe>
 
 					<!-- Thông báo nếu không có trailer -->
-					<div id="no-trailer-message" style="display: none;">
+					<div id="no-trailer-message" style="display: none;color :white;">
 						<p>Trailer is not available.</p>
 					</div>
 				</div>
@@ -299,7 +312,7 @@
 				<div class="row">
 					<div class="col-12">
 						<!-- content title -->
-						<h2 class="content__title">Discover</h2>
+<!--						<h2 class="content__title">Discover</h2>-->
 						<!-- end content title -->
 
 						<!-- content tabs nav -->
@@ -308,13 +321,13 @@
 								<button id="1-tab" class="active" data-bs-toggle="tab" data-bs-target="#tab-1" type="button" role="tab" aria-controls="tab-1" aria-selected="true">Comments</button>
 							</li>
 
-							<li class="nav-item" role="presentation">
-								<button id="2-tab" data-bs-toggle="tab" data-bs-target="#tab-2" type="button" role="tab" aria-controls="tab-2" aria-selected="false">Reviews</button>
-							</li>
+<!--							<li class="nav-item" role="presentation">-->
+<!--								<button id="2-tab" data-bs-toggle="tab" data-bs-target="#tab-2" type="button" role="tab" aria-controls="tab-2" aria-selected="false">Reviews</button>-->
+<!--							</li>-->
 
-							<li class="nav-item" role="presentation">
-								<button id="3-tab" data-bs-toggle="tab" data-bs-target="#tab-3" type="button" role="tab" aria-controls="tab-3" aria-selected="false">Photos</button>
-							</li>
+<!--							<li class="nav-item" role="presentation">-->
+<!--								<button id="3-tab" data-bs-toggle="tab" data-bs-target="#tab-3" type="button" role="tab" aria-controls="tab-3" aria-selected="false">Photos</button>-->
+<!--							</li>-->
 						</ul>
 						<!-- end content tabs nav -->
 					</div>
@@ -948,8 +961,6 @@
 			document.getElementById('movie-director').innerText = movie.director ? movie.director.join(', ') : 'Updating';
 			document.getElementById('movie-category').innerText = movie.category ? movie.category.join(', ') : 'Updating';
 
-
-
 			// Cập nhật video trailer
 			if (movie.trailer) {
 				// Chuyển đổi URL trailer sang dạng nhúng
@@ -996,7 +1007,11 @@
 		function displayComments() {
 			const commentsList = document.querySelector('.comments__list');
 			commentsList.innerHTML = '';  // Clear danh sách cũ
-
+			if (!comments || comments.length === 0) {
+				// Nếu không có bình luận, hiển thị thông báo hoặc xử lý logic khác
+				commentsList.innerHTML = '<li class="comments__item">No comments available</li>';
+				return;
+			}
 			const start = 0;
 			const end = commentsPerPage * currentPage;
 			const commentsToDisplay = comments.slice(start, end);
@@ -1267,14 +1282,45 @@
 			checkBookmarkStatus(movieId);
 		});
 		document.getElementById('watchMovieBtn').addEventListener('click', () => {
-			const movieId = getMovieIdFromURL(); // Hoặc lấy movieId từ một nguồn khác nếu có
-			if (movieId) {
-				// Chuyển hướng đến trang xem phim, giả sử có đường dẫn là '/watch/:movieId'
-				window.location.href = `/watch?movieId=${movieId}&episode=1`;
+			const token = localStorage.getItem('token'); // Lấy token từ localStorage
+			const movieId = getMovieIdFromURL(); // Lấy movieId từ URL hoặc nguồn khác
+
+			if (!movieId) {
+				showMessage('Movie ID not found!'); // Hiển thị thông báo nếu không tìm thấy ID phim
+				return;
+			}
+
+			if (token) {
+				// Gửi yêu cầu đến một endpoint để xác thực token
+				// fetch('/validate-token', {
+				// 	method: 'GET',
+				// 	headers: {
+				// 		'Authorization': `Bearer ${token}` // Gửi token trong tiêu đề
+				// 	}
+				// })
+				// 		.then(response => {
+				// 			if (response.ok) {
+								// Nếu token hợp lệ, chuyển hướng đến trang xem phim
+								window.location.href = `/watch?movieId=${movieId}&episode=1`;
+						// 	} else {
+						// 		// Nếu token không hợp lệ, chuyển hướng về trang đăng nhập
+						// 		showMessage('Session expired. Please log in again.');
+						// 		window.location.href = '/signin';
+						// 	}
+						// })
+						// .catch(error => {
+						// 	console.error('Error:', error);
+						// 	showMessage('An error occurred. Please try again later.');
+						// });
 			} else {
-				showMessage('Movie ID not found!');
+				// Nếu không có token, chuyển hướng tới trang đăng nhập
+				showMessage('You must be logged in to watch movies.'); // Thông báo cho người dùng
+				window.location.href = '/signin';
 			}
 		});
+
+
+
 	</script>
 </body>
 

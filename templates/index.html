@@ -36,7 +36,7 @@
 				<div class="col-12">
 					<div class="header__content">
 						<!-- header logo -->
-						<a href="index.html" class="header__logo">
+						<a href="/index" class="header__logo">
 							<img src="img/logo.svg" alt="">
 						</a>
 						<!-- end header logo -->
@@ -45,7 +45,7 @@
 						<ul class="header__nav">
 							<!-- dropdown -->
 							<li class="header__nav-item">
-								<a class="header__nav-link" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Home <i class="ti ti-chevron-down"></i></a>
+								<a class="header__nav-link" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Category <i class="ti ti-chevron-down"></i></a>
 
 								<ul class="dropdown-menu header__dropdown-menu">
 									<li><a href="index.html">Home style 1</a></li>
@@ -57,11 +57,11 @@
 
 							<!-- dropdown -->
 							<li class="header__nav-item">
-								<a class="header__nav-link" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Catalog <i class="ti ti-chevron-down"></i></a>
+								<a class="header__nav-link" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Country <i class="ti ti-chevron-down"></i></a>
 
 								<ul class="dropdown-menu header__dropdown-menu">
 									<li><a href="catalog.html">Catalog style 1</a></li>
-									<li><a href="catalog2.html">Catalog style 2</a></li>
+									<li><a href="search-results.html">Catalog style 2</a></li>
 									<li><a href="details.html">Details Movie</a></li>
 									<li><a href="watch.html">Details TV Series</a></li>
 								</ul>
@@ -69,12 +69,12 @@
 							<!-- end dropdown -->
 
 							<li class="header__nav-item">
-								<a href="pricing.html" class="header__nav-link">Pricing plan</a>
+								<a href="pricing.html" class="header__nav-link">New movies</a>
 							</li>
 
 							<!-- dropdown -->
 							<li class="header__nav-item">
-								<a class="header__nav-link" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Pages <i class="ti ti-chevron-down"></i></a>
+								<a class="header__nav-link" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Top movies <i class="ti ti-chevron-down"></i></a>
 
 								<ul class="dropdown-menu header__dropdown-menu">
 									<li><a href="about.html">About Us</a></li>
@@ -106,8 +106,8 @@
 						<!-- header auth -->
 						<div class="header__auth">
 							<form action="#" class="header__search">
-								<input class="header__search-input" type="text" placeholder="Search...">
-								<button class="header__search-button" type="button">
+								<input class="header__search-input" id="search-input" type="text" placeholder="Search...">
+								<button class="header__search-button" type="button" id="search-btn">
 									<i class="ti ti-search"></i>
 								</button>
 								<button class="header__search-close" type="button">
@@ -115,20 +115,21 @@
 								</button>
 							</form>
 
+
 							<button class="header__search-btn" type="button">
 								<i class="ti ti-search"></i>
 							</button>
 
 							<!-- dropdown -->
-							<div class="header__lang">
-								<a class="header__nav-link" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">EN <i class="ti ti-chevron-down"></i></a>
+<!--							<div class="header__lang">-->
+<!--								<a class="header__nav-link" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">EN <i class="ti ti-chevron-down"></i></a>-->
 
-								<ul class="dropdown-menu header__dropdown-menu">
-									<li><a href="#">English</a></li>
-									<li><a href="#">Spanish</a></li>
-									<li><a href="#">French</a></li>
-								</ul>
-							</div>
+<!--								<ul class="dropdown-menu header__dropdown-menu">-->
+<!--									<li><a href="#">English</a></li>-->
+<!--									<li><a href="#">Spanish</a></li>-->
+<!--									<li><a href="#">French</a></li>-->
+<!--								</ul>-->
+<!--							</div>-->
 							<!-- end dropdown -->
 
 							<!-- dropdown -->
@@ -165,18 +166,18 @@
 	<!-- end header -->
 
 	<!-- home -->
-	<section class="home">
+	<section class="home" style="padding-bottom: 15px">
 		<div class="container">
 			<div class="row">
 				<!-- home title -->
 				<div class="col-12">
-					<h1 class="home__title"><b>NEW ITEMS</b> OF THIS SEASON</h1>
+					<h1 class="home__title"><b>NEW MOVIES</b> YOU MAY LIKE</h1>
 				</div>
 				<!-- end home title -->
 
 				<!-- home carousel -->
 				<div class="col-12">
-					<div class="home__carousel splide splide--home">
+					<div class="home__carousel splide splide--home" id="newrecommendmovies">
 						<div class="splide__arrows">
 							<button class="splide__arrow splide__arrow--prev" type="button">
 								<i class="ti ti-chevron-left"></i>
@@ -187,7 +188,7 @@
 						</div>
 
 						<div class="splide__track">
-							<ul class="splide__list" id="movieList">
+							<ul class="splide__list" id="newmovieList">
 <!--								<li class="splide__slide">-->
 <!--									<div class="item item&#45;&#45;hero">-->
 <!--										<div class="item__cover">-->
@@ -213,6 +214,59 @@
 				</div>
 				<!-- end home carousel -->
 			</div>
+
+		</div>
+	</section>
+
+	<section class="home" style="margin-top: 0px;padding-top: 40px">
+		<div class="container">
+			<div class="row">
+				<!-- home title -->
+				<div class="col-12">
+					<h1 class="home__title"><b>RECOMMENDED MOVIES</b> </h1>
+				</div>
+				<!-- end home title -->
+
+				<!-- home carousel -->
+				<div class="col-12">
+					<div class="home__carousel splide splide--home" id="recommendmovies">
+						<div class="splide__arrows">
+							<button class="splide__arrow splide__arrow--prev" type="button">
+								<i class="ti ti-chevron-left"></i>
+							</button>
+							<button class="splide__arrow splide__arrow--next" type="button">
+								<i class="ti ti-chevron-right"></i>
+							</button>
+						</div>
+
+						<div class="splide__track">
+							<ul class="splide__list" id="movieList">
+								<!--								<li class="splide__slide">-->
+								<!--									<div class="item item&#45;&#45;hero">-->
+								<!--										<div class="item__cover">-->
+								<!--											<img src="img/covers/cover12.jpg" alt="">-->
+								<!--											<a href="details.html" class="item__play">-->
+								<!--												<i class="ti ti-player-play-filled"></i>-->
+								<!--											</a>-->
+								<!--											<span class="item__rate item__rate&#45;&#45;green">8.4</span>-->
+								<!--											<button class="item__favorite" type="button"><i class="ti ti-bookmark"></i></button>-->
+								<!--										</div>-->
+								<!--										<div class="item__content">-->
+								<!--											<h3 class="item__title"><a href="details.html">The Edge of Tomorrow</a></h3>-->
+								<!--											<span class="item__category">-->
+								<!--												<a href="#">Action</a>-->
+								<!--												<a href="#">Triler</a>-->
+								<!--											</span>-->
+								<!--										</div>-->
+								<!--									</div>-->
+								<!--								</li>-->
+							</ul>
+						</div>
+					</div>
+				</div>
+				<!-- end home carousel -->
+			</div>
+
 		</div>
 	</section>
 	<!-- end home -->
@@ -2291,15 +2345,73 @@
 	<script src="js/photoswipe-ui-default.min.js"></script>
 	<script src="js/main.js"></script>
 	<script>
-		async function fetchMovies(offset, limit) {
+		function getUserIdFromToken() {
+			const token = localStorage.getItem('token');
+			if (!token) return null;
+
+			// Giả sử token là JWT, bạn có thể phân tích nó để lấy userId
+			const payload = JSON.parse(atob(token.split('.')[1]));
+			return payload.user_id; // Lưu ý: thay đổi 'userId' thành 'user_id' cho đúng với payload
+		}
+		async function fetchMovies() {
 			try {
+				const userId=getUserIdFromToken()
 				// Fetch dữ liệu từ API
-				const response = await fetch(`/api/v1/movies?offset=${offset}&limit=${limit}`);
+				const response = await fetch(`/api/v1/movie/user/${userId}/recommend`);
 				const movies = await response.json();
 
 				// Lấy phần tử danh sách phim
 				const movieList = document.getElementById('movieList');
 				movieList.innerHTML = ''; // Xóa nội dung cũ
+
+				// Duyệt qua danh sách phim và thêm vào DOM
+				movies.forEach(movie => {
+					const movieItem = document.createElement('li');
+					movieItem.className = 'splide__slide';
+					console.log(movie.name)
+					movieItem.innerHTML = `
+                    <div class="item item--hero">
+                        <div class="item__cover">
+                            <img src="${movie.thumbnail}" alt="${movie.name}">
+                            <a href="detail?movieId=${movie.id}" class="item__play">
+                                <i class="ti ti-player-play-filled"></i>
+                            </a>
+                            <span class="item__rate item__rate--green">${movie.rate}</span>
+                            <button class="item__favorite" type="button"><i class="ti ti-bookmark"></i></button>
+                        </div>
+                        <div class="item__content">
+                            <h3 class="item__title"><a href="detail?movieId=${movie.id}">${movie.name}</a></h3>
+                            <span class="item__category">
+                                ${movie.category.map(cat => `<a href="#">${cat}</a>`).join(', ')}
+                            </span>
+                        </div>
+                    </div>
+                `;
+					movieList.appendChild(movieItem);
+				});
+
+				// Khởi tạo lại Splide sau khi thêm các phim mới
+				new Splide('#recommendmovies', {
+					gap	:'30px',
+					type   : 'loop',  // Tùy chọn cho Splide (có thể điều chỉnh)
+					perPage: 5,       // Số item trên mỗi trang
+					arrows : true,    // Hiển thị nút điều hướng
+				}).mount();
+
+			} catch (error) {
+				console.error('Error fetching movies:', error);
+			}
+		}
+		async function fetchnewMovies() {
+			try {
+				const userId=getUserIdFromToken()
+				// Fetch dữ liệu từ API
+				const response = await fetch(`/api/v1/movie/user/${userId}/new-recommend`);
+				const movies = await response.json();
+
+				// Lấy phần tử danh sách phim
+				const newmovieList = document.getElementById('newmovieList');
+				newmovieList.innerHTML = ''; // Xóa nội dung cũ
 
 				// Duyệt qua danh sách phim và thêm vào DOM
 				movies.forEach(movie => {
@@ -2324,11 +2436,12 @@
                         </div>
                     </div>
                 `;
-					movieList.appendChild(movieItem);
+					newmovieList.appendChild(movieItem);
 				});
 
 				// Khởi tạo lại Splide sau khi thêm các phim mới
-				new Splide('.splide', {
+				new Splide('#newrecommendmovies', {
+					gap	:'30px',
 					type   : 'loop',  // Tùy chọn cho Splide (có thể điều chỉnh)
 					perPage: 5,       // Số item trên mỗi trang
 					arrows : true,    // Hiển thị nút điều hướng
@@ -2340,7 +2453,33 @@
 		}
 
 		// Gọi hàm fetchMovies với số lượng phim mong muốn
-		fetchMovies(0, 5); // Ví dụ lấy 5 phim đầu tiên
+		// Ví dụ lấy 5 phim đầu tiên
+		fetchnewMovies();
+		fetchMovies();
+		document.addEventListener('DOMContentLoaded', function() {
+			const searchBtn = document.getElementById('search-btn');
+			const searchInput = document.getElementById('search-input');
+
+			// Sự kiện khi người dùng nhấn nút tìm kiếm
+			searchBtn.addEventListener('click', function() {
+				const query = searchInput.value.trim(); // Lấy giá trị từ input
+
+				if (query === '') {
+					alert('Please enter a search term');
+					return;
+				}
+
+				const page = 1;
+				const limit = 18;
+
+				// Tạo URL với query parameters
+				const searchUrl = `/search?q=${encodeURIComponent(query)}&page=${page}&limit=${limit}`;
+
+				// Chuyển hướng đến trang kết quả tìm kiếm
+				window.location.href = searchUrl;
+			});
+		});
+
 	</script>
 
 </body>
