@@ -27,8 +27,9 @@ func (h *Handler) RegisterRoutes(e *echo.Group) {
 
 	e.DELETE("/director/:id", h.DeleteDirectorHandler, auth.WithJWTAdminAuth(h.userStore))
 
-	e.GET("/director", h.GetAllDirectorsHandler)
+	//e.GET("/director", h.GetAllDirectorsHandler)
 	e.GET("/director/:id", h.GetDirectorByIDHandler)
+	e.GET("/director", h.SearchDirectorsHandler)
 
 }
 func (h *Handler) CreateDirectorHandler(c echo.Context) error {
@@ -87,6 +88,36 @@ func (h *Handler) DeleteDirectorHandler(c echo.Context) error {
 
 	// Trả về phản hồi thành công
 	return c.NoContent(http.StatusNoContent)
+}
+func (h *Handler) SearchDirectorsHandler(c echo.Context) error {
+	// Lấy keyword từ query params
+	keyword := c.QueryParam("keyword")
+
+	// Lấy các giá trị phân trang từ query params
+	page, err := strconv.Atoi(c.QueryParam("page"))
+	if err != nil || page <= 0 {
+		page = 1 // Mặc định là trang 1 nếu không có giá trị
+	}
+
+	limit, err := strconv.Atoi(c.QueryParam("limit"))
+	if err != nil || limit <= 0 {
+		limit = 10 // Mặc định là 10 bản ghi mỗi trang
+	}
+
+	// Gọi store để lấy danh sách diễn viên và tổng số bản ghi
+	directors, total, err := h.directorStore.SearchDirectors(keyword, page, limit)
+	if err != nil {
+		return c.JSON(http.StatusInternalServerError, map[string]string{"error": "could not fetch directors"})
+	}
+
+	// Trả về dữ liệu JSON bao gồm danh sách diễn viên và tổng số bản ghi
+	response := map[string]interface{}{
+		"directors": directors,
+		"total":     total,
+		"page":      page,
+		"limit":     limit,
+	}
+	return c.JSON(http.StatusOK, response)
 }
 func (h *Handler) GetAllDirectorsHandler(c echo.Context) error {
 	// Gọi hàm trong store để lấy tất cả Directors

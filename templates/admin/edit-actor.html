@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/slimselect.css">
+    <link rel="stylesheet" href="css/admin.css">
+
+    <!-- Icon font -->
+    <link rel="stylesheet" href="webfont/tabler-icons.min.css">
+
+    <!-- Favicons -->
+    <link rel="icon" type="image/png" href="icon/favicon-32x32.png" sizes="32x32">
+    <link rel="apple-touch-icon" href="icon/favicon-32x32.png">
+
+    <meta name="description" content="Online Movies, TV Shows & Cinema HTML Template">
+    <meta name="keywords" content="">
+    <meta name="author" content="Dmitry Volkov">
+    <title>ReelPlay – Online Movies, TV Shows & Cinema </title>
+</head>
+
+<body>
+<!-- header -->
+<header class="header">
+    <div class="header__content">
+        <!-- header logo -->
+        <a href="/admin/index" class="header__logo">
+            <img src="img/logo.svg" alt="">
+        </a>
+        <!-- end header logo -->
+
+        <!-- header menu btn -->
+        <button class="header__btn" type="button">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+        <!-- end header menu btn -->
+    </div>
+</header>
+<!-- end header -->
+
+<!-- sidebar -->
+<div class="sidebar">
+    <!-- sidebar logo -->
+    <a href="/admin/index" class="sidebar__logo">
+        <img src="img/logo.svg" alt="">
+    </a>
+    <!-- end sidebar logo -->
+
+    <!-- sidebar user -->
+    <div class="sidebar__user">
+        <div class="sidebar__user-img">
+            <img src="img/user.svg" alt="">
+        </div>
+
+        <div class="sidebar__user-title">
+            <span>Admin</span>
+        </div>
+
+        <button class="sidebar__user-btn" type="button">
+            <i class="ti ti-logout"></i>
+        </button>
+    </div>
+    <!-- end sidebar user -->
+
+    <!-- sidebar nav -->
+    <div class="sidebar__nav-wrap">
+        <ul class="sidebar__nav">
+            <li class="sidebar__nav-item">
+                <a href="index.html" class="sidebar__nav-link"><i class="ti ti-layout-grid"></i> <span>Dashboard</span></a>
+            </li>
+
+            <li class="sidebar__nav-item">
+                <a href="catalog.html" class="sidebar__nav-link"><i class="ti ti-movie"></i> <span>Movies</span></a>
+            </li>
+
+            <li class="sidebar__nav-item">
+                <a href="users.html" class="sidebar__nav-link"><i class="ti ti-users"></i> <span>Users</span></a>
+            </li>
+
+            <li class="sidebar__nav-item">
+                <a href="comments.html" class="sidebar__nav-link"><i class="ti ti-message"></i> <span>Comments</span></a>
+            </li>
+
+            <li class="sidebar__nav-item">
+                <a href="reviews.html" class="sidebar__nav-link"><i class="ti ti-star-half-filled"></i> <span>Reviews</span></a>
+            </li>
+
+            <li class="sidebar__nav-item">
+                <a href="settings.html" class="sidebar__nav-link"><i class="ti ti-settings"></i> <span>Settings</span></a>
+            </li>
+
+            <!-- dropdown -->
+            <li class="sidebar__nav-item">
+                <a class="sidebar__nav-link" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="ti ti-files"></i> <span>Pages</span> <i class="ti ti-chevron-down"></i></a>
+
+                <ul class="dropdown-menu sidebar__dropdown-menu">
+                    <li><a href="add-item.html">Add item</a></li>
+                    <li><a href="edit-user.html">Edit user</a></li>
+                    <li><a href="signin.html">Sign In</a></li>
+                    <li><a href="signup.html">Sign Up</a></li>
+                    <li><a href="forgot.html">Forgot password</a></li>
+                    <li><a href="404.html">404 Page</a></li>
+                </ul>
+            </li>
+            <!-- end dropdown -->
+
+            <li class="sidebar__nav-item">
+                <a href="https://hotflix.volkovdesign.com/main/index.html" class="sidebar__nav-link"><i class="ti ti-arrow-left"></i> <span>Back to HotFlix</span></a>
+            </li>
+        </ul>
+    </div>
+    <!-- end sidebar nav -->
+
+    <!-- sidebar copyright -->
+    <div class="sidebar__copyright">© HOTFLIX, 2019—2024. <br>Create by <a href="https://themeforest.net/user/dmitryvolkov/portfolio" target="_blank">Dmitry Volkov</a></div>
+    <!-- end sidebar copyright -->
+</div>
+<!-- end sidebar -->
+
+<!-- main content -->
+<main class="main">
+    <div class="container-fluid">
+        <div class="row">
+            <!-- main title -->
+            <div class="col-12">
+                <div class="main__title">
+                    <h2>Edit</h2>
+                </div>
+            </div>
+            <!-- end main title -->
+
+            <!-- form -->
+            <div class="col-12">
+                <form action="#" class="sign__form sign__form--add" id="actorForm">
+                    <div class="row">
+                        <div class="col-12 col-xl-7">
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="sign__group">
+                                        <input type="text" class="sign__input" placeholder="Name" id="actorName">
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="sign__group">
+                                        <input type="number" class="sign__input" placeholder="Year of birth" id="actorYear">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-12">
+                            <button type="button" class="sign__btn sign__btn--small" id="publishBtn"><span>Save</span></button>
+                        </div>
+                    </div>
+                </form>
+
+            </div>
+            <!-- end form -->
+        </div>
+    </div>
+</main>
+<!-- end main content -->
+
+<!-- JS -->
+<script src="js/bootstrap.bundle.min.js"></script>
+<script src="js/slimselect.min.js"></script>
+<script src="js/smooth-scrollbar.js"></script>
+<script src="js/admin.js"></script>
+<script>
+    // ID của diễn viên cần chỉnh sửa (giả sử bạn có ID này từ URL hoặc một nguồn khác)
+    const urlParams = new URLSearchParams(window.location.search);
+
+    // Lấy giá trị của `actorId` từ query parameter
+    const actorId = urlParams.get('actorId');
+    console.log(actorId)
+    // Lấy dữ liệu từ API (GET request không cần token)
+    window.onload = function() {
+        fetch(`http://localhost:8080/api/v1/actor/${actorId}`)
+            .then(response => response.json())
+            .then(data => {
+                // Load dữ liệu lên form
+                document.getElementById('actorName').value = data.name;
+                document.getElementById('actorYear').value = data.year;
+            })
+            .catch(error => {
+                console.error('Error fetching actor data:', error);
+                alert('Failed to load actor data.');
+            });
+    };
+
+    // Xử lý khi người dùng nhấn nút Save (POST/PUT request có kèm token)
+    document.getElementById('publishBtn').addEventListener('click', function() {
+        // Lấy dữ liệu từ form
+        const name = document.getElementById('actorName').value;
+        const year = document.getElementById('actorYear').value;
+
+        // Dữ liệu sẽ gửi lên API
+        const actorData = {
+            name: name,
+            year: parseInt(year)
+        };
+
+        // Lấy JWT token từ localStorage (hoặc nơi khác)
+        const token = localStorage.getItem('token');  // Ví dụ: lấy token từ localStorage
+
+        // Gửi yêu cầu PUT/POST tới API để cập nhật diễn viên
+        fetch(`http://localhost:8080/api/v1/actor/${actorId}`, {
+            method: 'PUT',  // Hoặc POST tùy theo cách xử lý backend
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + token,  // Thêm token vào header
+            },
+            body: JSON.stringify(actorData),
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Failed to update actor');
+                }
+                return response.json(); // Chuyển phản hồi sang JSON
+            })
+            .then(data => {
+                console.log('Success:', data);
+                alert('Actor updated successfully!');
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+                alert('Failed to update actor.');
+            });
+    });
+</script>
+
+
+</body>
+
+<!-- Mirrored from hotflix.volkovdesign.com/admin/add-item.html by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 01 Oct 2024 14:35:46 GMT -->
+</html>

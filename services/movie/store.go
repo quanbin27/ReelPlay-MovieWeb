@@ -46,7 +46,6 @@ func (s *Store) GetMoviesByCategories(userId, cate1Id, cate2Id, cate3Id int) ([]
 		Joins("LEFT JOIN episodes ON user_watcheds.episode_id = episodes.id").
 		Where("user_watcheds.user_id = ?", userId).
 		Pluck("episodes.movie_id", &watchedMovieIds)
-	print("da xem: ", watchedMovieIds[0], "!")
 	// Khởi tạo truy vấn cơ bản
 	query := s.db.Preload("Category").Joins("LEFT JOIN movie_category ON movies.id = movie_category.movie_id")
 
@@ -238,58 +237,62 @@ func (s *Store) CreateMovie(movie *types.Movie, categoryIDs []int, actorIDs []in
 func (s *Store) GetNewRecommendedMovies(userId, cate1Id, cate2Id, cate3Id int) ([]types.MovieItemResponse, error) {
 	var movies []types.Movie
 
+	// Lấy danh sách movieId đã xem dựa trên episodeId từ bảng user_watcheds
 	var watchedMovieIds []int
 	s.db.Table("user_watcheds").
 		Joins("LEFT JOIN episodes ON user_watcheds.episode_id = episodes.id").
 		Where("user_watcheds.user_id = ?", userId).
 		Pluck("episodes.movie_id", &watchedMovieIds)
-	print(len(watchedMovieIds), " ", watchedMovieIds[0])
-	for id := range watchedMovieIds {
-		print("movie id: ", id)
-	}
+
+	// Khởi tạo truy vấn cơ bản
+	query := s.db.Preload("Category").
+		Joins("LEFT JOIN movie_category ON movies.id = movie_category.movie_id")
+
+	// Thêm điều kiện là phim được recommended
+	query = query.Where("movies.is_recommended = ?", 1)
+
 	// Xác định khoảng thời gian phim mới được tạo (trong vòng 10 ngày)
 	tenDaysAgo := time.Now().AddDate(0, 0, -10)
+	query = query.Where("movies.created_at >= ?", tenDaysAgo)
 
-	// Trường hợp không có thể loại nào, lấy tất cả các phim mới, is_recommended, và sắp xếp theo predict_rate
+	// Thêm điều kiện loại bỏ phim đã xem nếu danh sách watchedMovieIds không rỗng
+	if len(watchedMovieIds) > 0 {
+		query = query.Where("movies.id NOT IN ?", watchedMovieIds)
+	}
+
+	// Trường hợp không có thể loại nào, lấy tất cả các phim mới
 	if cate1Id == 0 && cate2Id == 0 && cate3Id == 0 {
-		result := s.db.Preload("Category").
-			Joins("LEFT JOIN movie_category ON movies.id = movie_category.movie_id").
-			Where("movies.is_recommended = ? AND movies.created_at >= ?", 1, tenDaysAgo).
-			Where("movies.id NOT IN ?", watchedMovieIds). // Loại bỏ phim đã xem
-			Group("movies.id").
+		query = query.Group("movies.id").
 			Order("movies.predict_rate DESC").
 			Find(&movies)
-		if result.Error != nil {
-			return nil, result.Error
-		}
 	} else {
 		// Trường hợp có 1, 2 hoặc 3 category
 		condition := ""
 		if cate2Id == 0 { // Chỉ có 1 category
 			condition = "movie_category.category_id = ?"
+			query = query.Where(condition, cate1Id)
 		} else if cate3Id == 0 { // Có 2 category
 			condition = "(movie_category.category_id = ? OR movie_category.category_id = ?)"
+			query = query.Where(condition, cate1Id, cate2Id)
 		} else { // Có 3 category
 			condition = "(movie_category.category_id = ? OR movie_category.category_id = ? OR movie_category.category_id = ?)"
+			query = query.Where(condition, cate1Id, cate2Id, cate3Id)
 		}
 
-		result := s.db.Preload("Category").
-			Joins("LEFT JOIN movie_category ON movies.id = movie_category.movie_id").
-			Where(condition, cate1Id, cate2Id, cate3Id).
-			Where("movies.is_recommended = ? AND movies.created_at >= ?", 1, tenDaysAgo).
-			Where("movies.id NOT IN ?", watchedMovieIds). // Loại bỏ phim đã xem
-			Group("movies.id").
+		// Sắp xếp phim theo số lượng category khớp và predict_rate
+		query = query.Group("movies.id").
 			Order(`
 				CASE 
 					WHEN COUNT(DISTINCT movie_category.category_id) = 3 THEN 1
 					WHEN COUNT(DISTINCT movie_category.category_id) = 2 THEN 2
 					ELSE 3 
-				END, movies.predict_rate DESC
-			`).
+				END, movies.predict_rate DESC`).
 			Find(&movies)
-		if result.Error != nil {
-			return nil, result.Error
-		}
+	}
+
+	// Kiểm tra lỗi từ kết quả truy vấn
+	if query.Error != nil {
+		return nil, query.Error
 	}
 
 	// Chuyển đổi kết quả phim sang dạng MovieItemResponse
@@ -303,7 +306,6 @@ func (s *Store) GetNewRecommendedMovies(userId, cate1Id, cate2Id, cate3Id int) (
 		for _, category := range movie.Category {
 			movieItemResponse.Category = append(movieItemResponse.Category, category.Name)
 		}
-
 		movieItemResponses = append(movieItemResponses, movieItemResponse)
 	}
 

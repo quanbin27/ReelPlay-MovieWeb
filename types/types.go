@@ -22,6 +22,7 @@ type DirectorStore interface {
 	UpdateDirector(id int, updatedDirector *Director) error
 	GetDirectorByID(id int) (*Director, error)
 	CreateDirector(director *Director) error
+	SearchDirectors(keyword string, page, limit int) ([]Director, int64, error)
 }
 type ActorStore interface {
 	GetAllActors() ([]Actor, error)
@@ -29,6 +30,7 @@ type ActorStore interface {
 	UpdateActor(id int, updatedActor *Actor) error
 	GetActorByID(id int) (*Actor, error)
 	CreateActor(director *Actor) error
+	SearchActors(keyword string, page, limit int) ([]Actor, int64, error)
 }
 type UserStore interface {
 	GetUserByEmail(email string) (*User, error)
@@ -54,6 +56,9 @@ type MovieStore interface {
 type EpisodeStore interface {
 	GetEpisodeByMovieAndEpisodeId(movieId, episodeNumber int) (*Episode, error)
 	GetEpisodeById(id int) (*Episode, error)
+	DeleteEpisode(id int) error
+	UpdateEpisode(id int, episode *Episode) error
+	CreateEpisode(episode *Episode) error
 }
 type RateStore interface {
 	CreateMovieRating(rating *Rate) error

@@ -39,6 +39,13 @@ func (h *Handler) RegisterRoutes(e *echo.Echo) {
 	a := e.Group("/admin")
 	a.Static("/", "templates/admin/")
 	a.File("/index", "templates/admin/index.html")
+	a.File("/movie", "templates/admin/catalog.html")
+	a.File("/actor", "templates/admin/actor.html")
+	a.File("/add-actor", "templates/admin/add-actor.html")
+	a.File("/edit-actor", "templates/admin/edit-actor.html")
+	a.File("/director", "templates/admin/director.html")
+	a.File("/add-director", "templates/admin/add-director.html")
+	a.File("/edit-director", "templates/admin/edit-director.html")
 }
 func validate(c echo.Context) error {
 	return c.JSON(http.StatusOK, map[string]string{"status": "valid"})

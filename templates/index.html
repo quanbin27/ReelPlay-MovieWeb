@@ -2357,7 +2357,12 @@
 			try {
 				const userId=getUserIdFromToken()
 				// Fetch dữ liệu từ API
-				const response = await fetch(`/api/v1/movie/user/${userId}/recommend`);
+				const response = await fetch(`/api/v1/movie/user/${userId}/recommend`,{
+					headers: {
+						'Content-Type': 'application/json',
+						'Authorization': `Bearer ${localStorage.getItem('token')}` // Gửi token trong header
+					}
+				});
 				const movies = await response.json();
 
 				// Lấy phần tử danh sách phim
@@ -2406,7 +2411,12 @@
 			try {
 				const userId=getUserIdFromToken()
 				// Fetch dữ liệu từ API
-				const response = await fetch(`/api/v1/movie/user/${userId}/new-recommend`);
+				const response = await fetch(`/api/v1/movie/user/${userId}/new-recommend`,{
+					headers: {
+						'Content-Type': 'application/json',
+						'Authorization': `Bearer ${localStorage.getItem('token')}` // Gửi token trong header
+					}
+				});
 				const movies = await response.json();
 
 				// Lấy phần tử danh sách phim

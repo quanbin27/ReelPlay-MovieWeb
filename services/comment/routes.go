@@ -18,7 +18,7 @@ func NewHandler(cmtStore types.CommentStore, userStore types.UserStore) *Handler
 	return &Handler{cmtStore, userStore}
 }
 func (h *Handler) RegisterRoutes(e *echo.Group) {
-	e.POST("/movie/:id/comment", h.Create, auth.WithJWTAuth(h.userStore))
+	e.POST("/comment", h.Create, auth.WithJWTAuth(h.userStore))
 	e.GET("/movie/:id/comment", h.GetCommentsByMovieID)
 }
 func (h *Handler) Create(c echo.Context) error {
@@ -33,6 +33,9 @@ func (h *Handler) Create(c echo.Context) error {
 		return c.JSON(http.StatusInternalServerError, map[string]string{"message": "Failed to create comment"})
 	}
 	user, err := h.userStore.GetUserByID(req.UserID)
+	if err != nil {
+		return c.JSON(http.StatusInternalServerError, map[string]string{"message": "Failed to create comment"})
+	}
 	cmtreponse := types.CommentResponse{
 		ID:        comment.ID,
 		MovieID:   comment.MovieID,

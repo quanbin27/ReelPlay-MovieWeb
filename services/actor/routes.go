@@ -27,9 +27,39 @@ func (h *Handler) RegisterRoutes(e *echo.Group) {
 
 	e.DELETE("/actor/:id", h.DeleteActorHandler, auth.WithJWTAdminAuth(h.userStore))
 
-	e.GET("/actor", h.GetAllActorsHandler)
+	//e.GET("/actor", h.GetAllActorsHandler)
 	e.GET("/actor/:id", h.GetActorByIDHandler)
+	e.GET("/actor", h.SearchActorsHandler)
+}
+func (h *Handler) SearchActorsHandler(c echo.Context) error {
+	// Lấy keyword từ query params
+	keyword := c.QueryParam("keyword")
 
+	// Lấy các giá trị phân trang từ query params
+	page, err := strconv.Atoi(c.QueryParam("page"))
+	if err != nil || page <= 0 {
+		page = 1 // Mặc định là trang 1 nếu không có giá trị
+	}
+
+	limit, err := strconv.Atoi(c.QueryParam("limit"))
+	if err != nil || limit <= 0 {
+		limit = 10 // Mặc định là 10 bản ghi mỗi trang
+	}
+
+	// Gọi store để lấy danh sách diễn viên và tổng số bản ghi
+	actors, total, err := h.ActorStore.SearchActors(keyword, page, limit)
+	if err != nil {
+		return c.JSON(http.StatusInternalServerError, map[string]string{"error": "could not fetch actors"})
+	}
+
+	// Trả về dữ liệu JSON bao gồm danh sách diễn viên và tổng số bản ghi
+	response := map[string]interface{}{
+		"actors": actors,
+		"total":  total,
+		"page":   page,
+		"limit":  limit,
+	}
+	return c.JSON(http.StatusOK, response)
 }
 func (h *Handler) CreateActorHandler(c echo.Context) error {
 	// Tạo đối tượng Actor mới

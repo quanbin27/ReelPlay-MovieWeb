@@ -54,6 +54,30 @@ func (s *Store) GetAllActors() ([]types.Actor, error) {
 	}
 	return Actors, nil // Trả về danh sách Actors nếu thành công
 }
+func (s *Store) SearchActors(keyword string, page, limit int) ([]types.Actor, int64, error) {
+	var actors []types.Actor
+	var totalRecords int64
+
+	query := s.db.Model(&types.Actor{})
+
+	// Nếu có keyword, thêm điều kiện tìm kiếm theo tên diễn viên
+	if keyword != "" {
+		query = query.Where("name LIKE ?", "%"+keyword+"%")
+	}
+
+	// Đếm tổng số lượng bản ghi khớp với điều kiện tìm kiếm (dùng để phân trang)
+	if err := query.Count(&totalRecords).Error; err != nil {
+		return nil, 0, err
+	}
+
+	// Lấy dữ liệu theo phân trang
+	offset := (page - 1) * limit
+	if err := query.Offset(offset).Limit(limit).Find(&actors).Error; err != nil {
+		return nil, 0, err
+	}
+
+	return actors, totalRecords, nil
+}
 func (s *Store) GetActorByID(id int) (*types.Actor, error) {
 	var Actor types.Actor
 	// Tìm Actor theo ID

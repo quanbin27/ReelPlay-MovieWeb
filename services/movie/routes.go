@@ -4,6 +4,7 @@ import (
 	"errors"
 	"github.com/go-playground/validator/v10"
 	"github.com/labstack/echo/v4"
+	"github.com/quanbin27/ReelPlay/services/auth"
 	"github.com/quanbin27/ReelPlay/types"
 	"github.com/quanbin27/ReelPlay/utils"
 	"gorm.io/gorm"
@@ -28,11 +29,11 @@ func (h *Handler) RegisterRoutes(e *echo.Group) {
 	e.GET("/movie/:id", h.GetMovieByID)
 	e.GET("/movie/:id/category", h.GetCategoryID)
 	e.GET("/movie/search", h.MovieSearch)
-	e.GET("/movie/user/:user_id/recommend", h.GetRecommendedMoviesByCategory)
-	e.GET("/movie/user/:user_id/new-recommend", h.GetNewRecommendedMovies)
-	e.POST("/movie", h.CreateMovie)
-	e.DELETE("/movie/:id", h.DeleteMovieHandler)
-	e.PUT("/movie/:id", h.UpdateMovieHandler)
+	e.GET("/movie/user/:user_id/recommend", h.GetRecommendedMoviesByCategory, auth.WithJWTAuth(h.UserStore))
+	e.GET("/movie/user/:user_id/new-recommend", h.GetNewRecommendedMovies, auth.WithJWTAuth(h.UserStore))
+	e.POST("/movie", h.CreateMovie, auth.WithJWTAdminAuth(h.UserStore))
+	e.DELETE("/movie/:id", h.DeleteMovieHandler, auth.WithJWTAdminAuth(h.UserStore))
+	e.PUT("/movie/:id", h.UpdateMovieHandler, auth.WithJWTAdminAuth(h.UserStore))
 }
 
 // UpdateMovie cập nhật thông tin movie theo ID

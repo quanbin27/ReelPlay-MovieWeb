@@ -12,6 +12,30 @@ type Store struct {
 func NewStore(db *gorm.DB) *Store {
 	return &Store{db}
 }
+func (s *Store) SearchDirectors(keyword string, page, limit int) ([]types.Director, int64, error) {
+	var Directors []types.Director
+	var totalRecords int64
+
+	query := s.db.Model(&types.Director{})
+
+	// Nếu có keyword, thêm điều kiện tìm kiếm theo tên diễn viên
+	if keyword != "" {
+		query = query.Where("name LIKE ?", "%"+keyword+"%")
+	}
+
+	// Đếm tổng số lượng bản ghi khớp với điều kiện tìm kiếm (dùng để phân trang)
+	if err := query.Count(&totalRecords).Error; err != nil {
+		return nil, 0, err
+	}
+
+	// Lấy dữ liệu theo phân trang
+	offset := (page - 1) * limit
+	if err := query.Offset(offset).Limit(limit).Find(&Directors).Error; err != nil {
+		return nil, 0, err
+	}
+
+	return Directors, totalRecords, nil
+}
 func (s *Store) CreateDirector(director *types.Director) error {
 	// Tạo mới Director
 	if err := s.db.Create(director).Error; err != nil {

@@ -1066,7 +1066,7 @@
 
 		// Hàm để thêm comment
 		async function addComment(userId, movieId, content) {
-			const response = await fetch(`http://localhost:8080/api/v1/movie/${movieId}/comment`, {
+			const response = await fetch(`http://localhost:8080/api/v1/comment`, {
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json',
@@ -1206,7 +1206,7 @@
 			}
 
 			try {
-				const response = await fetch(`http://localhost:8080/api/v1/movie/${movieId}/bookmark/exist`, {
+				const response = await fetch(`http://localhost:8080/api/v1/bookmark/exist`, {
 					method: 'POST',
 					headers: {
 						'Content-Type': 'application/json',

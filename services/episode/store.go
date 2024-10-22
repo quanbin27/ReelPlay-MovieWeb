@@ -28,3 +28,25 @@ func (s *Store) GetEpisodeByMovieAndEpisodeId(movieId, episodeNumber int) (*type
 	}
 	return &episode, nil
 }
+func (s *Store) CreateEpisode(episode *types.Episode) error {
+	return s.db.Create(episode).Error
+}
+func (s *Store) UpdateEpisode(id int, episode *types.Episode) error {
+	var existingEpisode types.Episode
+	if err := s.db.First(&existingEpisode, id).Error; err != nil {
+		return err // Nếu không tìm thấy episode, trả về lỗi
+	}
+
+	// Cập nhật thông tin cho episode
+	episode.ID = existingEpisode.ID // Giữ nguyên ID
+	return s.db.Model(&existingEpisode).Updates(episode).Error
+}
+func (s *Store) DeleteEpisode(id int) error {
+	var episode types.Episode
+	if err := s.db.First(&episode, id).Error; err != nil {
+		return err // Nếu không tìm thấy episode, trả về lỗi
+	}
+
+	// Xóa episode
+	return s.db.Delete(&episode).Error
+}
