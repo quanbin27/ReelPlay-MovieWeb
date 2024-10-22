@@ -16,6 +16,20 @@ type CategoryFitStore interface {
 	UpdateCategoryFit(fit *CategoryFit) error
 	GetCategoryFit(userId int) (cate1, cate2, cate3 *CategoryFit, err error)
 }
+type DirectorStore interface {
+	GetAllDirectors() ([]Director, error)
+	DeleteDirector(id int) error
+	UpdateDirector(id int, updatedDirector *Director) error
+	GetDirectorByID(id int) (*Director, error)
+	CreateDirector(director *Director) error
+}
+type ActorStore interface {
+	GetAllActors() ([]Actor, error)
+	DeleteActor(id int) error
+	UpdateActor(id int, updatedActor *Actor) error
+	GetActorByID(id int) (*Actor, error)
+	CreateActor(director *Actor) error
+}
 type UserStore interface {
 	GetUserByEmail(email string) (*User, error)
 	GetUserByID(id int) (*User, error)
@@ -33,6 +47,9 @@ type MovieStore interface {
 	MovieSearchCount(query string) (int64, error)
 	GetMoviesByCategories(userId, cate1Id, cate2Id, cate3Id int) ([]MovieItemResponse, error)
 	GetNewRecommendedMovies(userId, cate1Id, cate2Id, cate3Id int) ([]MovieItemResponse, error)
+	CreateMovie(movie *Movie, categoryIDs []int, actorIDs []int, directorIDs []int) error
+	UpdateMovie(id int, updateReq *UpdateMovieRequest) error
+	DeleteMovie(id int) error
 }
 type EpisodeStore interface {
 	GetEpisodeByMovieAndEpisodeId(movieId, episodeNumber int) (*Episode, error)
@@ -55,8 +72,6 @@ type CommentStore interface {
 	GetCommentsByMovieID(movieID int) ([]Comment, error)
 }
 type CategoryStore interface{}
-type ActorStore interface{}
-type DirectorStore interface{}
 
 type RegisterUserPayLoad struct {
 	FirstName string `json:"firstName" validate:"required"`
@@ -135,11 +150,11 @@ type Movie struct {
 	ID            int            `gorm:"primaryKey;autoIncrement" json:"id"`
 	Name          string         `json:"name"`
 	Year          int            `json:"year"`
-	NumEpisodes   int            `json:"numEpisodes"`
+	NumEpisodes   int            `json:"num_episodes"`
 	Description   string         `json:"description"`
 	Language      string         `json:"language"`
-	CountryID     int            `json:"country"`
-	TimeForEp     int            `json:"timeForEp"`
+	CountryID     int            `json:"country_id"`
+	TimeForEp     int            `json:"time_for_ep"`
 	Thumbnail     string         `json:"thumbnail"`
 	Trailer       string         `json:"trailer"`
 	Rate          float32        `json:"rate"`
@@ -152,6 +167,38 @@ type Movie struct {
 	CreatedAt     time.Time      `gorm:"autoCreateTime" json:"created_at"`
 	UpdatedAt     time.Time      `gorm:"autoUpdateTime" json:"updated_at"`
 	DeletedAt     gorm.DeletedAt `gorm:"index" json:"deleted_at,omitempty"`
+}
+type CreateMovieInput struct {
+	Name          string  `json:"name" validate:"required"`
+	Year          int     `json:"year" validate:"required"`
+	Description   string  `json:"description"`
+	Language      string  `json:"language"`
+	CountryID     int     `json:"country_id" validate:"required"`
+	TimeForEp     int     `json:"time_for_ep"`
+	Thumbnail     string  `json:"thumbnail"`
+	Trailer       string  `json:"trailer"`
+	PredictRate   float32 `json:"predict_rate"`
+	IsRecommended bool    `json:"is_recommended"`
+	CategoryIDs   []int   `json:"category_ids" validate:"required"`
+	ActorIDs      []int   `json:"actor_ids" validate:"required"`
+	DirectorIDs   []int   `json:"director_ids" validate:"required"`
+}
+type UpdateMovieRequest struct {
+	Name          string  `json:"name"`
+	Year          int     `json:"year"`
+	NumEpisodes   int     `json:"num_episodes"`
+	Description   string  `json:"description"`
+	Language      string  `json:"language"`
+	CountryID     int     `json:"country_id"`
+	TimeForEp     int     `json:"time_for_ep"`
+	Thumbnail     string  `json:"thumbnail"`
+	Trailer       string  `json:"trailer"`
+	Rate          float32 `json:"rate"`
+	PredictRate   float32 `json:"predict_rate"`
+	IsRecommended bool    `json:"is_recommended"`
+	CategoryIds   []int   `json:"category_ids"` // Sử dụng CategoryIds
+	ActorIds      []int   `json:"actor_ids"`    // Sử dụng ActorIds
+	DirectorIds   []int   `json:"director_ids"` // Sử dụng DirectorIds
 }
 type Country struct {
 	ID   int    `gorm:"primaryKey" json:"id"`
@@ -224,8 +271,7 @@ type Director struct {
 type Actor struct {
 	ID   int    `gorm:"primaryKey;autoIncrement" json:"id"`
 	Name string `json:"name"`
-
-	Year int `json:"year"`
+	Year int    `json:"year"`
 }
 
 type Category struct {

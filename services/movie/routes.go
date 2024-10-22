@@ -1,8 +1,12 @@
 package movie
 
 import (
+	"errors"
+	"github.com/go-playground/validator/v10"
 	"github.com/labstack/echo/v4"
 	"github.com/quanbin27/ReelPlay/types"
+	"github.com/quanbin27/ReelPlay/utils"
+	"gorm.io/gorm"
 	"net/http"
 	"strconv"
 )
@@ -20,13 +24,102 @@ func NewHandler(userStore types.UserStore, moviestore types.MovieStore, category
 	return &Handler{userStore, moviestore, categorystore, actorstore, directorstore, categoryFitStore}
 }
 func (h *Handler) RegisterRoutes(e *echo.Group) {
-	e.GET("/movies", h.GetMovies)
+	e.GET("/movie", h.GetMovies)
 	e.GET("/movie/:id", h.GetMovieByID)
 	e.GET("/movie/:id/category", h.GetCategoryID)
 	e.GET("/movie/search", h.MovieSearch)
 	e.GET("/movie/user/:user_id/recommend", h.GetRecommendedMoviesByCategory)
 	e.GET("/movie/user/:user_id/new-recommend", h.GetNewRecommendedMovies)
+	e.POST("/movie", h.CreateMovie)
+	e.DELETE("/movie/:id", h.DeleteMovieHandler)
+	e.PUT("/movie/:id", h.UpdateMovieHandler)
+}
 
+// UpdateMovie cập nhật thông tin movie theo ID
+func (h *Handler) UpdateMovieHandler(c echo.Context) error {
+	// Lấy ID từ path parameter
+	id, err := strconv.Atoi(c.Param("id"))
+	if err != nil {
+		return c.JSON(http.StatusBadRequest, map[string]string{"error": "invalid id"})
+	}
+
+	// Tạo đối tượng request để lưu thông tin mới
+	var updateReq types.UpdateMovieRequest
+	if err := c.Bind(&updateReq); err != nil {
+		return c.JSON(http.StatusBadRequest, map[string]string{"error": "invalid data"})
+	}
+
+	// Gọi hàm cập nhật trong store
+	if err := h.MovieStore.UpdateMovie(id, &updateReq); err != nil {
+		if errors.Is(err, gorm.ErrRecordNotFound) {
+			return c.JSON(http.StatusNotFound, map[string]string{"error": "movie not found"})
+		}
+		return c.JSON(http.StatusInternalServerError, map[string]string{"error": "could not update movie"})
+	}
+
+	// Trả về phản hồi thành công
+	return c.JSON(http.StatusOK, map[string]interface{}{
+		"message": "movie updated successfully",
+	})
+}
+
+func (h *Handler) CreateMovie(c echo.Context) error {
+	var input types.CreateMovieInput
+
+	// Bind dữ liệu từ request vào struct CreateMovieInput
+	if err := c.Bind(&input); err != nil {
+		return c.JSON(http.StatusBadRequest, map[string]string{
+			"error": "invalid request body",
+		})
+	}
+
+	// Validate dữ liệu đầu vào
+	if err := utils.Validate.Struct(&input); err != nil {
+		errors := err.(validator.ValidationErrors)
+		return c.JSON(http.StatusBadRequest, map[string]string{"error": errors[0].Error()})
+	}
+
+	// Tạo đối tượng Movie để lưu vào database
+	movie := types.Movie{
+		Name:          input.Name,
+		Year:          input.Year,
+		Description:   input.Description,
+		Language:      input.Language,
+		CountryID:     input.CountryID,
+		TimeForEp:     input.TimeForEp,
+		Thumbnail:     input.Thumbnail,
+		Trailer:       input.Trailer,
+		PredictRate:   input.PredictRate,
+		IsRecommended: input.IsRecommended,
+	}
+
+	// Lưu movie vào store
+	err := h.MovieStore.CreateMovie(&movie, input.CategoryIDs, input.ActorIDs, input.DirectorIDs)
+	if err != nil {
+		return c.JSON(http.StatusInternalServerError, map[string]string{
+			"error": "could not save movie",
+		})
+	}
+
+	return c.JSON(http.StatusCreated, movie)
+}
+func (h *Handler) DeleteMovieHandler(c echo.Context) error {
+	// Lấy ID từ path parameter
+	id, err := strconv.Atoi(c.Param("id"))
+	if err != nil {
+		return c.JSON(http.StatusBadRequest, map[string]string{"error": "invalid id"})
+	}
+
+	// Gọi hàm xóa trong store
+	if err := h.MovieStore.DeleteMovie(id); err != nil {
+		if errors.Is(err, gorm.ErrRecordNotFound) {
+			return c.JSON(http.StatusNotFound, map[string]string{"error": "movie not found"})
+		}
+		return c.JSON(http.StatusInternalServerError, map[string]string{"error": "could not delete movie"})
+	}
+
+	// Trả về phản hồi thành công
+	return c.NoContent(http.StatusNoContent) // 204 No Content
 }
 func (h *Handler) GetRecommendedMoviesByCategory(c echo.Context) error {
 	userId, err := strconv.Atoi(c.Param("user_id"))

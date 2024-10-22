@@ -157,9 +157,12 @@
 
 									<div class="col-12 col-md-6">
 										<div class="sign__group">
-											<div class="sign__gallery">
-												<label id="gallery1" for="sign__gallery-upload">Upload cover (240x340)</label>
-												<input data-name="#gallery1" id="sign__gallery-upload" name="gallery" class="sign__gallery-upload" type="file" accept=".png, .jpg, .jpeg" multiple="">
+<!--											<div class="sign__gallery">-->
+<!--												<label id="gallery1" for="sign__gallery-upload">Upload cover (240x340)</label>-->
+<!--												<input data-name="#gallery1" id="sign__gallery-upload" name="gallery" class="sign__gallery-upload" type="file" accept=".png, .jpg, .jpeg" multiple="">-->
+<!--											</div>-->
+											<div class="sign__group">
+												<input type="text" class="sign__input" placeholder="Link to the trailer">
 											</div>
 										</div>
 									</div>
@@ -176,16 +179,19 @@
 								<div class="row">
 									<div class="col-12 col-md-6">
 										<div class="sign__group">
-											<select class="sign__selectjs" id="sign__quality">
-												<option value="FullHD">FullHD</option>
-												<option value="HD">HD</option>
-											</select>
+<!--											<select class="sign__selectjs" id="sign__quality">-->
+<!--												<option value="FullHD">FullHD</option>-->
+<!--												<option value="HD">HD</option>-->
+<!--											</select>-->
+											<div class="sign__group">
+												<input type="text" class="sign__input" placeholder="Language">
+											</div>
 										</div>
 									</div>
 
 									<div class="col-12 col-md-6">
 										<div class="sign__group">
-											<input type="text" class="sign__input" placeholder="Age">
+											<input type="text" class="sign__input" placeholder="Time For Ep">
 										</div>
 									</div>
 
@@ -209,15 +215,15 @@
 										</div>
 									</div>
 
-									<div class="col-12 col-md-6">
-										<div class="sign__group">
-											<input type="text" class="sign__input" placeholder="Running time">
-										</div>
-									</div>
+<!--									<div class="col-12 col-md-6">-->
+<!--										<div class="sign__group">-->
+<!--											<input type="text" class="sign__input" placeholder="Running time">-->
+<!--										</div>-->
+<!--									</div>-->
 
-									<div class="col-12 col-md-6">
+									<div class="col-12 ">
 										<div class="sign__group">
-											<input type="text" class="sign__input" placeholder="Premiere date">
+											<input type="text" class="sign__input" placeholder="Release year">
 										</div>
 									</div>
 
@@ -491,132 +497,136 @@
 
 							<div class="col-12">
 								<div class="sign__group">
-									<label class="sign__label">Item type:</label>
+									<button type="button" class="sign__btn sign__btn--small"><span>Predict Rate</span></button>
+									<div class="sign__group">
+										<input type="text" class="sign__input" placeholder="Predict Rate">
+									</div>
+									<label class="sign__label"> Recommend:</label>
 									<ul class="sign__radio">
 										<li>
-											<input id="type1" type="radio" name="type" data-bs-toggle="collapse" data-bs-target=".multi-collapse" checked="">
-											<label for="type1">Movie</label>
+											<input id="type1" type="radio" name="type">
+											<label for="type1">Yes</label>
 										</li>
 										<li>
-											<input id="type2" type="radio" name="type" data-bs-toggle="collapse" data-bs-target=".multi-collapse">
-											<label for="type2">TV Series</label>
+											<input id="type2" type="radio" name="type" >
+											<label for="type2">No</label>
 										</li>
 									</ul>
 								</div>
 							</div>
 
 							<!-- movie -->
-							<div class="col-12">
-								<div class="collapse show multi-collapse">
-									<div class="sign__video">
-										<label id="movie1" for="sign__video-upload">Upload video</label>
-										<input data-name="#movie1" id="sign__video-upload" name="movie" class="sign__video-upload" type="file" accept="video/mp4,video/x-m4v,video/*">
-									</div>
-								</div>
-							</div>
+<!--							<div class="col-12">-->
+<!--								<div class="collapse show multi-collapse">-->
+<!--&lt;!&ndash;									<div class="sign__video">&ndash;&gt;-->
+<!--&lt;!&ndash;										<label id="movie1" for="sign__video-upload">Upload video</label>&ndash;&gt;-->
+<!--&lt;!&ndash;										<input data-name="#movie1" id="sign__video-upload" name="movie" class="sign__video-upload" type="file" accept="video/mp4,video/x-m4v,video/*">&ndash;&gt;-->
+<!--&lt;!&ndash;									</div>&ndash;&gt;-->
+<!--								</div>-->
+<!--							</div>-->
 							<!-- end movie -->
 
 							<!-- tv series -->
-							<div class="col-12">
-								<div class="collapse multi-collapse">
-									<!-- season -->
-									<div class="sign__season">
-										<div class="sign__season-head">
-											<div class="row">
-												<div class="col-12">
-													<span class="sign__episode-title">Season #1</span>
-												</div>
+<!--							<div class="col-12">-->
+<!--								<div class="collapse multi-collapse">-->
+<!--									&lt;!&ndash; season &ndash;&gt;-->
+<!--									<div class="sign__season">-->
+<!--										<div class="sign__season-head">-->
+<!--											<div class="row">-->
+<!--												<div class="col-12">-->
+<!--													<span class="sign__episode-title">Season #1</span>-->
+<!--												</div>-->
 
-												<div class="col-12 col-sm-6 col-md-5 col-xl-6">
-													<div class="sign__group">
-														<input type="text" class="sign__input" placeholder="Season title">
-													</div>
-												</div>
+<!--												<div class="col-12 col-sm-6 col-md-5 col-xl-6">-->
+<!--													<div class="sign__group">-->
+<!--														<input type="text" class="sign__input" placeholder="Season title">-->
+<!--													</div>-->
+<!--												</div>-->
 
-												<div class="col-12 col-sm-6 col-md-4 col-xl-4">
-													<div class="sign__group">
-														<input type="text" class="sign__input" placeholder="Season info">
-													</div>
-												</div>
+<!--												<div class="col-12 col-sm-6 col-md-4 col-xl-4">-->
+<!--													<div class="sign__group">-->
+<!--														<input type="text" class="sign__input" placeholder="Season info">-->
+<!--													</div>-->
+<!--												</div>-->
 
-												<div class="col-12 col-sm-4 col-md-3 col-xl-2">
-													<button class="sign__btn sign__btn--add"><span>add season</span></button>
-												</div>
-											</div>
-										</div>
+<!--												<div class="col-12 col-sm-4 col-md-3 col-xl-2">-->
+<!--													<button class="sign__btn sign__btn&#45;&#45;add"><span>add season</span></button>-->
+<!--												</div>-->
+<!--											</div>-->
+<!--										</div>-->
 
-										<!-- episode -->
-										<div class="sign__episode">
-											<div class="row">
-												<div class="col-12">
-													<span class="sign__episode-title">Episode #1</span>
-													<button class="sign__delete" type="button">
-														<i class="ti ti-x"></i>
-													</button>
-												</div>
+<!--										&lt;!&ndash; episode &ndash;&gt;-->
+<!--										<div class="sign__episode">-->
+<!--											<div class="row">-->
+<!--												<div class="col-12">-->
+<!--													<span class="sign__episode-title">Episode #1</span>-->
+<!--													<button class="sign__delete" type="button">-->
+<!--														<i class="ti ti-x"></i>-->
+<!--													</button>-->
+<!--												</div>-->
 
-												<div class="col-12 col-md-6">
-													<div class="sign__group">
-														<input type="text" class="sign__input" placeholder="Episode title 1">
-													</div>
-												</div>
+<!--												<div class="col-12 col-md-6">-->
+<!--													<div class="sign__group">-->
+<!--														<input type="text" class="sign__input" placeholder="Episode title 1">-->
+<!--													</div>-->
+<!--												</div>-->
 
-												<div class="col-12 col-md-6">
-													<div class="sign__group">
-														<input type="text" class="sign__input" placeholder="Air date">
-													</div>
-												</div>
+<!--												<div class="col-12 col-md-6">-->
+<!--													<div class="sign__group">-->
+<!--														<input type="text" class="sign__input" placeholder="Air date">-->
+<!--													</div>-->
+<!--												</div>-->
 
-												<div class="col-12">
-													<div class="sign__video">
-														<label id="s1s1" for="sign__video-upload1">Upload episode 1</label>
-														<input data-name="#s1s1" id="sign__video-upload1" name="s1s1" class="sign__video-upload" type="file" accept="video/mp4,video/x-m4v,video/*">
-													</div>
-												</div>
-											</div>
-										</div>
-										<!-- end episode -->
+<!--												<div class="col-12">-->
+<!--													<div class="sign__video">-->
+<!--														<label id="s1s1" for="sign__video-upload1">Upload episode 1</label>-->
+<!--														<input data-name="#s1s1" id="sign__video-upload1" name="s1s1" class="sign__video-upload" type="file" accept="video/mp4,video/x-m4v,video/*">-->
+<!--													</div>-->
+<!--												</div>-->
+<!--											</div>-->
+<!--										</div>-->
+<!--										&lt;!&ndash; end episode &ndash;&gt;-->
 
-										<!-- episode -->
-										<div class="sign__episode">
-											<div class="row">
-												<div class="col-12">
-													<span class="sign__episode-title">Episode #2</span>
-													<button class="sign__delete" type="button">
-														<i class="ti ti-x"></i>
-													</button>
-												</div>
+<!--										&lt;!&ndash; episode &ndash;&gt;-->
+<!--										<div class="sign__episode">-->
+<!--											<div class="row">-->
+<!--												<div class="col-12">-->
+<!--													<span class="sign__episode-title">Episode #2</span>-->
+<!--													<button class="sign__delete" type="button">-->
+<!--														<i class="ti ti-x"></i>-->
+<!--													</button>-->
+<!--												</div>-->
 
-												<div class="col-12 col-md-6">
-													<div class="sign__group">
-														<input type="text" class="sign__input" placeholder="Episode title 2">
-													</div>
-												</div>
+<!--												<div class="col-12 col-md-6">-->
+<!--													<div class="sign__group">-->
+<!--														<input type="text" class="sign__input" placeholder="Episode title 2">-->
+<!--													</div>-->
+<!--												</div>-->
 
-												<div class="col-12 col-md-6">
-													<div class="sign__group">
-														<input type="text" class="sign__input" placeholder="Air date">
-													</div>
-												</div>
+<!--												<div class="col-12 col-md-6">-->
+<!--													<div class="sign__group">-->
+<!--														<input type="text" class="sign__input" placeholder="Air date">-->
+<!--													</div>-->
+<!--												</div>-->
 
-												<div class="col-12 col-sm-8 col-md-9 col-xl-10">
-													<div class="sign__video">
-														<label id="s1s2" for="sign__video-upload2">Upload episode 2</label>
-														<input data-name="#s1s2" id="sign__video-upload2" name="s1s2" class="sign__video-upload" type="file" accept="video/mp4,video/x-m4v,video/*">
-													</div>
-												</div>
+<!--												<div class="col-12 col-sm-8 col-md-9 col-xl-10">-->
+<!--													<div class="sign__video">-->
+<!--														<label id="s1s2" for="sign__video-upload2">Upload episode 2</label>-->
+<!--														<input data-name="#s1s2" id="sign__video-upload2" name="s1s2" class="sign__video-upload" type="file" accept="video/mp4,video/x-m4v,video/*">-->
+<!--													</div>-->
+<!--												</div>-->
 
-												<div class="col-12 col-sm-4 col-md-3 col-xl-2">
-													<button class="sign__btn sign__btn--add"><span>add episode</span></button>
-												</div>
-											</div>
-										</div>
-										<!-- end episode -->
-									</div>
-									<!-- end season -->
-								</div>
-							</div>
-							<!-- end tv series -->
+<!--												<div class="col-12 col-sm-4 col-md-3 col-xl-2">-->
+<!--													<button class="sign__btn sign__btn&#45;&#45;add"><span>add episode</span></button>-->
+<!--												</div>-->
+<!--											</div>-->
+<!--										</div>-->
+<!--										&lt;!&ndash; end episode &ndash;&gt;-->
+<!--									</div>-->
+<!--									&lt;!&ndash; end season &ndash;&gt;-->
+<!--								</div>-->
+<!--							</div>-->
+<!--							&lt;!&ndash; end tv series &ndash;&gt;-->
 
 							<div class="col-12">
 								<button type="button" class="sign__btn sign__btn--small"><span>Publish</span></button>

@@ -105,6 +105,136 @@ func (s *Store) GetMoviesByCategories(userId, cate1Id, cate2Id, cate3Id int) ([]
 	return movieItemResponses, nil
 }
 
+// UpdateMovie cập nhật thông tin movie theo ID
+func (s *Store) UpdateMovie(id int, updateReq *types.UpdateMovieRequest) error {
+	// Kiểm tra xem movie có tồn tại không
+	var existingMovie types.Movie
+	if err := s.db.Preload("Actor").Preload("Director").Preload("Category").First(&existingMovie, id).Error; err != nil {
+		return err // Nếu không tìm thấy movie, trả về lỗi
+	}
+
+	// Cập nhật thông tin movie
+	existingMovie.Name = updateReq.Name
+	existingMovie.Year = updateReq.Year
+	existingMovie.NumEpisodes = updateReq.NumEpisodes
+	existingMovie.Description = updateReq.Description
+	existingMovie.Language = updateReq.Language
+	existingMovie.CountryID = updateReq.CountryID
+	existingMovie.TimeForEp = updateReq.TimeForEp
+	existingMovie.Thumbnail = updateReq.Thumbnail
+	existingMovie.Trailer = updateReq.Trailer
+	existingMovie.Rate = updateReq.Rate
+	existingMovie.PredictRate = updateReq.PredictRate
+	existingMovie.IsRecommended = updateReq.IsRecommended
+
+	// Cập nhật movie trong cơ sở dữ liệu
+	if err := s.db.Save(&existingMovie).Error; err != nil {
+		return err // Nếu có lỗi khi cập nhật, trả về lỗi
+	}
+
+	// Cập nhật các mối quan hệ
+	if len(updateReq.ActorIds) > 0 {
+		var actors []types.Actor
+		if err := s.db.Find(&actors, updateReq.ActorIds).Error; err != nil {
+			return err
+		}
+		if err := s.db.Model(&existingMovie).Association("Actor").Replace(actors); err != nil {
+			return err
+		}
+	}
+
+	if len(updateReq.DirectorIds) > 0 {
+		var directors []types.Director
+		if err := s.db.Find(&directors, updateReq.DirectorIds).Error; err != nil {
+			return err
+		}
+		if err := s.db.Model(&existingMovie).Association("Director").Replace(directors); err != nil {
+			return err
+		}
+	}
+
+	if len(updateReq.CategoryIds) > 0 {
+		var categories []types.Category
+		if err := s.db.Find(&categories, updateReq.CategoryIds).Error; err != nil {
+			return err
+		}
+		if err := s.db.Model(&existingMovie).Association("Category").Replace(categories); err != nil {
+			return err
+		}
+	}
+
+	return nil // Cập nhật thành công
+}
+
+func (s *Store) DeleteMovie(id int) error {
+	// Kiểm tra xem movie có tồn tại không
+	var movie types.Movie
+	if err := s.db.First(&movie, id).Error; err != nil {
+		return err // Nếu không tìm thấy movie, trả về lỗi
+	}
+
+	// Thực hiện xóa mềm
+	if err := s.db.Delete(&movie).Error; err != nil {
+		return err // Nếu có lỗi khi xóa, trả về lỗi
+	}
+
+	return nil // Xóa thành công
+}
+func (s *Store) CreateMovie(movie *types.Movie, categoryIDs []int, actorIDs []int, directorIDs []int) error {
+	// Bắt đầu một transaction để đảm bảo tính toàn vẹn của dữ liệu
+	tx := s.db.Begin()
+
+	// Tạo movie trong database
+	if err := tx.Create(&movie).Error; err != nil {
+		tx.Rollback()
+		return err
+	}
+
+	// Thiết lập các quan hệ nhiều-nhiều (categories)
+	if len(categoryIDs) > 0 {
+		var categories []types.Category
+		if err := tx.Where("id IN ?", categoryIDs).Find(&categories).Error; err != nil {
+			tx.Rollback()
+			return err
+		}
+		// GORM sẽ tự động tạo bản ghi vào bảng trung gian (movie_category)
+		if err := tx.Model(&movie).Association("Category").Append(&categories); err != nil {
+			tx.Rollback()
+			return err
+		}
+	}
+
+	// Thiết lập các quan hệ nhiều-nhiều (actors)
+	if len(actorIDs) > 0 {
+		var actors []types.Actor
+		if err := tx.Where("id IN ?", actorIDs).Find(&actors).Error; err != nil {
+			tx.Rollback()
+			return err
+		}
+		// GORM sẽ tự động tạo bản ghi vào bảng trung gian (movie_actor)
+		if err := tx.Model(&movie).Association("Actor").Append(&actors); err != nil {
+			tx.Rollback()
+			return err
+		}
+	}
+
+	// Thiết lập các quan hệ nhiều-nhiều (directors)
+	if len(directorIDs) > 0 {
+		var directors []types.Director
+		if err := tx.Where("id IN ?", directorIDs).Find(&directors).Error; err != nil {
+			tx.Rollback()
+			return err
+		}
+		// GORM sẽ tự động tạo bản ghi vào bảng trung gian (movie_director)
+		if err := tx.Model(&movie).Association("Director").Append(&directors); err != nil {
+			tx.Rollback()
+			return err
+		}
+	}
+
+	// Commit transaction nếu mọi thứ đều thành công
+	return tx.Commit().Error
+}
 func (s *Store) GetNewRecommendedMovies(userId, cate1Id, cate2Id, cate3Id int) ([]types.MovieItemResponse, error) {
 	var movies []types.Movie
 
