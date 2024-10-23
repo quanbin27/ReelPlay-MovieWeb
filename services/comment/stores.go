@@ -31,3 +31,22 @@ func (s *Store) GetCommentsByMovieID(movieID int) ([]types.Comment, error) {
 	}
 	return comments, nil
 }
+func (s *Store) GetCommentsByUserID(userID int) ([]types.Comment, error) {
+	var comments []types.Comment
+	err := s.db.Where("user_id = ?", userID).Order("created_at desc").Find(&comments).Error
+	if err != nil {
+		return nil, err
+	}
+	return comments, nil
+}
+func (s *Store) DeleteComment(commentID int) error {
+	var cmt types.Comment
+	if err := s.db.First(&cmt, commentID).Error; err != nil {
+		return err // Trả về lỗi nếu không tìm thấy
+	}
+
+	if err := s.db.Delete(&cmt).Error; err != nil {
+		return err // Trả về lỗi nếu có vấn đề khi xóa
+	}
+	return nil // Trả về nil nếu thành công
+}

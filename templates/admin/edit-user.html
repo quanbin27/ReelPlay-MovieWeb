@@ -147,8 +147,9 @@
 							</div>
 							<!-- or red -->
 							<div class="profile__meta profile__meta--green">
-								<h3>John Doe <span>(Approved)</span></h3>
-								<span>HotFlix ID: 23562</span>
+								<h3 id="h3name">John Doe  </h3>
+								<span id="spanid">ID: 23562</span>
+								<span id="status-account"></span>
 							</div>
 						</div>
 						<!-- end profile user -->
@@ -163,16 +164,12 @@
 								<button id="2-tab" data-bs-toggle="tab" data-bs-target="#tab-2" type="button" role="tab" aria-controls="tab-2" aria-selected="false">Comments</button>
 							</li>
 
-							<li class="nav-item" role="presentation">
-								<button id="3-tab" data-bs-toggle="tab" data-bs-target="#tab-3" type="button" role="tab" aria-controls="tab-3" aria-selected="false">Reviews</button>
-							</li>
 						</ul>
 						<!-- end profile tabs nav -->
 
 						<!-- profile btns -->
 						<div class="profile__actions">
 							<button type="button" data-bs-toggle="modal" class="profile__action profile__action--banned" data-bs-target="#modal-status3"><i class="ti ti-lock"></i></button>
-							<button type="button" data-bs-toggle="modal" class="profile__action profile__action--delete" data-bs-target="#modal-delete3"><i class="ti ti-trash"></i></button>
 						</div>
 						<!-- end profile btns -->
 					</div>
@@ -194,8 +191,8 @@
 
 											<div class="col-12 col-md-6">
 												<div class="sign__group">
-													<label class="sign__label" for="username">Username</label>
-													<input id="username" type="text" name="username" class="sign__input" placeholder="User 123">
+													<label class="sign__label" for="firstName">First Name</label>
+													<input id="firstName" type="text" name="firstName" class="sign__input" placeholder="firstName">
 												</div>
 											</div>
 
@@ -208,45 +205,45 @@
 
 											<div class="col-12 col-md-6">
 												<div class="sign__group">
-													<label class="sign__label" for="fname">Name</label>
-													<input id="fname" type="text" name="fname" class="sign__input" placeholder="John Doe">
+													<label class="sign__label" for="lastName">lastName</label>
+													<input id="lastName" type="text" name="lastName" class="sign__input" placeholder="lastName">
 												</div>
 											</div>
 
-											<div class="col-12 col-md-6">
-												<div class="sign__group">
-													<label class="sign__label" for="sign__gallery-upload">Avatar</label>
-													<div class="sign__gallery">
-														<label id="gallery1" for="sign__gallery-upload">Upload (40x40)</label>
-														<input data-name="#gallery1" id="sign__gallery-upload" name="gallery" class="sign__gallery-upload" type="file" accept=".png, .jpg, .jpeg" multiple="">
-													</div>
-												</div>
-											</div>
+<!--											<div class="col-12 col-md-6">-->
+<!--												<div class="sign__group">-->
+<!--													<label class="sign__label" for="sign__gallery-upload">Avatar</label>-->
+<!--													<div class="sign__gallery">-->
+<!--														<label id="gallery1" for="sign__gallery-upload">Upload (40x40)</label>-->
+<!--														<input data-name="#gallery1" id="sign__gallery-upload" name="gallery" class="sign__gallery-upload" type="file" accept=".png, .jpg, .jpeg" multiple="">-->
+<!--													</div>-->
+<!--												</div>-->
+<!--											</div>-->
 
-											<div class="col-12 col-md-6">
-												<div class="sign__group">
-													<label class="sign__label" for="subscription">Subscription</label>
-													<select class="sign__select" id="subscription">
-														<option value="Basic">Basic</option>
-														<option value="Premium">Premium</option>
-														<option value="Cinematic">Cinematic</option>
-													</select>
-												</div>
-											</div>
+<!--											<div class="col-12 col-md-6">-->
+<!--												<div class="sign__group">-->
+<!--													<label class="sign__label" for="subscription">Subscription</label>-->
+<!--													<select class="sign__select" id="subscription">-->
+<!--														<option value="Basic">Basic</option>-->
+<!--														<option value="Premium">Premium</option>-->
+<!--														<option value="Cinematic">Cinematic</option>-->
+<!--													</select>-->
+<!--												</div>-->
+<!--											</div>-->
 
 											<div class="col-12 col-md-6">
 												<div class="sign__group">
 													<label class="sign__label" for="rights">Rights</label>
 													<select class="sign__select" id="rights">
 														<option value="User">User</option>
-														<option value="Moderator">Moderator</option>
+<!--														<option value="Moderator">Moderator</option>-->
 														<option value="Admin">Admin</option>
 													</select>
 												</div>
 											</div>
 
 											<div class="col-12">
-												<button class="sign__btn sign__btn--small" type="button"><span>Save</span></button>
+												<button class="sign__btn sign__btn--small" type="button" id="changeInfo"><span>Save</span></button>
 											</div>
 										</div>
 									</form>
@@ -261,12 +258,12 @@
 												<h4 class="sign__title">Change password</h4>
 											</div>
 
-											<div class="col-12 col-md-6 col-lg-12 col-xxl-6">
-												<div class="sign__group">
-													<label class="sign__label" for="oldpass">Old Password</label>
-													<input id="oldpass" type="password" name="oldpass" class="sign__input">
-												</div>
-											</div>
+<!--											<div class="col-12 col-md-6 col-lg-12 col-xxl-6">-->
+<!--												<div class="sign__group">-->
+<!--													<label class="sign__label" for="oldpass">Old Password</label>-->
+<!--													<input id="oldpass" type="password" name="oldpass" class="sign__input">-->
+<!--												</div>-->
+<!--											</div>-->
 
 											<div class="col-12 col-md-6 col-lg-12 col-xxl-6">
 												<div class="sign__group">
@@ -283,7 +280,7 @@
 											</div>
 
 											<div class="col-12">
-												<button class="sign__btn sign__btn--small" type="button"><span>Change</span></button>
+												<button class="sign__btn sign__btn--small" type="button" id="changePass"><span>Change</span></button>
 											</div>
 										</div>
 									</form>
@@ -299,751 +296,31 @@
 							<div class="catalog catalog--1">
 								<table class="catalog__table">
 									<thead>
-										<tr>
-											<th>ID</th>
-											<th>ITEM</th>
-											<th>AUTHOR</th>
-											<th>TEXT</th>
-											<th>LIKE / DISLIKE</th>
-											<th>CRAETED DATE</th>
-											<th>ACTIONS</th>
-										</tr>
+									<tr>
+										<th>ID</th>
+										<th>Movie ID</th>
+										<th>User ID</th>
+										<th>Author</th>
+										<th>Text</th>
+										<th>Created Date</th>
+										<th>Actions</th>
+									</tr>
 									</thead>
-
 									<tbody>
-										<tr>
-											<td>
-												<div class="catalog__text">11</div>
-											</td>
-											<td>
-												<div class="catalog__text"><a href="#">I Dream in Another Language</a></div>
-											</td>
-											<td>
-												<div class="catalog__text">Charlize Theron</div>
-											</td>
-											<td>
-												<div class="catalog__text">When a renowned archaeologist goes...</div>
-											</td>
-											<td>
-												<div class="catalog__text">12 / 7</div>
-											</td>
-											<td>
-												<div class="catalog__text">05.02.2023</div>
-											</td>
-											<td>
-												<div class="catalog__btns">
-													<button type="button" data-bs-toggle="modal" class="catalog__btn catalog__btn--view" data-bs-target="#modal-view">
-														<i class="ti ti-eye"></i>
-													</button>
-
-													<button type="button" data-bs-toggle="modal" class="catalog__btn catalog__btn--delete" data-bs-target="#modal-delete">
-														<i class="ti ti-trash"></i>
-													</button>
-												</div>
-											</td>
-										</tr>
-										<tr>
-											<td>
-												<div class="catalog__text">12</div>
-											</td>
-											<td>
-												<div class="catalog__text"><a href="#">The Forgotten Road</a></div>
-											</td>
-											<td>
-												<div class="catalog__text">Tyreese Gibson</div>
-											</td>
-											<td>
-												<div class="catalog__text">A down-on-his-luck boxer struggles...</div>
-											</td>
-											<td>
-												<div class="catalog__text">67 / 22</div>
-											</td>
-											<td>
-												<div class="catalog__text">05.02.2023</div>
-											</td>
-											<td>
-												<div class="catalog__btns">
-													<button type="button" data-bs-toggle="modal" class="catalog__btn catalog__btn--view" data-bs-target="#modal-view">
-														<i class="ti ti-eye"></i>
-													</button>
-
-													<button type="button" data-bs-toggle="modal" class="catalog__btn catalog__btn--delete" data-bs-target="#modal-delete">
-														<i class="ti ti-trash"></i>
-													</button>
-												</div>
-											</td>
-										</tr>
-										<tr>
-											<td>
-												<div class="catalog__text">13</div>
-											</td>
-											<td>
-												<div class="catalog__text"><a href="#">Whitney</a></div>
-											</td>
-											<td>
-												<div class="catalog__text">Jordana Brewster</div>
-											</td>
-											<td>
-												<div class="catalog__text">When an old friend offers him...</div>
-											</td>
-											<td>
-												<div class="catalog__text">44 / 5</div>
-											</td>
-											<td>
-												<div class="catalog__text">04.02.2023</div>
-											</td>
-											<td>
-												<div class="catalog__btns">
-													<button type="button" data-bs-toggle="modal" class="catalog__btn catalog__btn--view" data-bs-target="#modal-view">
-														<i class="ti ti-eye"></i>
-													</button>
-
-													<button type="button" data-bs-toggle="modal" class="catalog__btn catalog__btn--delete" data-bs-target="#modal-delete">
-														<i class="ti ti-trash"></i>
-													</button>
-												</div>
-											</td>
-										</tr>
-										<tr>
-											<td>
-												<div class="catalog__text">14</div>
-											</td>
-											<td>
-												<div class="catalog__text"><a href="#">Red Sky at Night</a></div>
-											</td>
-											<td>
-												<div class="catalog__text">Son Gun</div>
-											</td>
-											<td>
-												<div class="catalog__text">But as the stakes get higher...</div>
-											</td>
-											<td>
-												<div class="catalog__text">20 / 6</div>
-											</td>
-											<td>
-												<div class="catalog__text">04.02.2023</div>
-											</td>
-											<td>
-												<div class="catalog__btns">
-													<button type="button" data-bs-toggle="modal" class="catalog__btn catalog__btn--view" data-bs-target="#modal-view">
-														<i class="ti ti-eye"></i>
-													</button>
-
-													<button type="button" data-bs-toggle="modal" class="catalog__btn catalog__btn--delete" data-bs-target="#modal-delete">
-														<i class="ti ti-trash"></i>
-													</button>
-												</div>
-											</td>
-										</tr>
-										<tr>
-											<td>
-												<div class="catalog__text">15</div>
-											</td>
-											<td>
-												<div class="catalog__text"><a href="#">Into the Unknown</a></div>
-											</td>
-											<td>
-												<div class="catalog__text">Louis Leterrier</div>
-											</td>
-											<td>
-												<div class="catalog__text">A brilliant scientist discovers...</div>
-											</td>
-											<td>
-												<div class="catalog__text">8 / 132</div>
-											</td>
-											<td>
-												<div class="catalog__text">04.02.2023</div>
-											</td>
-											<td>
-												<div class="catalog__btns">
-													<button type="button" data-bs-toggle="modal" class="catalog__btn catalog__btn--view" data-bs-target="#modal-view">
-														<i class="ti ti-eye"></i>
-													</button>
-
-													<button type="button" data-bs-toggle="modal" class="catalog__btn catalog__btn--delete" data-bs-target="#modal-delete">
-														<i class="ti ti-trash"></i>
-													</button>
-												</div>
-											</td>
-										</tr>
-										<tr>
-											<td>
-												<div class="catalog__text">16</div>
-											</td>
-											<td>
-												<div class="catalog__text"><a href="#">The Unseen Journey</a></div>
-											</td>
-											<td>
-												<div class="catalog__text">Brian Cranston</div>
-											</td>
-											<td>
-												<div class="catalog__text">But when her groundbreaking...</div>
-											</td>
-											<td>
-												<div class="catalog__text">6 / 1</div>
-											</td>
-											<td>
-												<div class="catalog__text">03.02.2023</div>
-											</td>
-											<td>
-												<div class="catalog__btns">
-													<button type="button" data-bs-toggle="modal" class="catalog__btn catalog__btn--view" data-bs-target="#modal-view">
-														<i class="ti ti-eye"></i>
-													</button>
-
-													<button type="button" data-bs-toggle="modal" class="catalog__btn catalog__btn--delete" data-bs-target="#modal-delete">
-														<i class="ti ti-trash"></i>
-													</button>
-												</div>
-											</td>
-										</tr>
-										<tr>
-											<td>
-												<div class="catalog__text">17</div>
-											</td>
-											<td>
-												<div class="catalog__text"><a href="#">Savage Beauty</a></div>
-											</td>
-											<td>
-												<div class="catalog__text">Matt Jones</div>
-											</td>
-											<td>
-												<div class="catalog__text">Along the way, she must...</div>
-											</td>
-											<td>
-												<div class="catalog__text">10 / 0</div>
-											</td>
-											<td>
-												<div class="catalog__text">03.02.2023</div>
-											</td>
-											<td>
-												<div class="catalog__btns">
-													<button type="button" data-bs-toggle="modal" class="catalog__btn catalog__btn--view" data-bs-target="#modal-view">
-														<i class="ti ti-eye"></i>
-													</button>
-
-													<button type="button" data-bs-toggle="modal" class="catalog__btn catalog__btn--delete" data-bs-target="#modal-delete">
-														<i class="ti ti-trash"></i>
-													</button>
-												</div>
-											</td>
-										</tr>
-										<tr>
-											<td>
-												<div class="catalog__text">18</div>
-											</td>
-											<td>
-												<div class="catalog__text"><a href="#">Endless Horizon</a></div>
-											</td>
-											<td>
-												<div class="catalog__text">Rosa Lee</div>
-											</td>
-											<td>
-												<div class="catalog__text">Renewable energy source...</div>
-											</td>
-											<td>
-												<div class="catalog__text">13 / 14</div>
-											</td>
-											<td>
-												<div class="catalog__text">02.02.2023</div>
-											</td>
-											<td>
-												<div class="catalog__btns">
-													<button type="button" data-bs-toggle="modal" class="catalog__btn catalog__btn--view" data-bs-target="#modal-view">
-														<i class="ti ti-eye"></i>
-													</button>
-
-													<button type="button" data-bs-toggle="modal" class="catalog__btn catalog__btn--delete" data-bs-target="#modal-delete">
-														<i class="ti ti-trash"></i>
-													</button>
-												</div>
-											</td>
-										</tr>
-										<tr>
-											<td>
-												<div class="catalog__text">19</div>
-											</td>
-											<td>
-												<div class="catalog__text"><a href="#">The Lost Key</a></div>
-											</td>
-											<td>
-												<div class="catalog__text">Tess Harper</div>
-											</td>
-											<td>
-												<div class="catalog__text">Confront her own past to save...</div>
-											</td>
-											<td>
-												<div class="catalog__text">12 / 7</div>
-											</td>
-											<td>
-												<div class="catalog__text">02.02.2023</div>
-											</td>
-											<td>
-												<div class="catalog__btns">
-													<button type="button" data-bs-toggle="modal" class="catalog__btn catalog__btn--view" data-bs-target="#modal-view">
-														<i class="ti ti-eye"></i>
-													</button>
-
-													<button type="button" data-bs-toggle="modal" class="catalog__btn catalog__btn--delete" data-bs-target="#modal-delete">
-														<i class="ti ti-trash"></i>
-													</button>
-												</div>
-											</td>
-										</tr>
-										<tr>
-											<td>
-												<div class="catalog__text">20</div>
-											</td>
-											<td>
-												<div class="catalog__text"><a href="#">Echoes of Yesterday</a></div>
-											</td>
-											<td>
-												<div class="catalog__text">Gene Graham</div>
-											</td>
-											<td>
-												<div class="catalog__text">Her father and uncover the secrets...</div>
-											</td>
-											<td>
-												<div class="catalog__text">67 / 22</div>
-											</td>
-											<td>
-												<div class="catalog__text">01.02.2023</div>
-											</td>
-											<td>
-												<div class="catalog__btns">
-													<button type="button" data-bs-toggle="modal" class="catalog__btn catalog__btn--view" data-bs-target="#modal-view">
-														<i class="ti ti-eye"></i>
-													</button>
-
-													<button type="button" data-bs-toggle="modal" class="catalog__btn catalog__btn--delete" data-bs-target="#modal-delete">
-														<i class="ti ti-trash"></i>
-													</button>
-												</div>
-											</td>
-										</tr>
+									<!-- Dữ liệu bình luận sẽ được tải và chèn vào đây bởi JavaScript -->
 									</tbody>
 								</table>
 							</div>
+
 						</div>
 						<!-- end table -->
 
 						<!-- paginator -->
-						<div class="col-12">
-							<div class="main__paginator">
-								<!-- amount -->
-								<span class="main__paginator-pages">10 of 169</span>
-								<!-- end amount -->
 
-								<ul class="main__paginator-list">
-									<li>
-										<a href="#">
-											<i class="ti ti-chevron-left"></i>
-											<span>Prev</span>
-										</a>
-									</li>
-									<li>
-										<a href="#">
-											<span>Next</span>
-											<i class="ti ti-chevron-right"></i>
-										</a>
-									</li>
-								</ul>
-
-								<ul class="paginator">
-									<li class="paginator__item paginator__item--prev">
-										<a href="#"><i class="ti ti-chevron-left"></i></a>
-									</li>
-									<li class="paginator__item"><a href="#">1</a></li>
-									<li class="paginator__item paginator__item--active"><a href="#">2</a></li>
-									<li class="paginator__item"><a href="#">3</a></li>
-									<li class="paginator__item"><a href="#">4</a></li>
-									<li class="paginator__item"><span>...</span></li>
-									<li class="paginator__item"><a href="#">29</a></li>
-									<li class="paginator__item"><a href="#">30</a></li>
-									<li class="paginator__item paginator__item--next">
-										<a href="#"><i class="ti ti-chevron-right"></i></a>
-									</li>
-								</ul>
-							</div>
-						</div>
 						<!-- end paginator -->
 					</div>
 
-					<div class="tab-pane fade" id="tab-3" role="tabpanel" aria-labelledby="3-tab" tabindex="0">
-						<!-- table -->
-						<div class="col-12">
-							<div class="catalog catalog--2">
-								<table class="catalog__table">
-									<thead>
-										<tr>
-											<th>ID</th>
-											<th>ITEM</th>
-											<th>AUTHOR</th>
-											<th>TEXT</th>
-											<th>RATING</th>
-											<th>CRAETED DATE</th>
-											<th>ACTIONS</th>
-										</tr>
-									</thead>
 
-									<tbody>
-										<tr>
-											<td>
-												<div class="catalog__text">11</div>
-											</td>
-											<td>
-												<div class="catalog__text"><a href="#">I Dream in Another Language</a></div>
-											</td>
-											<td>
-												<div class="catalog__text">Gene Graham</div>
-											</td>
-											<td>
-												<div class="catalog__text">Her father and uncover the secrets...</div>
-											</td>
-											<td>
-												<div class="catalog__text catalog__text--rate">7.9</div>
-											</td>
-											<td>
-												<div class="catalog__text">06.02.2023</div>
-											</td>
-											<td>
-												<div class="catalog__btns">
-													<button type="button" data-bs-toggle="modal" class="catalog__btn catalog__btn--view" data-bs-target="#modal-view2">
-														<i class="ti ti-eye"></i>
-													</button>
-
-													<button type="button" data-bs-toggle="modal" class="catalog__btn catalog__btn--delete" data-bs-target="#modal-delete2">
-														<i class="ti ti-trash"></i>
-													</button>
-												</div>
-											</td>
-										</tr>
-										<tr>
-											<td>
-												<div class="catalog__text">12</div>
-											</td>
-											<td>
-												<div class="catalog__text"><a href="#">The Forgotten Road</a></div>
-											</td>
-											<td>
-												<div class="catalog__text">Tess Harper</div>
-											</td>
-											<td>
-												<div class="catalog__text">Confront her own past to save...</div>
-											</td>
-											<td>
-												<div class="catalog__text catalog__text--rate">8.6</div>
-											</td>
-											<td>
-												<div class="catalog__text">06.02.2023</div>
-											</td>
-											<td>
-												<div class="catalog__btns">
-													<button type="button" data-bs-toggle="modal" class="catalog__btn catalog__btn--view" data-bs-target="#modal-view2">
-														<i class="ti ti-eye"></i>
-													</button>
-
-													<button type="button" data-bs-toggle="modal" class="catalog__btn catalog__btn--delete" data-bs-target="#modal-delete2">
-														<i class="ti ti-trash"></i>
-													</button>
-												</div>
-											</td>
-										</tr>
-										<tr>
-											<td>
-												<div class="catalog__text">13</div>
-											</td>
-											<td>
-												<div class="catalog__text"><a href="#">Whitney</a></div>
-											</td>
-											<td>
-												<div class="catalog__text">Rosa Lee</div>
-											</td>
-											<td>
-												<div class="catalog__text">Renewable energy source...</div>
-											</td>
-											<td>
-												<div class="catalog__text catalog__text--rate">6.0</div>
-											</td>
-											<td>
-												<div class="catalog__text">05.02.2023</div>
-											</td>
-											<td>
-												<div class="catalog__btns">
-													<button type="button" data-bs-toggle="modal" class="catalog__btn catalog__btn--view" data-bs-target="#modal-view2">
-														<i class="ti ti-eye"></i>
-													</button>
-
-													<button type="button" data-bs-toggle="modal" class="catalog__btn catalog__btn--delete" data-bs-target="#modal-delete2">
-														<i class="ti ti-trash"></i>
-													</button>
-												</div>
-											</td>
-										</tr>
-										<tr>
-											<td>
-												<div class="catalog__text">14</div>
-											</td>
-											<td>
-												<div class="catalog__text"><a href="#">Red Sky at Night</a></div>
-											</td>
-											<td>
-												<div class="catalog__text">Matt Jones</div>
-											</td>
-											<td>
-												<div class="catalog__text">Along the way, she must...</div>
-											</td>
-											<td>
-												<div class="catalog__text catalog__text--rate">9.1</div>
-											</td>
-											<td>
-												<div class="catalog__text">05.02.2023</div>
-											</td>
-											<td>
-												<div class="catalog__btns">
-													<button type="button" data-bs-toggle="modal" class="catalog__btn catalog__btn--view" data-bs-target="#modal-view2">
-														<i class="ti ti-eye"></i>
-													</button>
-
-													<button type="button" data-bs-toggle="modal" class="catalog__btn catalog__btn--delete" data-bs-target="#modal-delete2">
-														<i class="ti ti-trash"></i>
-													</button>
-												</div>
-											</td>
-										</tr>
-										<tr>
-											<td>
-												<div class="catalog__text">15</div>
-											</td>
-											<td>
-												<div class="catalog__text"><a href="#">Into the Unknown</a></div>
-											</td>
-											<td>
-												<div class="catalog__text">Brian Cranston</div>
-											</td>
-											<td>
-												<div class="catalog__text">But when her groundbreaking...</div>
-											</td>
-											<td>
-												<div class="catalog__text catalog__text--rate">5.5</div>
-											</td>
-											<td>
-												<div class="catalog__text">05.02.2023</div>
-											</td>
-											<td>
-												<div class="catalog__btns">
-													<button type="button" data-bs-toggle="modal" class="catalog__btn catalog__btn--view" data-bs-target="#modal-view2">
-														<i class="ti ti-eye"></i>
-													</button>
-
-													<button type="button" data-bs-toggle="modal" class="catalog__btn catalog__btn--delete" data-bs-target="#modal-delete2">
-														<i class="ti ti-trash"></i>
-													</button>
-												</div>
-											</td>
-										</tr>
-										<tr>
-											<td>
-												<div class="catalog__text">16</div>
-											</td>
-											<td>
-												<div class="catalog__text"><a href="#">The Unseen Journey</a></div>
-											</td>
-											<td>
-												<div class="catalog__text">Louis Leterrier</div>
-											</td>
-											<td>
-												<div class="catalog__text">A brilliant scientist discovers...</div>
-											</td>
-											<td>
-												<div class="catalog__text catalog__text--rate">7.0</div>
-											</td>
-											<td>
-												<div class="catalog__text">04.02.2023</div>
-											</td>
-											<td>
-												<div class="catalog__btns">
-													<button type="button" data-bs-toggle="modal" class="catalog__btn catalog__btn--view" data-bs-target="#modal-view2">
-														<i class="ti ti-eye"></i>
-													</button>
-
-													<button type="button" data-bs-toggle="modal" class="catalog__btn catalog__btn--delete" data-bs-target="#modal-delete2">
-														<i class="ti ti-trash"></i>
-													</button>
-												</div>
-											</td>
-										</tr>
-										<tr>
-											<td>
-												<div class="catalog__text">17</div>
-											</td>
-											<td>
-												<div class="catalog__text"><a href="#">Savage Beauty</a></div>
-											</td>
-											<td>
-												<div class="catalog__text">Son Gun</div>
-											</td>
-											<td>
-												<div class="catalog__text">But as the stakes get higher...</div>
-											</td>
-											<td>
-												<div class="catalog__text catalog__text--rate">9.0</div>
-											</td>
-											<td>
-												<div class="catalog__text">04.02.2023</div>
-											</td>
-											<td>
-												<div class="catalog__btns">
-													<button type="button" data-bs-toggle="modal" class="catalog__btn catalog__btn--view" data-bs-target="#modal-view2">
-														<i class="ti ti-eye"></i>
-													</button>
-
-													<button type="button" data-bs-toggle="modal" class="catalog__btn catalog__btn--delete" data-bs-target="#modal-delete2">
-														<i class="ti ti-trash"></i>
-													</button>
-												</div>
-											</td>
-										</tr>
-										<tr>
-											<td>
-												<div class="catalog__text">18</div>
-											</td>
-											<td>
-												<div class="catalog__text"><a href="#">Endless Horizon</a></div>
-											</td>
-											<td>
-												<div class="catalog__text">Jordana Brewster</div>
-											</td>
-											<td>
-												<div class="catalog__text">When an old friend offers him...</div>
-											</td>
-											<td>
-												<div class="catalog__text catalog__text--rate">6.2</div>
-											</td>
-											<td>
-												<div class="catalog__text">03.02.2023</div>
-											</td>
-											<td>
-												<div class="catalog__btns">
-													<button type="button" data-bs-toggle="modal" class="catalog__btn catalog__btn--view" data-bs-target="#modal-view2">
-														<i class="ti ti-eye"></i>
-													</button>
-
-													<button type="button" data-bs-toggle="modal" class="catalog__btn catalog__btn--delete" data-bs-target="#modal-delete2">
-														<i class="ti ti-trash"></i>
-													</button>
-												</div>
-											</td>
-										</tr>
-										<tr>
-											<td>
-												<div class="catalog__text">19</div>
-											</td>
-											<td>
-												<div class="catalog__text"><a href="#">The Lost Key</a></div>
-											</td>
-											<td>
-												<div class="catalog__text">Tyreese Gibson</div>
-											</td>
-											<td>
-												<div class="catalog__text">A down-on-his-luck boxer struggles...</div>
-											</td>
-											<td>
-												<div class="catalog__text catalog__text--rate">7.9</div>
-											</td>
-											<td>
-												<div class="catalog__text">02.02.2023</div>
-											</td>
-											<td>
-												<div class="catalog__btns">
-													<button type="button" data-bs-toggle="modal" class="catalog__btn catalog__btn--view" data-bs-target="#modal-view2">
-														<i class="ti ti-eye"></i>
-													</button>
-
-													<button type="button" data-bs-toggle="modal" class="catalog__btn catalog__btn--delete" data-bs-target="#modal-delete2">
-														<i class="ti ti-trash"></i>
-													</button>
-												</div>
-											</td>
-										</tr>
-										<tr>
-											<td>
-												<div class="catalog__text">20</div>
-											</td>
-											<td>
-												<div class="catalog__text"><a href="#">Echoes of Yesterday</a></div>
-											</td>
-											<td>
-												<div class="catalog__text">Charlize Theron</div>
-											</td>
-											<td>
-												<div class="catalog__text">When a renowned archaeologist goes...</div>
-											</td>
-											<td>
-												<div class="catalog__text catalog__text--rate">8.6</div>
-											</td>
-											<td>
-												<div class="catalog__text">02.02.2023</div>
-											</td>
-											<td>
-												<div class="catalog__btns">
-													<button type="button" data-bs-toggle="modal" class="catalog__btn catalog__btn--view" data-bs-target="#modal-view2">
-														<i class="ti ti-eye"></i>
-													</button>
-
-													<button type="button" data-bs-toggle="modal" class="catalog__btn catalog__btn--delete" data-bs-target="#modal-delete2">
-														<i class="ti ti-trash"></i>
-													</button>
-												</div>
-											</td>
-										</tr>
-									</tbody>
-								</table>
-							</div>
-						</div>
-						<!-- end table -->
-
-						<!-- paginator -->
-						<div class="col-12">
-							<div class="main__paginator">
-								<!-- amount -->
-								<span class="main__paginator-pages">10 of 169</span>
-								<!-- end amount -->
-
-								<ul class="main__paginator-list">
-									<li>
-										<a href="#">
-											<i class="ti ti-chevron-left"></i>
-											<span>Prev</span>
-										</a>
-									</li>
-									<li>
-										<a href="#">
-											<span>Next</span>
-											<i class="ti ti-chevron-right"></i>
-										</a>
-									</li>
-								</ul>
-
-								<ul class="paginator">
-									<li class="paginator__item paginator__item--prev">
-										<a href="#"><i class="ti ti-chevron-left"></i></a>
-									</li>
-									<li class="paginator__item"><a href="#">1</a></li>
-									<li class="paginator__item paginator__item--active"><a href="#">2</a></li>
-									<li class="paginator__item"><a href="#">3</a></li>
-									<li class="paginator__item"><a href="#">4</a></li>
-									<li class="paginator__item"><span>...</span></li>
-									<li class="paginator__item"><a href="#">29</a></li>
-									<li class="paginator__item"><a href="#">30</a></li>
-									<li class="paginator__item paginator__item--next">
-										<a href="#"><i class="ti ti-chevron-right"></i></a>
-									</li>
-								</ul>
-							</div>
-						</div>
-						<!-- end paginator -->
-					</div>
 				</div>
 				<!-- end content tabs -->
 			</div>
@@ -1080,20 +357,18 @@
 		<div class="modal-dialog modal-dialog-centered">
 			<div class="modal-content">
 				<div class="modal__content">
-					<form action="#" class="modal__form">
-						<h4 class="modal__title">Comment delete</h4>
-
-						<p class="modal__text">Are you sure to permanently delete this comment?</p>
-
-						<div class="modal__btns">
-							<button class="modal__btn modal__btn--apply" type="button"><span>Delete</span></button>
-							<button class="modal__btn modal__btn--dismiss" type="button" data-bs-dismiss="modal" aria-label="Close"><span>Dismiss</span></button>
-						</div>
-					</form>
+					<h4 class="modal__title">Confirm Deletion</h4>
+					<p class="modal__text">Are you sure you want to delete this comment?</p>
+					<div class="modal__btns">
+						<button class="modal__btn modal__btn--apply" id="confirmDelete" type="button" data-id=""><span>Delete</span></button>
+						<button class="modal__btn modal__btn--dismiss" type="button" data-bs-dismiss="modal" aria-label="Close"><span>Cancel</span></button>
+					</div>
 				</div>
 			</div>
 		</div>
 	</div>
+
+
 	<!-- end delete modal -->
 
 	<!-- view modal -->
@@ -1147,7 +422,7 @@
 						<p class="modal__text">Are you sure about immediately change status?</p>
 
 						<div class="modal__btns">
-							<button class="modal__btn modal__btn--apply" type="button"><span>Apply</span></button>
+							<button id="applyTrash" class="modal__btn modal__btn--apply" type="button"><span>Apply</span></button>
 							<button class="modal__btn modal__btn--dismiss" type="button" data-bs-dismiss="modal" aria-label="Close"><span>Dismiss</span></button>
 						</div>
 					</form>
@@ -1183,6 +458,316 @@
 	<script src="js/slimselect.min.js"></script>
 	<script src="js/smooth-scrollbar.js"></script>
 	<script src="js/admin.js"></script>
+	<script>
+		// Hàm lấy userId từ URL
+		function getUserIdFromURL() {
+			const params = new URLSearchParams(window.location.search);
+			return params.get('userId'); // 'userId' là tên param trong URL (vd: /profile.html?userId=1)
+		}
+		const profileMeta = document.querySelector('#h3name');
+		const profileIdSpan = document.querySelector('#spanid');
+		const token = localStorage.getItem('token'); // Thay bằng cách lấy token phù hợp
+
+		// Lấy userId từ URL
+		const userId = getUserIdFromURL();
+
+		if (!userId) {
+			alert('User ID not found in URL.');
+		}
+		let userDeletedAt;
+		// Hàm tải thông tin người dùng
+		function loadUserInfo() {
+			fetch(`/api/v1/user/${userId}`, {
+				method: 'GET',
+				headers: {
+					'Authorization': `Bearer ${token}` // Thêm token vào header
+				}
+			})
+					.then(response => response.json())
+					.then(data => {
+						// Không có `data.success`, nên kiểm tra trực tiếp dữ liệu người dùng
+						if (data.id) {
+							// Hiển thị firstName + lastName và ID
+							const fullName = `${data.firstName} ${data.lastName}`;
+							const userIdText = `ID: ${data.id}`;
+							console.log(fullName, " ", userIdText);
+							userDeletedAt = data.deleted_at;
+							document.querySelector('#status-account').textContent =data.deleted_at === null ? 'Active' :'Locked';
+
+							// Cập nhật nội dung vào HTML
+							document.querySelector('#firstName').value = data.firstName;
+							document.querySelector('#lastName').value = data.lastName;
+							document.querySelector('#email2').value = data.email;
+							document.querySelector('#rights').value = data.role_id === 2 ? 'Admin' : 'User';
+							profileMeta.textContent = fullName;
+							profileIdSpan.textContent = userIdText;
+						} else {
+							alert('Error loading user info.');
+						}
+					})
+					.catch(error => {
+						console.error('Error:', error);
+						alert('An error occurred while loading user info.');
+					});
+		}
+
+		// Gọi hàm để tải thông tin người dùng
+		loadUserInfo();
+		// Lấy các phần tử HTML
+		const saveProfileButton = document.querySelector('#changeInfo');
+		const changePasswordButton = document.querySelector('#changePass');
+
+		// Giả sử bạn đã lưu token vào localStorage sau khi đăng nhập
+
+
+		// Hàm cập nhật thông tin người dùng
+		saveProfileButton.addEventListener('click', () => {
+			// Lấy giá trị từ các input
+			const firstName = document.querySelector('#firstName').value;
+			const lastName = document.querySelector('#lastName').value;
+			const email = document.querySelector('#email2').value;
+			const rights = document.querySelector('#rights').value;
+
+			// Kiểm tra dữ liệu trước khi gửi
+			if (!firstName || !lastName || !email) {
+				alert('Please fill out all required fields.');
+				return;
+			}
+
+			const userInfo = {
+				first_name: firstName,
+				last_name: lastName,
+				email: email,
+				role_id: rights === 'Admin' ? 2 : 1
+			};
+
+			console.log('Updating user info:', userInfo);
+
+			fetch(`/api/v1/user/${userId}/info`, {
+				method: 'PUT',
+				headers: {
+					'Content-Type': 'application/json',
+					'Authorization': `Bearer ${token}` // Đảm bảo token hợp lệ
+				},
+				body: JSON.stringify(userInfo)
+			})
+					.then(response => response.json())
+					.then(data => {
+						console.log('Response from updating profile:', data);
+						if (data.message) {
+							alert('User info updated successfully!');
+						} else if (data.error) {
+							alert('Error updating profile: ' + data.error);
+						}
+					})
+					.catch(error => {
+						console.error('Error occurred during profile update:', error);
+						alert('An error occurred while updating profile.');
+					});
+		});
+
+
+		// Hàm thay đổi mật khẩu
+		changePasswordButton.addEventListener('click', () => {
+			// Lấy giá trị từ các input
+			const newPassword = document.querySelector('#newpass').value;
+			const confirmPassword = document.querySelector('#confirmpass').value;
+
+			// Kiểm tra nếu mật khẩu không trùng nhau
+			if (newPassword !== confirmPassword) {
+				alert('New password and confirm password do not match.');
+				return;
+			}
+
+			// Kiểm tra nếu mật khẩu mới bị bỏ trống
+			if (!newPassword || newPassword.trim() === '') {
+				alert('Password cannot be empty.');
+				return;
+			}
+
+			const passwordInfo = {
+				password: newPassword
+			};
+
+			console.log('Changing password for user with data:', passwordInfo);
+
+			fetch(`/api/v1/user/${userId}/password`, {
+				method: 'PUT',
+				headers: {
+					'Content-Type': 'application/json',
+					'Authorization': `Bearer ${token}` // Đảm bảo token hợp lệ
+				},
+				body: JSON.stringify(passwordInfo)
+			})
+					.then(response => response.json())
+					.then(data => {
+						console.log('Response from changing password:', data);
+						if (data.message) {
+							alert('Password changed successfully!');
+						} else if (data.error){
+							alert('Error changing password: ' + (data.error || 'Unknown error'));
+						}
+					})
+					.catch(error => {
+						console.error('Error occurred during password change:', error);
+						alert('An error occurred while changing password.');
+					});
+		});
+		const applyButton = document.querySelector('#applyTrash');
+		applyButton.addEventListener('click', () => {
+			console.log("Bắt đầu xử lý người dùng:", userId);
+
+
+
+			if (!userDeletedAt) { // Nếu deletedAt là nil (người dùng đang bị khóa)
+				// Xóa người dùng
+				fetch(`/api/v1/user/${userId}`, {
+					method: 'DELETE',
+					headers: {
+						'Authorization': `Bearer ${token}` // Thêm token vào header
+					}
+				})
+						.then(response => {
+							if (response.ok) {
+								alert('Tài khoản đã được xóa thành công.');
+								window.location.reload(); // Chuyển hướng sau khi xóa thành công
+							} else {
+								return response.json().then(data => {
+									alert('Lỗi khi xóa tài khoản: ' + (data.error || 'Có lỗi xảy ra.'));
+								});
+							}
+						})
+						.catch(error => {
+							console.error('Error:', error);
+							alert('Có lỗi xảy ra khi xóa tài khoản.');
+						});
+			} else { // Nếu deletedAt không phải là nil (người dùng đã bị xóa)
+				// Mở khóa người dùng
+				fetch(`/api/v1/user/${userId}/unlock`, {
+					method: 'PUT',
+					headers: {
+						'Authorization': `Bearer ${token}` // Thêm token vào header
+					}
+				})
+						.then(response => {
+							if (response.ok) {
+								alert('Tài khoản đã được mở khóa thành công.');
+								window.location.reload(); // Chuyển hướng sau khi mở khóa thành công
+							} else {
+								return response.json().then(data => {
+									alert('Lỗi khi mở khóa tài khoản: ' + (data.error || 'Có lỗi xảy ra.'));
+								});
+							}
+						})
+						.catch(error => {
+							console.error('Error:', error);
+							alert('Có lỗi xảy ra khi mở khóa tài khoản.');
+						});
+			}
+		});
+		// Function để tải bình luận của một user và hiển thị chúng trong bảng
+		function loadComments(userId) {
+			console.log("load cmt",userId)
+			fetch(`/api/v1/user/${userId}/comment`, {
+				method: 'GET',
+				headers: {
+					'Authorization': `Bearer ${token}` // Thêm token vào header nếu cần
+				}
+			})
+					.then(response => response.json())
+					.then(comments => {
+						const tbody = document.querySelector('.catalog__table tbody');
+						tbody.innerHTML = ''; // Xóa sạch nội dung hiện tại
+
+						if (!Array.isArray(comments) || comments.length === 0) {
+							// Trường hợp không có bình luận
+							const noCommentsRow = document.createElement('tr');
+							noCommentsRow.innerHTML = `
+                <td colspan="7">
+                    <div class="catalog__text">User chưa có bình luận nào.</div>
+                </td>
+            `;
+							tbody.appendChild(noCommentsRow);
+						} else {
+							// Nếu có bình luận thì hiển thị bình luận vào bảng
+							comments.forEach(comment => {
+								const row = document.createElement('tr');
+								row.innerHTML = `
+                    <td><div class="catalog__text">${comment.id}</div></td>
+                    <td><div class="catalog__text"><a href="#">${comment.movie_id}</a></div></td>
+                    <td><div class="catalog__text">${comment.user_id}</div></td>
+                    <td><div class="catalog__text">${comment.user_name}</div></td>
+                    <td><div class="catalog__text">${comment.content}</div></td>
+                    <td><div class="catalog__text">${new Date(comment.created_at).toLocaleDateString()}</div></td>
+                    <td>
+                        <div class="catalog__btns">
+                            <button type="button" class="catalog__btn catalog__btn--delete" data-id="${comment.id}" data-bs-toggle="modal" data-bs-target="#modal-delete">
+                                <i class="ti ti-trash"></i>
+                            </button>
+                        </div>
+                    </td>
+                `;
+								tbody.appendChild(row);
+							});
+
+							// Thêm sự kiện click cho các nút xóa
+							document.querySelectorAll('.catalog__btn--delete').forEach(button => {
+								button.addEventListener('click', (e) => {
+									const commentId = e.target.closest('button').dataset.id;
+									document.querySelector('#confirmDelete').dataset.id = commentId;
+								});
+							});
+						}
+					})
+					.catch(error => {
+						console.error('Error loading comments:', error);
+						alert('Error loading comments');
+					});
+		}
+
+		// Function để xóa một bình luận
+		function deleteComment(commentId) {
+			fetch(`/api/v1/comment/${commentId}`, {
+				method: 'DELETE',
+				headers: {
+					'Authorization': `Bearer ${token}` // Thêm token vào header nếu cần
+				}
+			})
+					.then(response => {
+						if (response.ok) {
+							alert('Comment deleted successfully');
+							loadComments(userId); // Tải lại danh sách bình luận sau khi xóa
+						} else {
+							return response.json().then(data => {
+								alert('Error deleting comment: ' + (data.error || 'Unknown error'));
+							});
+						}
+					})
+					.catch(error => {
+						console.error('Error deleting comment:', error);
+						alert('Error deleting comment');
+					});
+		}
+
+		// Sự kiện click cho nút "Delete" trong modal
+		document.querySelector('#confirmDelete').addEventListener('click', () => {
+			const commentId = document.querySelector('#confirmDelete').dataset.id;
+			deleteComment(commentId);
+
+			// Đóng modal sau khi xóa
+			const modal = bootstrap.Modal.getInstance(document.getElementById('modal-delete'));
+			modal.hide();
+		});
+
+		// Gọi function để tải thông tin bình luận khi trang được load
+		document.addEventListener('DOMContentLoaded', () => {
+			loadComments(userId); // Gọi hàm này để tải bình luận của user khi trang load
+		});
+
+
+	</script>
+
+
 </body>
 
 <!-- Mirrored from hotflix.volkovdesign.com/admin/edit-user.html by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 01 Oct 2024 14:35:46 GMT -->

@@ -37,6 +37,11 @@ type UserStore interface {
 	GetUserByID(id int) (*User, error)
 	CreateUser(user *User) error
 	UpdatePassword(userID int, newPassword string) error
+	SearchUsers(keyword string, page, limit int) ([]User, int64, error)
+	DeleteUserSoft(userID int) error
+	UpdateUserInfo(userID int, updatedData map[string]interface{}) error
+	UpdateUserPassword(userID int, newPassword string) error
+	UnlockUser(userID int) error
 }
 type EmailService interface {
 	SendResetPasswordEmail(to, resetLink string) error
@@ -75,6 +80,8 @@ type BookmarkStore interface {
 type CommentStore interface {
 	CreateComment(content string, movieID int, userID int) (*Comment, error)
 	GetCommentsByMovieID(movieID int) ([]Comment, error)
+	GetCommentsByUserID(userID int) ([]Comment, error)
+	DeleteComment(commentID int) error
 }
 type CategoryStore interface{}
 
