@@ -179,6 +179,59 @@ func (s *Store) DeleteMovie(id int) error {
 
 	return nil // Xóa thành công
 }
+func (s *Store) UpdateNumofEp(movieId int, num int) error {
+	var movie types.Movie
+	if err := s.db.First(&movie, movieId).Error; err != nil {
+		return err // Nếu không tìm thấy movie, trả về lỗi
+	}
+	newNum := movie.NumEpisodes + num
+	if err := s.db.Model(&types.Movie{}).Where("id = ?", movieId).Update("num_episodes", newNum).Error; err != nil {
+		return err // Nếu có lỗi khi xóa, trả về lỗi
+	}
+	return nil
+}
+func (s *Store) GetAllMovies() ([]types.Movie, error) {
+	var movies []types.Movie
+	// Chỉ chọn cột ID và Name
+	err := s.db.Select("id", "name").Find(&movies).Error
+	if err != nil {
+		return nil, err
+	}
+	return movies, nil
+}
+func (s *Store) UpdateAverageDuration(movieId int) error {
+	// Tính tổng thời gian của tất cả các tập phim
+	var totalDuration int
+	var episodeCount int
+
+	// Lấy tất cả các tập phim của movieId
+	var episodes []types.Episode
+	if err := s.db.Where("movie_id = ? AND deleted_at IS NULL", movieId).Find(&episodes).Error; err != nil {
+		return err
+	}
+
+	// Tính tổng thời gian và số lượng tập
+	for _, episode := range episodes {
+		totalDuration += episode.Duration
+		episodeCount++
+	}
+
+	// Tính thời gian trung bình
+	var averageDuration int
+	if episodeCount > 0 {
+		averageDuration = totalDuration / episodeCount
+	} else {
+		averageDuration = 0 // Nếu không có tập nào, đặt trung bình là 0
+	}
+
+	// Cập nhật vào bảng movies
+	if err := s.db.Model(&types.Movie{}).Where("id = ?", movieId).Update("time_for_ep", averageDuration).Error; err != nil {
+		return err
+	}
+
+	return nil
+}
+
 func (s *Store) CreateMovie(movie *types.Movie, categoryIDs []int, actorIDs []int, directorIDs []int) error {
 	// Bắt đầu một transaction để đảm bảo tính toàn vẹn của dữ liệu
 	tx := s.db.Begin()

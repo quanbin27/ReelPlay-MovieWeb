@@ -25,7 +25,8 @@ func NewHandler(userStore types.UserStore, moviestore types.MovieStore, category
 	return &Handler{userStore, moviestore, categorystore, actorstore, directorstore, categoryFitStore}
 }
 func (h *Handler) RegisterRoutes(e *echo.Group) {
-	e.GET("/movie", h.GetMovies)
+	e.GET("/movie", h.GetAllMovies)
+	//	e.GET("/movie", h.GetMovies)
 	e.GET("/movie/:id", h.GetMovieByID)
 	e.GET("/movie/:id/category", h.GetCategoryID)
 	e.GET("/movie/search", h.MovieSearch)
@@ -87,7 +88,6 @@ func (h *Handler) CreateMovie(c echo.Context) error {
 		Description:   input.Description,
 		Language:      input.Language,
 		CountryID:     input.CountryID,
-		TimeForEp:     input.TimeForEp,
 		Thumbnail:     input.Thumbnail,
 		Trailer:       input.Trailer,
 		PredictRate:   input.PredictRate,
@@ -256,4 +256,22 @@ func (h *Handler) GetMovies(c echo.Context) error {
 		})
 	}
 	return c.JSON(http.StatusOK, movies)
+}
+func (h *Handler) GetAllMovies(c echo.Context) error {
+	// Lấy danh sách phim từ store
+	movies, err := h.MovieStore.GetAllMovies()
+	if err != nil {
+		return c.JSON(http.StatusInternalServerError, map[string]string{"message": "Failed to fetch movies"})
+	}
+
+	// Chuyển đổi sang định dạng MovieResponse để trả về
+	var movieResponses []types.AllMovieResponse
+	for _, movie := range movies {
+		movieResponses = append(movieResponses, types.AllMovieResponse{
+			ID:   movie.ID,
+			Name: movie.Name,
+		})
+	}
+
+	return c.JSON(http.StatusOK, movieResponses)
 }

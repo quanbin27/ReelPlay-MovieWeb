@@ -3,6 +3,7 @@ package episode
 import (
 	"github.com/quanbin27/ReelPlay/types"
 	"gorm.io/gorm"
+	"time"
 )
 
 type Store struct {
@@ -20,6 +21,37 @@ func (s *Store) GetEpisodeById(id int) (*types.Episode, error) {
 	}
 	return &episode, err
 }
+func (s *Store) SearchEpisodes(keyword string, page int, limit int) ([]types.SearchEpisodesResponse, int64, error) {
+	var episodes []types.SearchEpisodesResponse
+	var total int64
+
+	// Offset for pagination
+	offset := (page - 1) * limit
+
+	// Building the query with join to get the Movie title
+	query := s.db.Table("episodes").
+		Select("episodes.id, episodes.movie_id, episodes.episode_number, movies.name as movie_title, episodes.duration, episodes.updated_at").
+		Joins("left join movies on movies.id = episodes.movie_id").
+		Where("episodes.deleted_at IS NULL")
+
+	// Add search condition
+	if keyword != "" {
+		searchKeyword := "%" + keyword + "%"
+		query = query.Where("movies.name LIKE ? OR episodes.episode_number LIKE ? OR episodes.movie_id LIKE ?", searchKeyword, searchKeyword, searchKeyword)
+	}
+
+	// Get total count for pagination
+	query.Count(&total)
+
+	// Apply pagination and execute the query
+	err := query.Limit(limit).Offset(offset).Scan(&episodes).Error
+	if err != nil {
+		return nil, 0, err
+	}
+
+	return episodes, total, nil
+}
+
 func (s *Store) GetEpisodeByMovieAndEpisodeId(movieId, episodeNumber int) (*types.Episode, error) {
 	var episode types.Episode
 	err := s.db.Where("movie_id = ? AND episode_number = ?", movieId, episodeNumber).First(&episode).Error
@@ -31,22 +63,15 @@ func (s *Store) GetEpisodeByMovieAndEpisodeId(movieId, episodeNumber int) (*type
 func (s *Store) CreateEpisode(episode *types.Episode) error {
 	return s.db.Create(episode).Error
 }
-func (s *Store) UpdateEpisode(id int, episode *types.Episode) error {
-	var existingEpisode types.Episode
-	if err := s.db.First(&existingEpisode, id).Error; err != nil {
-		return err // Nếu không tìm thấy episode, trả về lỗi
-	}
+func (s *Store) UpdateEpisode(id int, episode *types.UpdateEpisodeRequest) error {
 
-	// Cập nhật thông tin cho episode
-	episode.ID = existingEpisode.ID // Giữ nguyên ID
-	return s.db.Model(&existingEpisode).Updates(episode).Error
+	return s.db.Model(&types.Episode{}).Where("id = ?", id).Update("source", episode.Source).Update("duration", episode.Duration).Update("updated_at", time.Now()).Error
 }
 func (s *Store) DeleteEpisode(id int) error {
 	var episode types.Episode
 	if err := s.db.First(&episode, id).Error; err != nil {
 		return err // Nếu không tìm thấy episode, trả về lỗi
 	}
-
 	// Xóa episode
 	return s.db.Delete(&episode).Error
 }

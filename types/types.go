@@ -47,6 +47,7 @@ type EmailService interface {
 	SendResetPasswordEmail(to, resetLink string) error
 }
 type MovieStore interface {
+	GetAllMovies() ([]Movie, error)
 	GetMoviesWithPagination(offset, limit int) ([]MovieItemResponse, error)
 	GetMovieById(id int) (MovieResponse, error)
 	GetCategories(id int) ([]int, error)
@@ -57,13 +58,16 @@ type MovieStore interface {
 	CreateMovie(movie *Movie, categoryIDs []int, actorIDs []int, directorIDs []int) error
 	UpdateMovie(id int, updateReq *UpdateMovieRequest) error
 	DeleteMovie(id int) error
+	UpdateNumofEp(movieId int, num int) error
+	UpdateAverageDuration(movieId int) error
 }
 type EpisodeStore interface {
 	GetEpisodeByMovieAndEpisodeId(movieId, episodeNumber int) (*Episode, error)
 	GetEpisodeById(id int) (*Episode, error)
 	DeleteEpisode(id int) error
-	UpdateEpisode(id int, episode *Episode) error
+	UpdateEpisode(id int, episode *UpdateEpisodeRequest) error
 	CreateEpisode(episode *Episode) error
+	SearchEpisodes(keyword string, page int, limit int) ([]SearchEpisodesResponse, int64, error)
 }
 type RateStore interface {
 	CreateMovieRating(rating *Rate) error
@@ -186,7 +190,6 @@ type CreateMovieInput struct {
 	Description   string  `json:"description"`
 	Language      string  `json:"language"`
 	CountryID     int     `json:"country_id" validate:"required"`
-	TimeForEp     int     `json:"time_for_ep"`
 	Thumbnail     string  `json:"thumbnail"`
 	Trailer       string  `json:"trailer"`
 	PredictRate   float32 `json:"predict_rate"`
@@ -194,6 +197,10 @@ type CreateMovieInput struct {
 	CategoryIDs   []int   `json:"category_ids" validate:"required"`
 	ActorIDs      []int   `json:"actor_ids" validate:"required"`
 	DirectorIDs   []int   `json:"director_ids" validate:"required"`
+}
+type AllMovieResponse struct {
+	ID   int    `json:"id"`
+	Name string `json:"name"`
 }
 type UpdateMovieRequest struct {
 	Name          string  `json:"name"`
@@ -219,14 +226,27 @@ type Country struct {
 
 // Episode struct
 type Episode struct {
-	ID            int       `gorm:"primaryKey;autoIncrement" json:"id"`
-	EpisodeNumber int       `gorm:"not null;uniqueIndex:idx_episode_movie" json:"episode_number"`
-	MovieID       int       `gorm:"not null;uniqueIndex:idx_episode_movie" json:"movie_id"`
-	Source        string    `json:"source"`
+	ID            int            `gorm:"primaryKey;autoIncrement" json:"id"`
+	EpisodeNumber int            `gorm:"not null;uniqueIndex:idx_episode_movie" json:"episode_number"`
+	MovieID       int            `gorm:"not null;uniqueIndex:idx_episode_movie" json:"movie_id"`
+	Source        string         `json:"source"`
+	Duration      int            `json:"duration"`
+	CreatedAt     time.Time      `gorm:"autoCreateTime" json:"created_at"`
+	UpdatedAt     time.Time      `gorm:"autoUpdateTime" json:"updated_at"`
+	DeletedAt     gorm.DeletedAt `gorm:"index" json:"deleted_at,omitempty"`
+	Movie         Movie          `gorm:"foreignKey:MovieID"`
+}
+type UpdateEpisodeRequest struct {
+	Source   string `json:"source"`
+	Duration int    `json:"duration"`
+}
+type SearchEpisodesResponse struct {
+	ID            int       `json:"id"`
+	MovieID       int       `json:"movie_id"`
+	EpisodeNumber int       `json:"episode_number"`
+	MovieTitle    string    `json:"movie_title"`
 	Duration      int       `json:"duration"`
-	CreatedAt     time.Time `gorm:"autoCreateTime" json:"created_at"`
-	UpdatedAt     time.Time `gorm:"autoUpdateTime" json:"updated_at"`
-	Movie         Movie     `gorm:"foreignKey:MovieID"`
+	UpdatedAt     time.Time `json:"updated_at"`
 }
 
 // Bookmark struct

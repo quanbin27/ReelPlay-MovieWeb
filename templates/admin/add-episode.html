@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/slimselect.css">
+    <link rel="stylesheet" href="css/admin.css">
+
+    <!-- Icon font -->
+    <link rel="stylesheet" href="webfont/tabler-icons.min.css">
+
+    <!-- Favicons -->
+    <link rel="icon" type="image/png" href="icon/favicon-32x32.png" sizes="32x32">
+    <link rel="apple-touch-icon" href="icon/favicon-32x32.png">
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+
+
+    <meta name="description" content="Online Movies, TV Shows & Cinema HTML Template">
+    <meta name="keywords" content="">
+    <meta name="author" content="Dmitry Volkov">
+    <title>ReelPlay – Online Movies, TV Shows & Cinema </title>
+</head>
+
+<body>
+<!-- header -->
+<header class="header">
+    <div class="header__content">
+        <!-- header logo -->
+        <a href="/admin/index" class="header__logo">
+            <img src="img/logo.svg" alt="">
+        </a>
+        <!-- end header logo -->
+
+        <!-- header menu btn -->
+        <button class="header__btn" type="button">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+        <!-- end header menu btn -->
+    </div>
+</header>
+<!-- end header -->
+
+<!-- sidebar -->
+<div class="sidebar">
+    <!-- sidebar logo -->
+    <a href="/admin/index" class="sidebar__logo">
+        <img src="img/logo.svg" alt="">
+    </a>
+    <!-- end sidebar logo -->
+
+    <!-- sidebar user -->
+    <div class="sidebar__user">
+        <div class="sidebar__user-img">
+            <img src="img/user.svg" alt="">
+        </div>
+
+        <div class="sidebar__user-title">
+            <span>Admin</span>
+        </div>
+
+        <button class="sidebar__user-btn" type="button">
+            <i class="ti ti-logout"></i>
+        </button>
+    </div>
+    <!-- end sidebar user -->
+
+    <!-- sidebar nav -->
+    <div class="sidebar__nav-wrap">
+        <ul class="sidebar__nav">
+            <li class="sidebar__nav-item">
+                <a href="index.html" class="sidebar__nav-link"><i class="ti ti-layout-grid"></i> <span>Dashboard</span></a>
+            </li>
+
+            <li class="sidebar__nav-item">
+                <a href="catalog.html" class="sidebar__nav-link"><i class="ti ti-movie"></i> <span>Movies</span></a>
+            </li>
+
+            <li class="sidebar__nav-item">
+                <a href="users.html" class="sidebar__nav-link"><i class="ti ti-users"></i> <span>Users</span></a>
+            </li>
+
+            <li class="sidebar__nav-item">
+                <a href="comments.html" class="sidebar__nav-link"><i class="ti ti-message"></i> <span>Comments</span></a>
+            </li>
+
+            <li class="sidebar__nav-item">
+                <a href="reviews.html" class="sidebar__nav-link"><i class="ti ti-star-half-filled"></i> <span>Reviews</span></a>
+            </li>
+
+            <li class="sidebar__nav-item">
+                <a href="settings.html" class="sidebar__nav-link"><i class="ti ti-settings"></i> <span>Settings</span></a>
+            </li>
+
+            <!-- dropdown -->
+            <li class="sidebar__nav-item">
+                <a class="sidebar__nav-link" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="ti ti-files"></i> <span>Pages</span> <i class="ti ti-chevron-down"></i></a>
+
+                <ul class="dropdown-menu sidebar__dropdown-menu">
+                    <li><a href="add-item.html">Add item</a></li>
+                    <li><a href="edit-user.html">Edit user</a></li>
+                    <li><a href="signin.html">Sign In</a></li>
+                    <li><a href="signup.html">Sign Up</a></li>
+                    <li><a href="forgot.html">Forgot password</a></li>
+                    <li><a href="404.html">404 Page</a></li>
+                </ul>
+            </li>
+            <!-- end dropdown -->
+
+            <li class="sidebar__nav-item">
+                <a href="https://hotflix.volkovdesign.com/main/index.html" class="sidebar__nav-link"><i class="ti ti-arrow-left"></i> <span>Back to HotFlix</span></a>
+            </li>
+        </ul>
+    </div>
+    <!-- end sidebar nav -->
+
+    <!-- sidebar copyright -->
+    <div class="sidebar__copyright">© HOTFLIX, 2019—2024. <br>Create by <a href="https://themeforest.net/user/dmitryvolkov/portfolio" target="_blank">Dmitry Volkov</a></div>
+    <!-- end sidebar copyright -->
+</div>
+<!-- end sidebar -->
+
+<!-- main content -->
+<main class="main">
+    <div class="container-fluid">
+        <div class="row">
+            <!-- main title -->
+            <div class="col-12">
+                <div class="main__title">
+                    <h2>Add new episode</h2>
+                </div>
+            </div>
+            <!-- end main title -->
+
+            <!-- form -->
+            <div class="col-12">
+                <form action="#" class="sign__form sign__form--add" id="episodeForm">
+                    <div class="row">
+                        <div class="col-12 col-xl-7">
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="sign__group">
+                                        <select id="movieSelect" class="sign__input">
+                                            <option value="">Select Movie</option>
+                                            <!-- Phần option sẽ được điền bởi JavaScript -->
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="sign__group">
+                                        <input type="number" class="sign__input" placeholder="Episode Number" id="episodeNumber">
+                                    </div>
+                                </div>
+
+                                <div class="col-12">
+                                    <div class="sign__group">
+                                        <input type="text" class="sign__input" placeholder="Source" id="linksource">
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="sign__group">
+                                        <input type="number" class="sign__input" placeholder="Duration" id="duration">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-12">
+                            <button type="button" class="sign__btn sign__btn--small" id="publishBtn"><span>Add</span></button>
+                        </div>
+                    </div>
+                </form>
+
+            </div>
+            <!-- end form -->
+        </div>
+    </div>
+</main>
+<!-- end main content -->
+
+<!-- JS -->
+<script src="js/bootstrap.bundle.min.js"></script>
+<script src="js/slimselect.min.js"></script>
+<script src="js/smooth-scrollbar.js"></script>
+<script src="js/admin.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+<script>
+    // Sau khi trang đã tải, khởi tạo Select2
+    $(document).ready(function() {
+        $('#movieSelect').select2({
+            placeholder: "Select Movie",
+            allowClear: true,
+
+        });
+
+        // Fetch danh sách phim và thêm vào dropdown
+        fetch('/api/v1/movie')
+            .then(response => response.json())
+            .then(data => {
+                // Kiểm tra dữ liệu trả về có phải là mảng hay không
+                if (Array.isArray(data)) {
+                    // Xóa hết option cũ trước khi thêm mới
+                    $('#movieSelect').empty().append('<option value="">Select Movie</option>');
+
+                    // Thêm các option vào Select2
+                    data.forEach(movie => {
+                        let option = new Option(movie.name, movie.id, false, false);
+                        $('#movieSelect').append(option);
+                    });
+
+                    // Refresh lại Select2 để nhận diện các option mới
+                    $('#movieSelect').trigger('change');
+                } else {
+                    console.error('Invalid data format:', data);
+                }
+            })
+            .catch(error => console.error('Error fetching movies:', error));
+    });
+    document.addEventListener('DOMContentLoaded', function() {
+        document.getElementById('publishBtn').addEventListener('click', function() {
+            // Lấy thông tin từ các trường nhập liệu
+            const movieId = document.getElementById('movieSelect').value; // Giá trị của Select Movie
+            const episodeNumber = document.getElementById('episodeNumber').value;
+            const linkSource = document.getElementById('linksource').value;
+            const duration = document.getElementById('duration').value;
+
+            // Kiểm tra xem các trường có được điền đầy đủ không
+            if (!movieId || !episodeNumber || !linkSource || !duration) {
+                alert('Vui lòng điền đầy đủ thông tin.');
+                return;
+            }
+            // Tạo đối tượng dữ liệu để gửi
+            const data = {
+                movie_id: parseInt(movieId),
+                episode_number: parseInt(episodeNumber),
+                source: linkSource,
+                duration: parseInt(duration)
+            };
+            console.log(data)
+            const token = localStorage.getItem('token');
+            // Gửi yêu cầu API
+            fetch('http://localhost:8080/api/v1/episode', { // Thay đổi thành URL API của bạn
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer ' + token, // Thay thế 'YOUR_TOKEN_HERE' bằng token thực tế
+                },
+                body: JSON.stringify(data)
+            })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Có lỗi xảy ra khi gửi yêu cầu.');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    // Xử lý phản hồi từ API
+                    console.log('Tập phim đã được tạo:', data);
+                    alert('Tập phim đã được tạo thành công!');
+                    // Có thể thêm logic khác ở đây, ví dụ: làm mới danh sách, xóa dữ liệu từ biểu mẫu, v.v.
+                })
+                .catch(error => {
+                    // Xử lý lỗi
+                    console.error('Có lỗi xảy ra:', error);
+                    alert('Có lỗi xảy ra. Vui lòng thử lại sau.');
+                });
+        });
+    });
+
+</script>
+
+
+
+</body>
+
+<!-- Mirrored from hotflix.volkovdesign.com/admin/add-item.html by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 01 Oct 2024 14:35:46 GMT -->
+</html>

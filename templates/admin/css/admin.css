@@ -2524,3 +2524,63 @@ body::-webkit-scrollbar-thumb {
   border-radius: 4px !important;
   cursor: pointer;
 }
+/* Tùy chỉnh cho select2 */
+/* Tùy chỉnh cho select2 */.select2-container {
+                             width: 100% !important;
+                           }
+
+.select2-container .select2-selection--single {
+  background-color: #222028; /* Màu nền giống các ô khác */
+  border: 2px solid transparent;
+  height: 46px;
+  color: #fff; /* Màu chữ giống các ô khác */
+  font-size: 16px;
+  width: 100%;
+  border-radius: 8px;
+  padding: 0 20px;
+  display: flex;
+  align-items: center;
+  box-sizing: border-box;
+}
+
+/* Điều chỉnh vị trí của icon mũi tên trong Select2 */
+.select2-container .select2-selection--single .select2-selection__arrow {
+  top: 50%;
+  right: 10px;
+  transform: translateY(-50%);
+}
+
+/* Style cho phần hiển thị văn bản */
+.select2-container .select2-selection--single .select2-selection__rendered {
+  color: #fff; /* Màu chữ */
+  line-height: 46px;
+}
+
+/* Style cho dropdown của Select2 */
+.select2-container .select2-dropdown {
+  background-color: #222028; /* Màu nền dropdown */
+  border: 2px solid #444;
+  border-radius: 8px;
+}
+
+/* Style cho các option trong dropdown */
+.select2-container .select2-results__option {
+  color: #fff; /* Màu chữ */
+  background-color: #222028; /* Màu nền */
+  padding: 10px;
+}
+
+/* Style khi hover vào option */
+.select2-container .select2-results__option--highlighted {
+  background-color: #333; /* Màu nền khi hover */
+  color: #fff;
+}
+
+/* Đảm bảo style cho ô nhập chữ khi nhấp vào */
+.select2-container--default .select2-selection--single .select2-selection__placeholder {
+  color: #fff; /* Màu chữ cho placeholder */
+}
+
+.select2-container--default .select2-selection--single .select2-selection__rendered {
+  color: #fff; /* Màu chữ khi đã chọn */
+}
