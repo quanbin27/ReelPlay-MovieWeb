@@ -106,13 +106,19 @@
 				if (response.ok) {
 					const data = await response.json();
 					const token = data.token; // JWT token được trả về từ server
+					const roleID = data.role_id; // Lấy role_id từ dữ liệu trả về
 
 					// Lưu token vào localStorage
 					localStorage.setItem('token', token);
 
 					alert('Login successful');
-					// Điều hướng người dùng đến trang khác hoặc reload trang hiện tại
-					window.location.href = '/index'
+
+					// Điều hướng người dùng dựa trên role_id
+					if (roleID === 2) {
+						window.location.href = '/admin';
+					} else {
+						window.location.href = '/index';
+					}
 				} else {
 					alert('Login failed');
 				}

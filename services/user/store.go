@@ -67,6 +67,13 @@ func (store *Store) GetUserByEmail(email string) (*types.User, error) {
 func (s *Store) UpdatePassword(userID int, newPassword string) error {
 	return s.db.Model(&types.User{}).Where("id = ?", userID).Update("password", newPassword).Error
 }
+func (s *Store) CountUsers() (int, error) {
+	var count int64
+	if err := s.db.Model(&types.User{}).Count(&count).Error; err != nil {
+		return 0, err
+	}
+	return int(count), nil
+}
 
 // Trong file store.go hoặc tương tự
 func (s *Store) UnlockUser(userID int) error {

@@ -67,6 +67,14 @@ func (s *Store) UpdateEpisode(id int, episode *types.UpdateEpisodeRequest) error
 
 	return s.db.Model(&types.Episode{}).Where("id = ?", id).Update("source", episode.Source).Update("duration", episode.Duration).Update("updated_at", time.Now()).Error
 }
+func (s *Store) CountEpisodes() (int, error) {
+	var count int64                                                    // Thử dùng int64 thay cho int
+	if err := s.db.Table("episodes").Count(&count).Error; err != nil { // Chỉ định tên bảng trực tiếp
+		return 0, err
+	}
+	return int(count), nil
+}
+
 func (s *Store) DeleteEpisode(id int) error {
 	var episode types.Episode
 	if err := s.db.First(&episode, id).Error; err != nil {

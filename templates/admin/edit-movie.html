@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/slimselect.css">
+    <link rel="stylesheet" href="css/admin.css">
+    <script src="../js/logout.js"></script>
+    <!-- Icon font -->
+    <link rel="stylesheet" href="webfont/tabler-icons.min.css">
+
+    <!-- Favicons -->
+    <link rel="icon" type="image/png" href="icon/favicon-32x32.png" sizes="32x32">
+    <link rel="apple-touch-icon" href="icon/favicon-32x32.png">
+
+    <meta name="description" content="Online Movies, TV Shows & Cinema HTML Template">
+    <meta name="keywords" content="">
+    <meta name="author" content="Dmitry Volkov">
+    <title>ReelPlay– Online Movies, TV Shows & Cinema </title>
+</head>
+
+<body>
+<!-- header -->
+<header class="header">
+    <div class="header__content">
+        <!-- header logo -->
+        <a href="index.html" class="header__logo">
+            <img src="img/logo.svg" alt="">
+        </a>
+        <!-- end header logo -->
+
+        <!-- header menu btn -->
+        <button class="header__btn" type="button">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+        <!-- end header menu btn -->
+    </div>
+</header>
+<!-- end header -->
+
+<!-- sidebar -->
+<div class="sidebar">
+    <!-- sidebar logo -->
+    <a href="index.html" class="sidebar__logo">
+        <img src="img/logo.svg" alt="">
+    </a>
+    <!-- end sidebar logo -->
+
+    <!-- sidebar user -->
+    <div class="sidebar__user">
+        <div class="sidebar__user-img">
+            <img src="img/user.svg" alt="">
+        </div>
+
+        <div class="sidebar__user-title">
+            <span>Admin</span>
+        </div>
+
+        <button class="sidebar__user-btn" type="button" onclick="logout()">
+            <i class="ti ti-logout"></i>
+        </button>
+    </div>
+    <!-- end sidebar user -->
+
+    <!-- sidebar nav -->
+    <div class="sidebar__nav-wrap">
+        <ul class="sidebar__nav">
+            <li class="sidebar__nav-item">
+                <a href="/admin/index" class="sidebar__nav-link"><i class="ti ti-layout-grid"></i> <span>Dashboard</span></a>
+            </li>
+
+            <li class="sidebar__nav-item">
+                <a href="/admin/movie" class="sidebar__nav-link sidebar__nav-link--active"><i class="ti ti-movie"></i> <span>Movies</span></a>
+            </li>
+
+            <li class="sidebar__nav-item">
+                <a href="/admin/user" class="sidebar__nav-link"><i class="ti ti-users"></i> <span>Users</span></a>
+            </li>
+
+            <li class="sidebar__nav-item">
+                <a href="/admin/actor" class="sidebar__nav-link"><i class="ti ti-users-minus"></i> <span>Actors</span></a>
+            </li>
+
+            <li class="sidebar__nav-item">
+                <a href="/admin/director" class="sidebar__nav-link"><i class="ti ti-users-minus"></i> <span>Directors</span></a>
+            </li>
+            <li class="sidebar__nav-item">
+                <a href="/admin/episode" class="sidebar__nav-link"><i class="ti ti-badge-hd"></i> <span>Episodes</span></a>
+            </li>
+
+
+            <!-- end dropdown -->
+
+            <li class="sidebar__nav-item">
+                <a href="/index" class="sidebar__nav-link"><i class="ti ti-arrow-left"></i> <span>Back to ReelPlay</span></a>
+            </li>
+        </ul>
+    </div>
+    <!-- end sidebar nav -->
+
+    <!-- sidebar copyright -->
+    <!-- end sidebar copyright -->
+</div>
+<!-- end sidebar -->
+
+<!-- main content -->
+<main class="main">
+    <div class="container-fluid">
+        <div class="row">
+            <!-- main title -->
+            <div class="col-12">
+                <div class="main__title">
+                    <h2>Edit movie</h2>
+                </div>
+            </div>
+            <!-- end main title -->
+
+            <!-- form -->
+            <div class="col-12">
+                <form action="#" class="sign__form sign__form--add" id="formadd">
+                    <div class="row">
+                        <div class="col-12 col-xl-7">
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="sign__group">
+                                        <input type="text" class="sign__input" placeholder="Title" required>
+                                    </div>
+                                </div>
+
+                                <div class="col-12">
+                                    <div class="sign__group">
+                                        <textarea id="text" name="text" class="sign__textarea" placeholder="Description"></textarea>
+                                    </div>
+                                </div>
+
+                                <div class="col-12 col-md-6">
+                                    <div class="sign__group">
+
+                                        <div class="sign__group">
+                                            <input type="text" class="sign__input" placeholder="Link to the trailer">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-12 col-md-6">
+                                    <div class="sign__group">
+                                        <input type="text" class="sign__input" placeholder="Link to the background ">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-12 col-xl-5">
+                            <div class="row">
+                                <div class="col-12 ">
+                                    <div class="sign__group">
+                                        <div class="sign__group">
+                                            <input type="text" class="sign__input" placeholder="Language">
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <div class="col-12">
+                                    <div class="sign__group">
+                                        <select class="sign__selectjs" id="sign__genres" multiple >
+                                            <option value="1">Action</option>
+                                            <option value="2">Adventure</option>
+                                            <option value="3">Comedy</option>
+                                            <option value="4">Document</option>
+                                            <option value="5">Drama</option>
+                                            <option value="6">Family</option>
+                                            <option value="7">Horror</option>
+                                            <option value="8">Romance</option>
+                                            <option value="9">Science-fiction</option>
+                                            <option value="10">Sport</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="col-12 ">
+                                    <div class="sign__group">
+                                        <input type="text" class="sign__input" placeholder="Release year" required>
+                                    </div>
+                                </div>
+
+                                <div class="col-12">
+                                    <div class="sign__group">
+                                        <select class="sign__selectjs" id="sign__countrys" >
+                                            <option value="1">China</option>
+                                            <option value="2">South Korea</option>
+                                            <option value="3">Japan</option>
+                                            <option value="4">Thailand</option>
+                                            <option value="5">Western Countries</option>
+                                            <option value="6">Taiwan</option>
+                                            <option value="7">Hong Kong</option>
+                                            <option value="8">India</option>
+                                            <option value="9">United Kingdom</option>
+                                            <option value="10">France</option>
+                                            <option value="11">Canada</option>
+                                            <option value="12">Other Countries</option>
+                                            <option value="13">Germany</option>
+                                            <option value="14">Spain</option>
+                                            <option value="15">Turkey</option>
+                                            <option value="16">Netherlands</option>
+                                            <option value="17">Indonesia</option>
+                                            <option value="18">Russia</option>
+                                            <option value="19">Mexico</option>
+                                            <option value="20">Poland</option>
+                                            <option value="21">Australia</option>
+                                            <option value="22">Sweden</option>
+                                            <option value="23">Malaysia</option>
+                                            <option value="24">Brazil</option>
+                                            <option value="25">Philippines</option>
+                                            <option value="26">Portugal</option>
+                                            <option value="27">Italy</option>
+                                            <option value="28">Denmark</option>
+                                            <option value="29">UAE</option>
+                                            <option value="30">Norway</option>
+                                            <option value="31">Switzerland</option>
+                                            <option value="32">Africa</option>
+                                            <option value="33">South Africa</option>
+                                            <option value="34">Ukraine</option>
+                                            <option value="35">Saudi Arabia</option>
+                                            <option value="36">Others</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-12 col-md-6 col-xl-5">
+                            <div class="sign__group">
+                                <select class="sign__selectjs" id="sign__directors"  multiple>
+
+
+                                </select>
+                                \
+                            </div>
+                        </div>
+
+                        <div class="col-12 col-md-6 col-xl-7">
+                            <div class="sign__group">
+                                <select class="sign__selectjs" id="sign__actor" multiple>
+
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="col-12">
+                            <div class="sign__group">
+                                <label class="sign__label"> Recommend:</label>
+                                <ul class="sign__radio">
+                                    <li>
+                                        <input id="type1" type="radio" name="type">
+                                        <label for="type1">Yes</label>
+                                    </li>
+                                    <li>
+                                        <input id="type2" type="radio" name="type" >
+                                        <label for="type2">No</label>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+
+
+
+                        <div class="col-12">
+                            <button type="submit" class="sign__btn sign__btn--small" id="publish"><span>Publish</span></button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <!-- end form -->
+        </div>
+    </div>
+</main>
+<!-- end main content -->
+
+<!-- JS -->
+<script src="js/bootstrap.bundle.min.js"></script>
+<script src="js/slimselect.min.js"></script>
+<script src="js/smooth-scrollbar.js"></script>
+<script src="js/admin.js"></script>
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                // Khởi tạo SlimSelect
+                var select_director = new SlimSelect({
+                    select: '#sign__directors',
+                    settings: {
+                        placeholderText: 'Select Directors',
+                    },
+                    data: [],
+                });
+                var select_actor = new SlimSelect({
+                    select: '#sign__actor',
+                    settings: {
+                        placeholderText: 'Select Actors',
+                    },
+                    data: [],
+                });
+                var select_country = new SlimSelect({
+                    select: '#sign__countrys',
+
+                });
+                var select_genres = new SlimSelect({
+                    select: '#sign__genres',
+
+                });
+                const urlParams = new URLSearchParams(window.location.search);
+                const movieId = urlParams.get('movieId');
+
+                // Fetch dữ liệu movie
+                fetch(`http://localhost:8080/api/v1/movie/${movieId}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        // Gán dữ liệu vào form
+                        document.querySelector('input[placeholder="Title"]').value = data.name;
+                        document.querySelector('textarea[placeholder="Description"]').value = data.description;
+                        document.querySelector('input[placeholder="Link to the trailer"]').value = data.trailer;
+                        document.querySelector('input[placeholder="Link to the background "]').value = data.thumbnail;
+                        document.querySelector('input[placeholder="Language"]').value = data.language;
+                        document.querySelector('input[placeholder="Release year"]').value = data.year;
+                        const selectedDirectorDatas=data.director;
+                        const selectedActorDatas=data.actor;
+                        const seledtedCategoryDatas=data.category;
+                        const selectedCategoryValues = select_genres.getData().filter(option =>
+                            seledtedCategoryDatas.includes(option.text)
+                        ).map(option => option.value);
+                        select_genres.setSelected(selectedCategoryValues);
+                        const selectedCountryData=data.country;
+                        const selectedCountryValue = select_country.getData().filter(option =>
+                            selectedCountryData.includes(option.text)
+                        ).map(option => option.value);
+                        select_country.setSelected(selectedCountryValue);
+                        // Check vào ô radio dựa trên giá trị của is_recommended
+                        if (data.is_recommend === true) {
+                            document.getElementById('type1').checked = true; // Yes
+                        } else {
+                            document.getElementById('type2').checked = true; // No
+                        }
+
+                        // Fetch directors và actors
+                        fetch('http://localhost:8080/api/v1/directors')
+                            .then(response => response.json())
+                            .then(directorsData => {
+                                select_director.setData(directorsData.map(d => ({ text: d.name+" "+d.year.toString(), value: d.id })));
+                                const selecteDirectorValues = select_director.getData().filter(option =>
+                                    selectedDirectorDatas.includes(option.text)
+                                ).map(option => option.value);
+                                select_director.setSelected(selecteDirectorValues);
+                            });
+
+                        fetch('http://localhost:8080/api/v1/actors')
+                            .then(response => response.json())
+                            .then(actorsData => {
+                                select_actor.setData(actorsData.map(a => ({ text: a.name+" "+a.year.toString(), value: a.id })));
+                                const selectedActorValues = select_actor.getData().filter(option =>
+                                    selectedActorDatas.includes(option.text)
+                                ).map(option => option.value);
+
+                                select_actor.setSelected(selectedActorValues);
+                            });
+                    })
+                    .catch(error => console.error('Error loading movie data:', error));
+            });
+        </script>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        // Xử lý sự kiện khi người dùng nhấn nút "Publish"
+        document.querySelector('#formadd').addEventListener('submit', function (e) {
+            // Thu thập dữ liệu từ các trường trong form
+            e.preventDefault();
+            const name = document.querySelector('input[placeholder="Title"]').value;
+            const description = document.querySelector('#text').value;
+            const trailer = document.querySelector('input[placeholder="Link to the trailer"]').value;
+            const thumbnail = document.querySelector('input[placeholder="Link to the background "]').value;
+            const language = document.querySelector('input[placeholder="Language"]').value;
+            const year = parseInt(document.querySelector('input[placeholder="Release year"]').value);
+            const isRecommended = document.querySelector('#type1').checked;
+
+            // Lấy giá trị từ select cho country, genre, actor và director
+         
+            const countryId = parseInt(document.querySelector('#sign__countrys').value);
+            const categoryIds = Array.from(document.querySelector('#sign__genres').selectedOptions).map(option => parseInt(option.value));
+            const actorIds = Array.from(document.querySelector('#sign__actor').selectedOptions).map(option => parseInt(option.value));
+            const directorIds = Array.from(document.querySelector('#sign__directors').selectedOptions).map(option => parseInt(option.value));
+
+            // Chuẩn bị dữ liệu để gửi
+            const movieData = {
+                name,
+                year,
+                description,
+                language,
+                country_id: countryId,
+                thumbnail,
+                trailer,
+                is_recommended: isRecommended,
+                category_ids: categoryIds,
+                actor_ids: actorIds,
+                director_ids: directorIds
+            };
+
+            // Lấy token từ localStorage
+            const token = localStorage.getItem('token');
+            const urlParams = new URLSearchParams(window.location.search);
+            const movieId = urlParams.get('movieId');
+            // Gửi yêu cầu POST tới API
+            fetch(`http://localhost:8080/api/v1/movie/${movieId}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                },
+                body: JSON.stringify(movieData)
+            })
+                .then(response => {
+                    if (!response.ok) {
+                        console.log("loi roi");
+                        throw new Error('Failed to add movie');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    alert('Movie added successfully!');
+                    console.log(data);
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('An error occurred while adding the movie.');
+                });
+        });
+    });
+
+</script>
+
+</body>
+
+<!-- Mirrored from hotflix.volkovdesign.com/admin/add-item.html by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 01 Oct 2024 14:35:46 GMT -->
+</html>

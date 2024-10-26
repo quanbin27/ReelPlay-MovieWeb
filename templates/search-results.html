@@ -69,7 +69,7 @@
 							<!-- end dropdown -->
 
 							<li class="header__nav-item">
-								<a href="pricing.html" class="header__nav-link">Pricing plan</a>
+								<a href="new-movie.html" class="header__nav-link">Pricing plan</a>
 							</li>
 
 							<!-- dropdown -->
@@ -372,17 +372,17 @@
 					});
 					const data = await response.json();
 
-					if (!data.totalResults) {
+					if (!data.total) {
 						console.error('API does not return totalResults.');
 						return [];
 					}
 
-					totalResults = data.totalResults || 0; // Đảm bảo lấy tổng số kết quả từ API
+					totalResults = data.total || 0; // Đảm bảo lấy tổng số kết quả từ API
 					totalPages = Math.ceil(totalResults / limit); // Tính tổng số trang
 
 					console.log(`Total results: ${totalResults}, Total pages: ${totalPages}`); // Kiểm tra số trang
 
-					return data.data; // Trả về mảng phim từ data
+					return data.movies; // Trả về mảng phim từ data
 				} catch (error) {
 					console.error('Error fetching movies:', error);
 					return [];

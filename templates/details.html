@@ -69,7 +69,7 @@
 							<!-- end dropdown -->
 
 							<li class="header__nav-item">
-								<a href="pricing.html" class="header__nav-link">New movies</a>
+								<a href="new-movie.html" class="header__nav-link">New movies</a>
 							</li>
 
 							<!-- dropdown -->
@@ -196,11 +196,11 @@
 <!--									<ul class="item__meta">-->
 <!--										<li><span>Director:</span> <a href="actor.html">Vince Gilligan</a></li>-->
 <!--										<li><span>Cast:</span> <a href="actor.html">Brian Cranston</a> <a href="actor.html">Jesse Plemons</a> <a href="actor.html">Matt Jones</a> <a href="actor.html">Jonathan Banks</a> <a href="actor.html">Charles Baker</a> <a href="actor.html">Tess Harper</a></li>-->
-<!--										<li><span>Genre:</span> <a href="catalog.html">Action</a>-->
-<!--										<a href="catalog.html">Triler</a></li>-->
+<!--										<li><span>Genre:</span> <a href="movie.html">Action</a>-->
+<!--										<a href="movie.html">Triler</a></li>-->
 <!--										<li><span>Premiere::</span> 2019</li>-->
 <!--										<li><span>Running time:</span> 128 min</li>-->
-<!--										<li><span>Country:</span> <a href="catalog.html">USA</a></li>-->
+<!--										<li><span>Country:</span> <a href="movie.html">USA</a></li>-->
 <!--									</ul>-->
 
 <!--									<div class="item__description">-->
@@ -274,6 +274,7 @@
 										<li><span>Language:</span> <span id="movie-language"></span></li>
 										<li><span>Number of episodes:</span> <span id="movie-num-episodes"></span></li>
 										<li><span>Country:</span> <span id="movie-country"></span></li>
+										<li><span>Views:</span> <span id="movie-view"></span></li>
 									</ul>
 
 									<div class="item__description">
@@ -957,6 +958,7 @@
 			document.getElementById('movie-description').innerText = movie.description;
 			document.getElementById('movie-language').innerText = movie.language; // Bạn cần thêm trường này vào HTML nếu cần
 			document.getElementById('movie-country').innerText = movie.country;
+			document.getElementById('movie-view').innerText = movie.view;
 			document.getElementById('movie-actor').innerText = movie.actor ? movie.actor.join(', ') : 'Updating';
 			document.getElementById('movie-director').innerText = movie.director ? movie.director.join(', ') : 'Updating';
 			document.getElementById('movie-category').innerText = movie.category ? movie.category.join(', ') : 'Updating';

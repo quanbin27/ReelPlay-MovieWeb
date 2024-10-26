@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<!-- Mirrored from hotflix.volkovdesign.com/admin/index.html by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 01 Oct 2024 14:35:36 GMT -->
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -10,7 +9,7 @@
 	<link rel="stylesheet" href="css/bootstrap.min.css">
 	<link rel="stylesheet" href="css/slimselect.css">
 	<link rel="stylesheet" href="css/admin.css">
-
+	<script src="../js/logout.js"></script>
 	<!-- Icon font -->
 	<link rel="stylesheet" href="webfont/tabler-icons.min.css">
 
@@ -21,108 +20,93 @@
 	<meta name="description" content="Online Movies, TV Shows & Cinema HTML Template">
 	<meta name="keywords" content="">
 	<meta name="author" content="Dmitry Volkov">
-	<title>HotFlix – Online Movies, TV Shows & Cinema HTML Template</title>
+	<title>ReelPlay– Online Movies, TV Shows & Cinema </title>
 </head>
 
 <body>
-	<!-- header -->
-	<header class="header">
-		<div class="header__content">
-			<!-- header logo -->
-			<a href="index.html" class="header__logo">
-				<img src="img/logo.svg" alt="">
-			</a>
-			<!-- end header logo -->
-
-			<!-- header menu btn -->
-			<button class="header__btn" type="button">
-				<span></span>
-				<span></span>
-				<span></span>
-			</button>
-			<!-- end header menu btn -->
-		</div>
-	</header>
-	<!-- end header -->
-
-	<!-- sidebar -->
-	<div class="sidebar">
-		<!-- sidebar logo -->
-		<a href="index.html" class="sidebar__logo">
+<!-- header -->
+<header class="header">
+	<div class="header__content">
+		<!-- header logo -->
+		<a href="index.html" class="header__logo">
 			<img src="img/logo.svg" alt="">
 		</a>
-		<!-- end sidebar logo -->
-		
-		<!-- sidebar user -->
-		<div class="sidebar__user">
-			<div class="sidebar__user-img">
-				<img src="img/user.svg" alt="">
-			</div>
+		<!-- end header logo -->
 
-			<div class="sidebar__user-title">
-				<span>Admin</span>
-				<p>John Doe</p>
-			</div>
-
-			<button class="sidebar__user-btn" type="button">
-				<i class="ti ti-logout"></i>
-			</button>
-		</div>
-		<!-- end sidebar user -->
-
-		<!-- sidebar nav -->
-		<div class="sidebar__nav-wrap">
-			<ul class="sidebar__nav">
-				<li class="sidebar__nav-item">
-					<a href="index.html" class="sidebar__nav-link sidebar__nav-link--active"><i class="ti ti-layout-grid"></i> <span>Dashboard</span></a>
-				</li>
-
-				<li class="sidebar__nav-item">
-					<a href="catalog.html" class="sidebar__nav-link"><i class="ti ti-movie"></i> <span>Catalog</span></a>
-				</li>
-
-				<li class="sidebar__nav-item">
-					<a href="users.html" class="sidebar__nav-link"><i class="ti ti-users"></i> <span>Users</span></a>
-				</li>
-
-				<li class="sidebar__nav-item">
-					<a href="comments.html" class="sidebar__nav-link"><i class="ti ti-message"></i> <span>Comments</span></a>
-				</li>
-
-				<li class="sidebar__nav-item">
-					<a href="reviews.html" class="sidebar__nav-link"><i class="ti ti-star-half-filled"></i> <span>Reviews</span></a>
-				</li>
-
-				<li class="sidebar__nav-item">
-					<a href="settings.html" class="sidebar__nav-link"><i class="ti ti-settings"></i> <span>Settings</span></a>
-				</li>
-
-				<!-- dropdown -->
-				<li class="sidebar__nav-item">
-					<a class="sidebar__nav-link" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="ti ti-files"></i> <span>Pages</span> <i class="ti ti-chevron-down"></i></a>
-
-					<ul class="dropdown-menu sidebar__dropdown-menu">
-						<li><a href="add-item.html">Add item</a></li>
-						<li><a href="edit-user.html">Edit user</a></li>
-						<li><a href="signin.html">Sign In</a></li>
-						<li><a href="signup.html">Sign Up</a></li>
-						<li><a href="forgot.html">Forgot password</a></li>
-						<li><a href="404.html">404 Page</a></li>
-					</ul>
-				</li>
-				<!-- end dropdown -->
-
-				<li class="sidebar__nav-item">
-					<a href="https://hotflix.volkovdesign.com/main/index.html" class="sidebar__nav-link"><i class="ti ti-arrow-left"></i> <span>Back to HotFlix</span></a>
-				</li>
-			</ul>
-		</div>
-		<!-- end sidebar nav -->
-		
-		<!-- sidebar copyright -->
-		<div class="sidebar__copyright">© HOTFLIX, 2019—2024. <br>Create by <a href="https://themeforest.net/user/dmitryvolkov/portfolio" target="_blank">Dmitry Volkov</a></div>
-		<!-- end sidebar copyright -->
+		<!-- header menu btn -->
+		<button class="header__btn" type="button">
+			<span></span>
+			<span></span>
+			<span></span>
+		</button>
+		<!-- end header menu btn -->
 	</div>
+</header>
+<!-- end header -->
+
+<!-- sidebar -->
+<div class="sidebar">
+	<!-- sidebar logo -->
+	<a href="index.html" class="sidebar__logo">
+		<img src="img/logo.svg" alt="">
+	</a>
+	<!-- end sidebar logo -->
+
+	<!-- sidebar user -->
+	<div class="sidebar__user">
+		<div class="sidebar__user-img">
+			<img src="img/user.svg" alt="">
+		</div>
+
+		<div class="sidebar__user-title">
+			<span>Admin</span>
+		</div>
+
+		<button class="sidebar__user-btn" type="button" onclick="logout()">
+			<i class="ti ti-logout"></i>
+		</button>
+	</div>
+	<!-- end sidebar user -->
+
+	<!-- sidebar nav -->
+	<div class="sidebar__nav-wrap">
+		<ul class="sidebar__nav">
+			<li class="sidebar__nav-item">
+				<a href="/admin/index" class="sidebar__nav-link sidebar__nav-link--active"><i class="ti ti-layout-grid"></i> <span>Dashboard</span></a>
+			</li>
+
+			<li class="sidebar__nav-item">
+				<a href="/admin/movie" class="sidebar__nav-link "><i class="ti ti-movie"></i> <span>Movies</span></a>
+			</li>
+
+			<li class="sidebar__nav-item">
+				<a href="/admin/user" class="sidebar__nav-link"><i class="ti ti-users"></i> <span>Users</span></a>
+			</li>
+
+			<li class="sidebar__nav-item">
+				<a href="/admin/actor" class="sidebar__nav-link"><i class="ti ti-users-minus"></i> <span>Actors</span></a>
+			</li>
+
+			<li class="sidebar__nav-item">
+				<a href="/admin/director" class="sidebar__nav-link"><i class="ti ti-users-minus"></i> <span>Directors</span></a>
+			</li>
+			<li class="sidebar__nav-item">
+				<a href="/admin/episode" class="sidebar__nav-link"><i class="ti ti-badge-hd"></i> <span>Episodes</span></a>
+			</li>
+
+
+			<!-- end dropdown -->
+
+			<li class="sidebar__nav-item">
+				<a href="/index" class="sidebar__nav-link"><i class="ti ti-arrow-left"></i> <span>Back to ReelPlay</span></a>
+			</li>
+		</ul>
+	</div>
+	<!-- end sidebar nav -->
+
+	<!-- sidebar copyright -->
+	<!-- end sidebar copyright -->
+</div>
 	<!-- end sidebar -->
 
 	<!-- main content -->
@@ -134,7 +118,7 @@
 					<div class="main__title">
 						<h2>Dashboard</h2>
 
-						<a href="add-item.html" class="main__title-link">add item</a>
+						<a href="/admin/add-movie" class="main__title-link">add item</a>
 					</div>
 				</div>
 				<!-- end main title -->
@@ -142,19 +126,9 @@
 				<!-- stats -->
 				<div class="col-12 col-sm-6 col-xl-3">
 					<div class="stats">
-						<span>Subscriptions this month</span>
+						<span>Total movies</span>
 						<!-- or .red -->
-						<p>1 678 <b class="green">+15</b></p>
-						<i class="ti ti-diamond"></i>
-					</div>
-				</div>
-				<!-- end stats -->
-
-				<!-- stats -->
-				<div class="col-12 col-sm-6 col-xl-3">
-					<div class="stats">
-						<span>Items added this month</span>
-						<p>376 <b class="red">-44</b></p>
+						<p id="total-movies"> </p>
 						<i class="ti ti-movie"></i>
 					</div>
 				</div>
@@ -163,8 +137,8 @@
 				<!-- stats -->
 				<div class="col-12 col-sm-6 col-xl-3">
 					<div class="stats">
-						<span>Views this month</span>
-						<p>509 573 <b class="green">+3.1%</b></p>
+						<span>Total Views</span>
+						<p id="total-views"> </p>
 						<i class="ti ti-eye"></i>
 					</div>
 				</div>
@@ -173,9 +147,19 @@
 				<!-- stats -->
 				<div class="col-12 col-sm-6 col-xl-3">
 					<div class="stats">
-						<span>Reviews this month</span>
-						<p>642 <b class="green">+8</b></p>
+						<span>Total Rates</span>
+						<p id="total-rates"></p>
 						<i class="ti ti-star-half-filled"></i>
+					</div>
+				</div>
+				<!-- end stats -->
+
+				<!-- stats -->
+				<div class="col-12 col-sm-6 col-xl-3">
+					<div class="stats">
+						<span>Total Users</span>
+						<p id="total-users"> </p>
+						<i class="ti ti-users"></i>
 					</div>
 				</div>
 				<!-- end stats -->
@@ -186,26 +170,22 @@
 				<div class="col-12 col-xl-6">
 					<div class="dashbox">
 						<div class="dashbox__title">
-							<h3><i class="ti ti-trophy"></i> Top items</h3>
-
-							<div class="dashbox__wrap">
-								<a class="dashbox__refresh" href="#"><i class="ti ti-refresh"></i></a>
-								<a class="dashbox__more" href="catalog.html">View All</a>
-							</div>
+							<h3><i class="ti ti-trophy"></i> Top rates</h3>
 						</div>
 
 						<div class="dashbox__table-wrap dashbox__table-wrap--1">
-							<table class="dashbox__table">
+							<table  class="dashbox__table">
 								<thead>
 									<tr>
 										<th>ID</th>
 										<th>TITLE</th>
-										<th>CATEGORY</th>
+<!--										<th>CATEGORY</th>-->
 										<th>RATING</th>
+										<th>VIEW</th>
 									</tr>
 								</thead>
 
-								<tbody>
+								<tbody id="rate-table">
 									<tr>
 										<td>
 											<div class="dashbox__table-text dashbox__table-text--grey">241</div>
@@ -219,63 +199,11 @@
 										<td>
 											<div class="dashbox__table-text dashbox__table-text--rate"><i class="ti ti-star"></i> 9.2</div>
 										</td>
-									</tr>
-									<tr>
 										<td>
-											<div class="dashbox__table-text dashbox__table-text--grey">825</div>
-										</td>
-										<td>
-											<div class="dashbox__table-text"><a href="#">Undercurrents</a></div>
-										</td>
-										<td>
-											<div class="dashbox__table-text">Movie</div>
-										</td>
-										<td>
-											<div class="dashbox__table-text dashbox__table-text--rate"><i class="ti ti-star"></i> 9.1</div>
+											<div class="dashbox__table-text dashbox__table-text--rate"> 100</div>
 										</td>
 									</tr>
-									<tr>
-										<td>
-											<div class="dashbox__table-text dashbox__table-text--grey">9271</div>
-										</td>
-										<td>
-											<div class="dashbox__table-text"><a href="#">Tales from the Underworld</a></div>
-										</td>
-										<td>
-											<div class="dashbox__table-text">TV Series</div>
-										</td>
-										<td>
-											<div class="dashbox__table-text dashbox__table-text--rate"><i class="ti ti-star"></i> 9.0</div>
-										</td>
-									</tr>
-									<tr>
-										<td>
-											<div class="dashbox__table-text dashbox__table-text--grey">635</div>
-										</td>
-										<td>
-											<div class="dashbox__table-text"><a href="#">The Unseen World</a></div>
-										</td>
-										<td>
-											<div class="dashbox__table-text">TV Series</div>
-										</td>
-										<td>
-											<div class="dashbox__table-text dashbox__table-text--rate"><i class="ti ti-star"></i> 8.9</div>
-										</td>
-									</tr>
-									<tr>
-										<td>
-											<div class="dashbox__table-text dashbox__table-text--grey">825</div>
-										</td>
-										<td>
-											<div class="dashbox__table-text"><a href="#">Redemption Road</a></div>
-										</td>
-										<td>
-											<div class="dashbox__table-text">TV Series</div>
-										</td>
-										<td>
-											<div class="dashbox__table-text dashbox__table-text--rate"><i class="ti ti-star"></i> 8.9</div>
-										</td>
-									</tr>
+
 								</tbody>
 							</table>
 						</div>
@@ -287,12 +215,7 @@
 				<div class="col-12 col-xl-6">
 					<div class="dashbox">
 						<div class="dashbox__title">
-							<h3><i class="ti ti-movie"></i> Latest items</h3>
-
-							<div class="dashbox__wrap">
-								<a class="dashbox__refresh" href="#"><i class="ti ti-refresh"></i></a>
-								<a class="dashbox__more" href="catalog.html">View All</a>
-							</div>
+							<h3><i class="ti ti-movie"></i> Top views</h3>
 						</div>
 
 						<div class="dashbox__table-wrap dashbox__table-wrap--2">
@@ -301,12 +224,13 @@
 									<tr>
 										<th>ID</th>
 										<th>ITEM</th>
-										<th>CATEGORY</th>
+<!--										<th>CATEGORY</th>-->
 										<th>RATING</th>
+										<th>VIEW</th>
 									</tr>
 								</thead>
 
-								<tbody>
+								<tbody id="view-table">
 									<tr>
 										<td>
 											<div class="dashbox__table-text dashbox__table-text--grey">824</div>
@@ -384,206 +308,7 @@
 				</div>
 				<!-- end dashbox -->
 
-				<!-- dashbox -->
-				<div class="col-12 col-xl-6">
-					<div class="dashbox">
-						<div class="dashbox__title">
-							<h3><i class="ti ti-users"></i> Latest users</h3>
 
-							<div class="dashbox__wrap">
-								<a class="dashbox__refresh" href="#"><i class="ti ti-refresh"></i></a>
-								<a class="dashbox__more" href="users.html">View All</a>
-							</div>
-						</div>
-
-						<div class="dashbox__table-wrap dashbox__table-wrap--3">
-							<table class="dashbox__table">
-								<thead>
-									<tr>
-										<th>ID</th>
-										<th>FULL NAME</th>
-										<th>EMAIL</th>
-										<th>USERNAME</th>
-									</tr>
-								</thead>
-								<tbody>
-									<tr>
-										<td>
-											<div class="dashbox__table-text">23</div>
-										</td>
-										<td>
-											<div class="dashbox__table-text"><a href="#">Brian Cranston</a></div>
-										</td>
-										<td>
-											<div class="dashbox__table-text dashbox__table-text--grey">bcxwz@email.com</div>
-										</td>
-										<td>
-											<div class="dashbox__table-text">BrianXWZ</div>
-										</td>
-									</tr>
-									<tr>
-										<td>
-											<div class="dashbox__table-text">22</div>
-										</td>
-										<td>
-											<div class="dashbox__table-text"><a href="#">Jesse Plemons</a></div>
-										</td>
-										<td>
-											<div class="dashbox__table-text dashbox__table-text--grey">jess@email.com</div>
-										</td>
-										<td>
-											<div class="dashbox__table-text">Jesse.P</div>
-										</td>
-									</tr>
-									<tr>
-										<td>
-											<div class="dashbox__table-text">21</div>
-										</td>
-										<td>
-											<div class="dashbox__table-text"><a href="#">Matt Jones</a></div>
-										</td>
-										<td>
-											<div class="dashbox__table-text dashbox__table-text--grey">matt@email.com</div>
-										</td>
-										<td>
-											<div class="dashbox__table-text">Matty</div>
-										</td>
-									</tr>
-									<tr>
-										<td>
-											<div class="dashbox__table-text">20</div>
-										</td>
-										<td>
-											<div class="dashbox__table-text"><a href="#">Tess Harper</a></div>
-										</td>
-										<td>
-											<div class="dashbox__table-text dashbox__table-text--grey">harper@email.com</div>
-										</td>
-										<td>
-											<div class="dashbox__table-text">Harper123</div>
-										</td>
-									</tr>
-									<tr>
-										<td>
-											<div class="dashbox__table-text">19</div>
-										</td>
-										<td>
-											<div class="dashbox__table-text"><a href="#">Jonathan Banks</a></div>
-										</td>
-										<td>
-											<div class="dashbox__table-text dashbox__table-text--grey">bank@email.com</div>
-										</td>
-										<td>
-											<div class="dashbox__table-text">Jonathan</div>
-										</td>
-									</tr>
-								</tbody>
-							</table>
-						</div>
-					</div>
-				</div>
-				<!-- end dashbox -->
-
-				<!-- dashbox -->
-				<div class="col-12 col-xl-6">
-					<div class="dashbox">
-						<div class="dashbox__title">
-							<h3><i class="ti ti-star-half-filled"></i> Latest reviews</h3>
-
-							<div class="dashbox__wrap">
-								<a class="dashbox__refresh" href="#"><i class="ti ti-refresh"></i></a>
-								<a class="dashbox__more" href="reviews.html">View All</a>
-							</div>
-						</div>
-
-						<div class="dashbox__table-wrap dashbox__table-wrap--4">
-							<table class="dashbox__table">
-								<thead>
-									<tr>
-										<th>ID</th>
-										<th>ITEM</th>
-										<th>AUTHOR</th>
-										<th>RATING</th>
-									</tr>
-								</thead>
-
-								<tbody>
-									<tr>
-										<td>
-											<div class="dashbox__table-text dashbox__table-text--grey">824</div>
-										</td>
-										<td>
-											<div class="dashbox__table-text"><a href="#">I Dream in Another Language</a></div>
-										</td>
-										<td>
-											<div class="dashbox__table-text">Eliza Josceline</div>
-										</td>
-										<td>
-											<div class="dashbox__table-text dashbox__table-text--rate"><i class="ti ti-star"></i> 7.2</div>
-										</td>
-									</tr>
-									<tr>
-										<td>
-											<div class="dashbox__table-text dashbox__table-text--grey">602</div>
-										</td>
-										<td>
-											<div class="dashbox__table-text"><a href="#">Benched</a></div>
-										</td>
-										<td>
-											<div class="dashbox__table-text">Ketut</div>
-										</td>
-										<td>
-											<div class="dashbox__table-text dashbox__table-text--rate"><i class="ti ti-star"></i> 6.3</div>
-										</td>
-									</tr>
-									<tr>
-										<td>
-											<div class="dashbox__table-text dashbox__table-text--grey">538</div>
-										</td>
-										<td>
-											<div class="dashbox__table-text"><a href="#">Whitney</a></div>
-										</td>
-										<td>
-											<div class="dashbox__table-text">Brian Cranston</div>
-										</td>
-										<td>
-											<div class="dashbox__table-text dashbox__table-text--rate"><i class="ti ti-star"></i> 8.4</div>
-										</td>
-									</tr>
-									<tr>
-										<td>
-											<div class="dashbox__table-text dashbox__table-text--grey">129</div>
-										</td>
-										<td>
-											<div class="dashbox__table-text"><a href="#">Blindspotting</a></div>
-										</td>
-										<td>
-											<div class="dashbox__table-text">Quang</div>
-										</td>
-										<td>
-											<div class="dashbox__table-text dashbox__table-text--rate"><i class="ti ti-star"></i> 9.0</div>
-										</td>
-									</tr>
-									<tr>
-										<td>
-											<div class="dashbox__table-text dashbox__table-text--grey">360</div>
-										</td>
-										<td>
-											<div class="dashbox__table-text"><a href="#">Another</a></div>
-										</td>
-										<td>
-											<div class="dashbox__table-text">Jackson Brown</div>
-										</td>
-										<td>
-											<div class="dashbox__table-text dashbox__table-text--rate"><i class="ti ti-star"></i> 7.7</div>
-										</td>
-									</tr>
-								</tbody>
-							</table>
-						</div>
-					</div>
-				</div>
-				<!-- end dashbox -->
 			</div>
 		</div>
 	</main>
@@ -594,7 +319,94 @@
 	<script src="js/slimselect.min.js"></script>
 	<script src="js/smooth-scrollbar.js"></script>
 	<script src="js/admin.js"></script>
+<script>
+	// Hàm để lấy số liệu từ API dashboard
+	async function fetchDashboardData() {
+		const token = localStorage.getItem('token'); // Lấy token từ localStorage
+		const response = await fetch('http://localhost:8080/api/v1/dashboard', {
+			method: 'GET',
+			headers: {
+				'Authorization': `Bearer ${token}`, // Gửi token trong headers
+			},
+		});
+
+		if (!response.ok) {
+			alert("Please log in with admin account!")
+			localStorage.removeItem('token'); // Xóa token nếu có lỗi
+			window.location.href = '/signin'; // Chuyển hướng về trang đăng nhập
+			return; // Dừng thực hiện hàm
+		}
+
+		const data = await response.json(); // Lấy dữ liệu từ phản hồi
+		// Cập nhật giao diện với dữ liệu nhận được
+		document.querySelector('#total-movies').textContent = data.movies;
+		document.querySelector('#total-views').textContent = data.views;
+		document.querySelector('#total-rates').textContent = data.rates;
+		document.querySelector('#total-users').textContent = data.user;
+	}
+
+	// Hàm để lấy số liệu từ API movie
+	async function fetchTopRatedMovies() {
+		const response = await fetch('http://localhost:8080/api/v1/movie/most-rates/10', {
+			method: 'GET',
+		});
+
+		if (!response.ok) {
+			console.error('Error fetching top rated movies');
+			return; // Dừng thực hiện hàm
+		}
+
+		const movies = await response.json(); // Lấy dữ liệu từ phản hồi
+		const tableBody = document.querySelector('#rate-table');
+		tableBody.innerHTML = ''; // Xóa nội dung cũ trong bảng
+
+		movies.forEach(movie => {
+			const row = document.createElement('tr'); // Tạo một hàng mới
+			row.innerHTML = `
+            <td><div class="dashbox__table-text dashbox__table-text--grey">${movie.id}</div></td>
+            <td><div class="dashbox__table-text"><a href="#">${movie.name}</a></div></td>
+<!--            <td><div class="dashbox__table-text">${movie.category.join(', ')}</div></td>-->
+            <td><div class="dashbox__table-text dashbox__table-text--rate"><i class="ti ti-star"></i> ${movie.rate}</div></td>
+            <td><div class="dashbox__table-text dashbox__table-text--rate">${movie.view}</div></td>
+        `;
+			tableBody.appendChild(row); // Thêm hàng mới vào bảng
+		});
+	}
+	async function fetchTopViewMovies() {
+		const response = await fetch('http://localhost:8080/api/v1/movie/most-views/10', {
+			method: 'GET',
+		});
+
+		if (!response.ok) {
+			console.error('Error fetching top rated movies');
+			return; // Dừng thực hiện hàm
+		}
+
+		const movies = await response.json(); // Lấy dữ liệu từ phản hồi
+		const tableBody = document.querySelector('#view-table');
+		tableBody.innerHTML = ''; // Xóa nội dung cũ trong bảng
+
+		movies.forEach(movie => {
+			const row = document.createElement('tr'); // Tạo một hàng mới
+			row.innerHTML = `
+            <td><div class="dashbox__table-text dashbox__table-text--grey">${movie.id}</div></td>
+            <td><div class="dashbox__table-text"><a href="#">${movie.name}</a></div></td>
+<!--            <td><div class="dashbox__table-text">${movie.category.join(', ')}</div></td>-->
+            <td><div class="dashbox__table-text dashbox__table-text--rate"><i class="ti ti-star"></i> ${movie.rate}</div></td>
+            <td><div class="dashbox__table-text dashbox__table-text--rate">${movie.view}</div></td>
+        `;
+			tableBody.appendChild(row); // Thêm hàng mới vào bảng
+		});
+	}
+
+	// Gọi các hàm để lấy dữ liệu
+	fetchDashboardData();
+	fetchTopRatedMovies();
+	fetchTopViewMovies();
+
+</script>
 </body>
+
 
 <!-- Mirrored from hotflix.volkovdesign.com/admin/index.html by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 01 Oct 2024 14:35:42 GMT -->
 </html>

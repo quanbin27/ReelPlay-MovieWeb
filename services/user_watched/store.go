@@ -26,6 +26,7 @@ func (s *Store) GetWatchPosition(userId, episodeId int) (int, error) {
 	}
 	return userWatched.LastPosition, nil
 }
+
 func (s *Store) CreateUserWatched(userId int, episodeId int) error {
 	// Kiểm tra xem bản ghi đã tồn tại chưa
 	var userWatched types.UserWatched

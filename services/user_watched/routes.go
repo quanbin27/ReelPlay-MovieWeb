@@ -9,18 +9,20 @@ import (
 )
 
 type Handler struct {
-	userStore  types.UserStore
-	watchStore types.WatchStore
+	userStore    types.UserStore
+	watchStore   types.WatchStore
+	episodeStore types.EpisodeStore
+	movieStore   types.MovieStore
 }
 
-func NewHandler(store types.UserStore, watchStore types.WatchStore) *Handler {
-	return &Handler{store, watchStore}
+func NewHandler(store types.UserStore, watchStore types.WatchStore, episodeStore types.EpisodeStore, movieStore types.MovieStore) *Handler {
+	return &Handler{store, watchStore, episodeStore, movieStore}
 }
 func (h *Handler) RegisterRoutes(e *echo.Group) {
 	g := e.Group("", auth.WithJWTAuth(h.userStore))
-	g.POST("/watch-position", h.UpdateWatchPosition)
+	g.PUT("/watch-position", h.UpdateWatchPosition)
 	g.GET("/watch-position", h.GetWatchPosition)
-	g.PUT("/watch-position", h.CreateUserWatched)
+	g.POST("/watch-position", h.CreateUserWatched)
 }
 func (h *Handler) UpdateWatchPosition(c echo.Context) error {
 	userId, _ := strconv.Atoi(c.QueryParam("user_id"))
@@ -69,7 +71,18 @@ func (h *Handler) CreateUserWatched(c echo.Context) error {
 		return c.JSON(http.StatusBadRequest, echo.Map{"error": "Invalid episode_id"})
 	}
 
-	// Nếu không tìm thấy bản ghi, tạo mới
+	// Lấy Episode để truy xuất MovieID
+
+	episode, err := h.episodeStore.GetEpisodeById(episodeId)
+	if err != nil {
+		return c.JSON(http.StatusNotFound, echo.Map{"error": "Episode not found"})
+	}
+	// Tăng view cho Movie
+	if err := h.movieStore.IncrementView(episode.MovieID); err != nil {
+		return c.JSON(http.StatusInternalServerError, echo.Map{"error": "Unable to increment movie view"})
+	}
+
+	// Tạo bản ghi UserWatched
 	err = h.watchStore.CreateUserWatched(userId, episodeId)
 	if err != nil {
 		return c.JSON(http.StatusInternalServerError, echo.Map{

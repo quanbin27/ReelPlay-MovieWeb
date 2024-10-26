@@ -42,11 +42,16 @@ type UserStore interface {
 	UpdateUserInfo(userID int, updatedData map[string]interface{}) error
 	UpdateUserPassword(userID int, newPassword string) error
 	UnlockUser(userID int) error
+	CountUsers() (int, error)
 }
 type EmailService interface {
 	SendResetPasswordEmail(to, resetLink string) error
 }
 type MovieStore interface {
+	GetNewMovies(limit int) ([]MovieItemResponse, error)
+	GetMostViewRates(limit int) ([]MovieItemResponse, error)
+	GetMostViewMovies(limit int) ([]MovieItemResponse, error)
+	IncrementView(movieID int) error
 	GetAllMovies() ([]Movie, error)
 	GetMoviesWithPagination(offset, limit int) ([]MovieItemResponse, error)
 	GetMovieById(id int) (MovieResponse, error)
@@ -60,6 +65,9 @@ type MovieStore interface {
 	DeleteMovie(id int) error
 	UpdateNumofEp(movieId int, num int) error
 	UpdateAverageDuration(movieId int) error
+	CountMovies() (int, error)
+	CountViews() (int, error)
+	SumRates() (int, error)
 }
 type EpisodeStore interface {
 	GetEpisodeByMovieAndEpisodeId(movieId, episodeNumber int) (*Episode, error)
@@ -68,6 +76,7 @@ type EpisodeStore interface {
 	UpdateEpisode(id int, episode *UpdateEpisodeRequest) error
 	CreateEpisode(episode *Episode) error
 	SearchEpisodes(keyword string, page int, limit int) ([]SearchEpisodesResponse, int64, error)
+	CountEpisodes() (int, error)
 }
 type RateStore interface {
 	CreateMovieRating(rating *Rate) error
@@ -110,7 +119,8 @@ type MovieResponse struct {
 	Thumbnail   string   `json:"thumbnail"`
 	Trailer     string   `json:"trailer"`
 	Rate        float32  `json:"rate"`
-	IsFree      bool     `json:"is_free"`
+	View        int      `json:"view"`
+	IsRecommend bool     `json:"is_recommend"`
 	Category    []string `json:"category"`
 	Actor       []string `json:"actor"`
 	Director    []string `json:"director"`
@@ -120,8 +130,8 @@ type MovieItemResponse struct {
 	Name      string   `json:"name"`
 	Rate      float32  `json:"rate"`
 	Category  []string `json:"category"`
+	View      int      `json:"view"`
 	Thumbnail string   `json:"thumbnail"`
-	IsFree    bool     `json:"is_free"`
 }
 
 type CreateCommentRequest struct {
@@ -175,6 +185,7 @@ type Movie struct {
 	Trailer       string         `json:"trailer"`
 	Rate          float32        `json:"rate"`
 	PredictRate   float32        `json:"predict_rate"`
+	View          int            `json:"view" gorm:"default:0" `
 	IsRecommended bool           `json:"is_recommended"`
 	Category      []Category     `gorm:"many2many:movie_category"`
 	Actor         []Actor        `gorm:"many2many:movie_actor"`
@@ -203,21 +214,17 @@ type AllMovieResponse struct {
 	Name string `json:"name"`
 }
 type UpdateMovieRequest struct {
-	Name          string  `json:"name"`
-	Year          int     `json:"year"`
-	NumEpisodes   int     `json:"num_episodes"`
-	Description   string  `json:"description"`
-	Language      string  `json:"language"`
-	CountryID     int     `json:"country_id"`
-	TimeForEp     int     `json:"time_for_ep"`
-	Thumbnail     string  `json:"thumbnail"`
-	Trailer       string  `json:"trailer"`
-	Rate          float32 `json:"rate"`
-	PredictRate   float32 `json:"predict_rate"`
-	IsRecommended bool    `json:"is_recommended"`
-	CategoryIds   []int   `json:"category_ids"` // Sử dụng CategoryIds
-	ActorIds      []int   `json:"actor_ids"`    // Sử dụng ActorIds
-	DirectorIds   []int   `json:"director_ids"` // Sử dụng DirectorIds
+	Name          string `json:"name"`
+	Year          int    `json:"year"`
+	Description   string `json:"description"`
+	Language      string `json:"language"`
+	CountryID     int    `json:"country_id"`
+	Thumbnail     string `json:"thumbnail"`
+	Trailer       string `json:"trailer"`
+	IsRecommended bool   `json:"is_recommended"`
+	CategoryIds   []int  `json:"category_ids"` // Sử dụng CategoryIds
+	ActorIds      []int  `json:"actor_ids"`    // Sử dụng ActorIds
+	DirectorIds   []int  `json:"director_ids"` // Sử dụng DirectorIds
 }
 type Country struct {
 	ID   int    `gorm:"primaryKey" json:"id"`

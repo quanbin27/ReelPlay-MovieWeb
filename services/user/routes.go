@@ -181,7 +181,10 @@ func (h *Handler) handleLogin(c echo.Context) error {
 	if err != nil {
 		return c.JSON(http.StatusInternalServerError, map[string]string{"error": "internal services error"})
 	}
-	return c.JSON(http.StatusOK, map[string]string{"token": token})
+	return c.JSON(http.StatusOK, map[string]interface{}{
+		"token":   token,
+		"role_id": u.RoleID,
+	})
 }
 
 func (h *Handler) handleRegister(c echo.Context) error {

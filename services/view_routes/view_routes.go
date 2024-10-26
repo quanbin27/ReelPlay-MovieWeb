@@ -20,7 +20,7 @@ func (h *Handler) RegisterRoutes(e *echo.Echo) {
 	e.File("/signin", "templates/signin.html")
 	e.File("/signup", "templates/signup.html")
 	e.File("/profile", "templates/profile.html")
-	e.File("/pricing", "templates/pricing.html")
+	e.File("/new-movie", "templates/new-movie.html")
 	e.File("/forgot", "templates/forgot.html")
 	e.File("/about", "templates/about.html")
 	e.File("/error", "templates/404.html")
@@ -39,7 +39,7 @@ func (h *Handler) RegisterRoutes(e *echo.Echo) {
 	a := e.Group("/admin")
 	a.Static("/", "templates/admin/")
 	a.File("/index", "templates/admin/index.html")
-	a.File("/movie", "templates/admin/catalog.html")
+	a.File("/movie", "templates/admin/movie.html")
 	a.File("/actor", "templates/admin/actor.html")
 	a.File("/add-actor", "templates/admin/add-actor.html")
 	a.File("/edit-actor", "templates/admin/edit-actor.html")
@@ -51,6 +51,8 @@ func (h *Handler) RegisterRoutes(e *echo.Echo) {
 	a.File("/episode", "templates/admin/episode.html")
 	a.File("/add-episode", "templates/admin/add-episode.html")
 	a.File("/edit-episode", "templates/admin/edit-episode.html")
+	a.File("/add-movie", "templates/admin/add-item.html")
+	a.File("/edit-movie", "templates/admin/edit-movie.html")
 }
 func validate(c echo.Context) error {
 	return c.JSON(http.StatusOK, map[string]string{"status": "valid"})

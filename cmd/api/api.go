@@ -54,7 +54,7 @@ func (s *APIServer) Run() error {
 	userHandler := user.NewHandler(userStore, emailService)
 	directorHandler := director.NewHandler(directorStore, userStore)
 	actorHandler := actor.NewHandler(actorStore, userStore)
-	userWatchedHandler := user_watched.NewHandler(userStore, userWatchedStore)
+	userWatchedHandler := user_watched.NewHandler(userStore, userWatchedStore, episodeStore, movieStore)
 	movieHandler := movie.NewHandler(userStore, movieStore, categoryStore, actorStore, directorStore, categoryFitStore)
 	episodeHandler := episode.NewHandler(episodeStore, userStore, movieStore)
 	cmtHandler := comment.NewHandler(cmtStore, userStore)

@@ -70,7 +70,7 @@
 							<!-- end dropdown -->
 
 							<li class="header__nav-item">
-								<a href="pricing.html" class="header__nav-link">New movies</a>
+								<a href="new-movie.html" class="header__nav-link">New movies</a>
 							</li>
 
 							<!-- dropdown -->
@@ -206,6 +206,7 @@
 										<li><span>Language:</span> <span id="movie-language"></span></li>
 										<li><span>Number of episodes:</span> <span id="movie-num-episodes"></span></li>
 										<li><span>Country:</span> <span id="movie-country"></span></li>
+										<li><span>Views:</span> <span id="movie-view"></span></li>
 									</ul>
 
 									<div class="item__description">
@@ -855,7 +856,7 @@
 		async function createUserWatched(userId, episodeId) {
 			try {
 				const response = await fetch(`http://localhost:8080/api/v1/watch-position?user_id=${userId}&episode_id=${episodeId}`, {
-					method: 'PUT',
+					method: 'POST',
 					headers: {
 						'Content-Type': 'application/json',
 						'Authorization': `Bearer ${localStorage.getItem('token')}` // Gửi token trong header
@@ -897,7 +898,7 @@
 		async function updateWatchPosition(userId, episodeId, position) {
 			try {
 				const response = await fetch(`http://localhost:8080/api/v1/watch-position?user_id=${userId}&episode_id=${episodeId}&position=${position}`, {
-					method: 'POST',
+					method: 'PUT',
 					headers: {
 						'Content-Type': 'application/json',
 						'Authorization': `Bearer ${localStorage.getItem('token')}` // Gửi token trong header
@@ -940,6 +941,7 @@
 			document.getElementById('movie-description').innerText = movie.description;
 			document.getElementById('movie-language').innerText = movie.language; // Bạn cần thêm trường này vào HTML nếu cần
 			document.getElementById('movie-country').innerText = movie.country;
+			document.getElementById('movie-view').innerText = movie.view;
 			document.getElementById('movie-actor').innerText = movie.actor ? movie.actor.join(', ') : 'Updating';
 			document.getElementById('movie-director').innerText = movie.director ? movie.director.join(', ') : 'Updating';
 			document.getElementById('movie-category').innerText = movie.category ? movie.category.join(', ') : 'Updating';

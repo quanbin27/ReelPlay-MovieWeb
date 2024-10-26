@@ -27,7 +27,7 @@ func (h *Handler) RegisterRoutes(e *echo.Group) {
 
 	e.DELETE("/director/:id", h.DeleteDirectorHandler, auth.WithJWTAdminAuth(h.userStore))
 
-	//e.GET("/director", h.GetAllDirectorsHandler)
+	e.GET("/directors", h.GetAllDirectorsHandler)
 	e.GET("/director/:id", h.GetDirectorByIDHandler)
 	e.GET("/director", h.SearchDirectorsHandler)
 

@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<!-- Mirrored from hotflix.volkovdesign.com/admin/comments.html by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 01 Oct 2024 14:35:45 GMT -->
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -10,7 +9,7 @@
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="css/slimselect.css">
     <link rel="stylesheet" href="css/admin.css">
-
+    <script src="../js/logout.js"></script>
     <!-- Icon font -->
     <link rel="stylesheet" href="webfont/tabler-icons.min.css">
 
@@ -21,7 +20,7 @@
     <meta name="description" content="Online Movies, TV Shows & Cinema HTML Template">
     <meta name="keywords" content="">
     <meta name="author" content="Dmitry Volkov">
-    <title>HotFlix – Online Movies, TV Shows & Cinema HTML Template</title>
+    <title>ReelPlay– Online Movies, TV Shows & Cinema </title>
 </head>
 
 <body>
@@ -63,7 +62,7 @@
             <span>Admin</span>
         </div>
 
-        <button class="sidebar__user-btn" type="button">
+        <button class="sidebar__user-btn" type="button" onclick="logout()">
             <i class="ti ti-logout"></i>
         </button>
     </div>
@@ -73,45 +72,34 @@
     <div class="sidebar__nav-wrap">
         <ul class="sidebar__nav">
             <li class="sidebar__nav-item">
-                <a href="index.html" class="sidebar__nav-link"><i class="ti ti-layout-grid"></i> <span>Dashboard</span></a>
+                <a href="/admin/index" class="sidebar__nav-link"><i class="ti ti-layout-grid"></i> <span>Dashboard</span></a>
             </li>
 
             <li class="sidebar__nav-item">
-                <a href="catalog.html" class="sidebar__nav-link"><i class="ti ti-movie"></i> <span>Catalog</span></a>
+                <a href="/admin/movie" class="sidebar__nav-link "><i class="ti ti-movie"></i> <span>Movies</span></a>
             </li>
 
             <li class="sidebar__nav-item">
-                <a href="users.html" class="sidebar__nav-link"><i class="ti ti-users"></i> <span>Users</span></a>
+                <a href="/admin/user" class="sidebar__nav-link"><i class="ti ti-users"></i> <span>Users</span></a>
             </li>
 
             <li class="sidebar__nav-item">
-                <a href="comments.html" class="sidebar__nav-link sidebar__nav-link--active"><i class="ti ti-message"></i> <span>Comments</span></a>
+                <a href="/admin/actor" class="sidebar__nav-link"><i class="ti ti-users-minus"></i> <span>Actors</span></a>
             </li>
 
             <li class="sidebar__nav-item">
-                <a href="reviews.html" class="sidebar__nav-link"><i class="ti ti-star-half-filled"></i> <span>Reviews</span></a>
+                <a href="/admin/director" class="sidebar__nav-link"><i class="ti ti-users-minus"></i> <span>Directors</span></a>
             </li>
-
             <li class="sidebar__nav-item">
-                <a href="settings.html" class="sidebar__nav-link"><i class="ti ti-settings"></i> <span>Settings</span></a>
+                <a href="/admin/episode" class="sidebar__nav-link sidebar__nav-link--active"><i class="ti ti-badge-hd"></i> <span>Episodes</span></a>
             </li>
 
-            <!-- dropdown -->
-            <li class="sidebar__nav-item">
-                <a class="sidebar__nav-link" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="ti ti-files"></i> <span>Pages</span> <i class="ti ti-chevron-down"></i></a>
 
-                <ul class="dropdown-menu sidebar__dropdown-menu">
-                    <li><a href="add-item.html">Add item</a></li>
-                    <li><a href="edit-user.html">Edit user</a></li>
-                    <li><a href="signin.html">Sign In</a></li>
-                    <li><a href="signup.html">Sign Up</a></li>
-                    <li><a href="forgot.html">Forgot password</a></li>
-                    <li><a href="404.html">404 Page</a></li>
-                </ul>
-            </li>
             <!-- end dropdown -->
 
-
+            <li class="sidebar__nav-item">
+                <a href="/index" class="sidebar__nav-link"><i class="ti ti-arrow-left"></i> <span>Back to ReelPlay</span></a>
+            </li>
         </ul>
     </div>
     <!-- end sidebar nav -->

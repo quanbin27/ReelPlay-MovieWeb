@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+	<!-- CSS -->
+	<link rel="stylesheet" href="css/bootstrap.min.css">
+	<link rel="stylesheet" href="css/slimselect.css">
+	<link rel="stylesheet" href="css/admin.css">
+	<script src="../js/logout.js"></script>
+	<!-- Icon font -->
+	<link rel="stylesheet" href="webfont/tabler-icons.min.css">
+
+	<!-- Favicons -->
+	<link rel="icon" type="image/png" href="icon/favicon-32x32.png" sizes="32x32">
+	<link rel="apple-touch-icon" href="icon/favicon-32x32.png">
+
+	<meta name="description" content="Online Movies, TV Shows & Cinema HTML Template">
+	<meta name="keywords" content="">
+	<meta name="author" content="Dmitry Volkov">
+	<title>ReelPlay– Online Movies, TV Shows & Cinema </title>
+</head>
+
+<body>
+<!-- header -->
+<header class="header">
+	<div class="header__content">
+		<!-- header logo -->
+		<a href="index.html" class="header__logo">
+			<img src="img/logo.svg" alt="">
+		</a>
+		<!-- end header logo -->
+
+		<!-- header menu btn -->
+		<button class="header__btn" type="button">
+			<span></span>
+			<span></span>
+			<span></span>
+		</button>
+		<!-- end header menu btn -->
+	</div>
+</header>
+<!-- end header -->
+
+<!-- sidebar -->
+<div class="sidebar">
+	<!-- sidebar logo -->
+	<a href="index.html" class="sidebar__logo">
+		<img src="img/logo.svg" alt="">
+	</a>
+	<!-- end sidebar logo -->
+
+	<!-- sidebar user -->
+	<div class="sidebar__user">
+		<div class="sidebar__user-img">
+			<img src="img/user.svg" alt="">
+		</div>
+
+		<div class="sidebar__user-title">
+			<span>Admin</span>
+		</div>
+
+		<button class="sidebar__user-btn" type="button" onclick="logout()">
+			<i class="ti ti-logout"></i>
+		</button>
+	</div>
+	<!-- end sidebar user -->
+
+	<!-- sidebar nav -->
+	<div class="sidebar__nav-wrap">
+		<ul class="sidebar__nav">
+			<li class="sidebar__nav-item">
+				<a href="/admin/index" class="sidebar__nav-link"><i class="ti ti-layout-grid"></i> <span>Dashboard</span></a>
+			</li>
+
+			<li class="sidebar__nav-item">
+				<a href="/admin/movie" class="sidebar__nav-link sidebar__nav-link--active"><i class="ti ti-movie"></i> <span>Movies</span></a>
+			</li>
+
+			<li class="sidebar__nav-item">
+				<a href="/admin/user" class="sidebar__nav-link"><i class="ti ti-users"></i> <span>Users</span></a>
+			</li>
+
+			<li class="sidebar__nav-item">
+				<a href="/admin/actor" class="sidebar__nav-link"><i class="ti ti-users-minus"></i> <span>Actors</span></a>
+			</li>
+
+			<li class="sidebar__nav-item">
+				<a href="/admin/director" class="sidebar__nav-link"><i class="ti ti-users-minus"></i> <span>Directors</span></a>
+			</li>
+			<li class="sidebar__nav-item">
+				<a href="/admin/episode" class="sidebar__nav-link"><i class="ti ti-badge-hd"></i> <span>Episodes</span></a>
+			</li>
+
+
+			<!-- end dropdown -->
+
+			<li class="sidebar__nav-item">
+				<a href="/index" class="sidebar__nav-link"><i class="ti ti-arrow-left"></i> <span>Back to ReelPlay</span></a>
+			</li>
+		</ul>
+	</div>
+	<!-- end sidebar nav -->
+
+	<!-- sidebar copyright -->
+	<!-- end sidebar copyright -->
+</div>
+	<!-- end sidebar -->
+
+	<!-- main content -->
+	<main class="main">
+		<div class="container-fluid">
+			<div class="row">
+				<!-- main title -->
+				<div class="col-12">
+					<div class="main__title">
+						<h2>Movies</h2>
+
+
+						<div class="main__title-wrap">
+							<a href="/admin/add-movie" class="main__title-link main__title-link--wrap">Add movie</a>
+
+							<!-- search -->
+							<form action="#" class="main__title-form">
+								<input type="text" placeholder="Find movie / tv series..">
+								<button type="button">
+									<i class="ti ti-search"></i>
+								</button>
+							</form>
+							<!-- end search -->
+						</div>
+					</div>
+				</div>
+				<!-- end main title -->
+
+				<!-- items -->
+				<div class="col-12">
+					<div class="catalog catalog--1">
+						<table class="catalog__table">
+							<thead>
+								<tr>
+									<th>ID</th>
+									<th>TITLE</th>
+									<th>RATING</th>
+									<th>CATEGORY</th>
+									<th>VIEWS</th>
+									<th>ACTIONS</th>
+								</tr>
+							</thead>
+
+							<tbody>
+								<tr>
+									<td>
+										<div class="catalog__text">11</div>
+									</td>
+									<td>
+										<div class="catalog__text"><a href="#">I Dream in Another Language</a></div>
+									</td>
+									<td>
+										<div class="catalog__text catalog__text--rate">7.9</div>
+									</td>
+									<td>
+										<div class="catalog__text">Movie</div>
+									</td>
+									<td>
+										<div class="catalog__text">1392</div>
+									</td>
+									<td>
+										<div class="catalog__btns">
+											<a href="/edit-movie" class="catalog__btn catalog__btn--edit">
+												<i class="ti ti-edit"></i>
+											</a>
+											<button type="button" data-bs-toggle="modal" class="catalog__btn catalog__btn--delete" data-bs-target="#modal-delete">
+												<i class="ti ti-trash"></i>
+											</button>
+										</div>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+				<!-- end items -->
+
+				<!-- paginator -->
+				<div class="col-12">
+					<div class="main__paginator">
+						<!-- amount -->
+						<!-- end amount -->
+
+						<ul class="main__paginator-list">
+							<li>
+								<a href="#">
+									<i class="ti ti-chevron-left"></i>
+									<span>Prev</span>
+								</a>
+							</li>
+							<li>
+								<a href="#">
+									<span>Next</span>
+									<i class="ti ti-chevron-right"></i>
+								</a>
+							</li>
+						</ul>
+
+						<ul class="paginator">
+							<li class="paginator__item paginator__item--prev">
+								<a href="#"><i class="ti ti-chevron-left"></i></a>
+							</li>
+							<li class="paginator__item"><a href="#">1</a></li>
+							<li class="paginator__item paginator__item--active"><a href="#">2</a></li>
+							<li class="paginator__item"><a href="#">3</a></li>
+							<li class="paginator__item"><a href="#">4</a></li>
+							<li class="paginator__item"><span>...</span></li>
+							<li class="paginator__item"><a href="#">29</a></li>
+							<li class="paginator__item"><a href="#">30</a></li>
+							<li class="paginator__item paginator__item--next">
+								<a href="#"><i class="ti ti-chevron-right"></i></a>
+							</li>
+						</ul>
+					</div>
+				</div>
+				<!-- end paginator -->
+			</div>
+		</div>
+	</main>
+	<!-- end main content -->
+
+	<!-- status modal -->
+	<div class="modal fade" id="modal-status" tabindex="-1" aria-labelledby="modal-status" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered">
+			<div class="modal-content">
+				<div class="modal__content">
+					<form action="#" class="modal__form">
+						<h4 class="modal__title">Status change</h4>
+
+						<p class="modal__text">Are you sure about immediately change status?</p>
+
+						<div class="modal__btns">
+							<button class="modal__btn modal__btn--apply" type="button"><span>Apply</span></button>
+							<button class="modal__btn modal__btn--dismiss" type="button" data-bs-dismiss="modal" aria-label="Close"><span>Dismiss</span></button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- end status modal -->
+
+	<!-- delete modal -->
+	<div class="modal fade" id="modal-delete" tabindex="-1" aria-labelledby="modal-delete" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered">
+			<div class="modal-content">
+				<div class="modal__content">
+					<form action="#" class="modal__form">
+						<h4 class="modal__title">Item delete</h4>
+
+						<p class="modal__text">Are you sure to permanently delete this item?</p>
+
+						<div class="modal__btns">
+							<button class="modal__btn modal__btn--apply" type="button"><span>Delete</span></button>
+							<button class="modal__btn modal__btn--dismiss" type="button" data-bs-dismiss="modal" aria-label="Close"><span>Dismiss</span></button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- end delete modal -->
+
+	<!-- JS -->
+	<script src="js/bootstrap.bundle.min.js"></script>
+	<script src="js/slimselect.min.js"></script>
+	<script src="js/smooth-scrollbar.js"></script>
+	<script src="js/admin.js"></script>
+</body>
+<script>
+	document.addEventListener("DOMContentLoaded", function () {
+		const apiUrl = "http://localhost:8080/api/v1/movie/search";
+		const tableBody = document.querySelector(".catalog__table tbody");
+		const paginatorList = document.querySelector(".paginator");
+		const searchForm = document.querySelector(".main__title-form");
+		let currentPage = 1;
+		const limit = 15;
+
+		function fetchMovies(query = "", page = 1) {
+			fetch(`${apiUrl}?q=${query}&page=${page}&limit=${limit}`)
+					.then(response => response.json())
+					.then(data => {
+						renderMovies(data.movies);
+						updatePaginator(data.page, data.total);
+					})
+					.catch(error => console.error("Error fetching movies:", error));
+		}
+
+		function renderMovies(movies) {
+			tableBody.innerHTML = "";
+			movies.forEach(movie => {
+				const row = document.createElement("tr");
+				row.innerHTML = `
+                <td><div class="catalog__text">${movie.id}</div></td>
+                <td><div class="catalog__text"><a href="#">${movie.name}</a></div></td>
+                <td><div class="catalog__text catalog__text--rate">${movie.rate}</div></td>
+                <td><div class="catalog__text">${movie.category?.join(", ") ?? "updating"}</div></td>
+                <td><div class="catalog__text">${movie.view}</div></td>
+                <td>
+                    <div class="catalog__btns">
+                        <a href="/admin/edit-movie?movieId=${movie.id}" class="catalog__btn catalog__btn--edit"><i class="ti ti-edit"></i></a>
+						<button type="button" class="catalog__btn catalog__btn--delete" onclick="deleteMovie(${movie.id})">
+                            <i class="ti ti-trash"></i>
+                        </button>                    </div>
+                </td>
+            `;
+				tableBody.appendChild(row);
+			});
+		}
+
+		function updatePaginator(current, total) {
+			const totalPages = Math.ceil(total / limit);
+			paginatorList.innerHTML = `
+            <li class="paginator__item paginator__item--prev ${current === 1 ? "disabled" : ""}">
+                <a href="#" onclick="navigatePage(${current - 1})"><i class="ti ti-chevron-left"></i></a>
+            </li>
+        `;
+			for (let i = 1; i <= totalPages; i++) {
+				paginatorList.innerHTML += `
+                <li class="paginator__item ${i === current ? "paginator__item--active" : ""}">
+                    <a href="#" onclick="navigatePage(${i})">${i}</a>
+                </li>
+            `;
+			}
+			paginatorList.innerHTML += `
+            <li class="paginator__item paginator__item--next ${current === totalPages ? "disabled" : ""}">
+                <a href="#" onclick="navigatePage(${current + 1})"><i class="ti ti-chevron-right"></i></a>
+            </li>
+        `;
+		}
+
+		// Chuyển navigatePage thành hàm toàn cục
+		window.navigatePage = function(page) {
+			if (page > 0) {
+				currentPage = page;
+				const query = searchForm.querySelector("input").value;
+				fetchMovies(query, currentPage);
+			}
+		}
+
+		searchForm.addEventListener("click", function (event) {
+			event.preventDefault();
+			const query = searchForm.querySelector("input").value;
+			currentPage = 1;
+			fetchMovies(query, currentPage);
+		});
+		window.deleteMovie = function(movieId) {
+			const token = localStorage.getItem("token"); // Lấy token từ localStorage
+			if (!token) {
+				alert("Bạn cần đăng nhập để xóa phim.");
+				return;
+			}
+
+			fetch(`http://localhost:8080/api/v1/movie/${movieId}`, {
+				method: "DELETE",
+				headers: {
+					"Authorization": `Bearer ${token}`,
+					"Content-Type": "application/json"
+				}
+			})
+					.then(response => {
+						if (response.ok) {
+							alert("Xóa phim thành công!");
+							fetchMovies(searchForm.querySelector("input").value, currentPage); // Cập nhật lại danh sách phim
+						} else {
+							alert("Xóa phim thất bại.");
+						}
+					})
+					.catch(error => console.error("Error deleting movie:", error));
+		};
+		fetchMovies();
+	});
+</script>
+
+<!-- Mirrored from hotflix.volkovdesign.com/admin/movie.html by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 01 Oct 2024 14:35:45 GMT -->
+</html>
