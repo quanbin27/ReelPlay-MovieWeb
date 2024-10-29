@@ -43,11 +43,14 @@ type UserStore interface {
 	UpdateUserPassword(userID int, newPassword string) error
 	UnlockUser(userID int) error
 	CountUsers() (int, error)
+	UpdateInfo(userID int, updatedData map[string]interface{}) error
 }
 type EmailService interface {
 	SendResetPasswordEmail(to, resetLink string) error
 }
 type MovieStore interface {
+	GetSeriesMovies(limit int) ([]MovieItemResponse, error)
+	GetFeaturesMovies(limit int) ([]MovieItemResponse, error)
 	GetNewMovies(limit int) ([]MovieItemResponse, error)
 	GetMostViewRates(limit int) ([]MovieItemResponse, error)
 	GetMostViewMovies(limit int) ([]MovieItemResponse, error)
@@ -68,6 +71,8 @@ type MovieStore interface {
 	CountMovies() (int, error)
 	CountViews() (int, error)
 	SumRates() (int, error)
+	GetBookMarkMovies(userID int) ([]MovieItemResponse, error)
+	GetWatchingList(userId int) ([]MovieItemResponse, error)
 }
 type EpisodeStore interface {
 	GetEpisodeByMovieAndEpisodeId(movieId, episodeNumber int) (*Episode, error)
@@ -96,7 +101,6 @@ type CommentStore interface {
 	GetCommentsByUserID(userID int) ([]Comment, error)
 	DeleteComment(commentID int) error
 }
-type CategoryStore interface{}
 
 type RegisterUserPayLoad struct {
 	FirstName string `json:"firstName" validate:"required"`

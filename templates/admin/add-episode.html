@@ -128,10 +128,9 @@
                         <div class="col-12 col-xl-7">
                             <div class="row">
                                 <div class="col-12">
-                                    <div class="sign__group">
-                                        <select id="movieSelect" class="sign__input">
-                                            <option value="">Select Movie</option>
-                                            <!-- Phần option sẽ được điền bởi JavaScript -->
+                                    <div class="sign__group" >
+                                        <select id="movieSelects" class="sign__selectjs">
+
                                         </select>
                                     </div>
                                 </div>
@@ -177,40 +176,39 @@
 
 <script>
     // Sau khi trang đã tải, khởi tạo Select2
-    $(document).ready(function() {
-        $('#movieSelect').select2({
-            placeholder: "Select Movie",
-            allowClear: true,
+    var select1=new SlimSelect({
+        select: '#movieSelects',
+        settings: {
+            placeholderText: 'Select Movies',
+        },
+        data: [],
+    })
+    document.addEventListener('DOMContentLoaded', function () {
+        // Khởi tạo SlimSelect với options rỗng trước
 
-        });
 
-        // Fetch danh sách phim và thêm vào dropdown
-        fetch('/api/v1/movies')
+        // Sau đó gọi API để lấy danh sách đạo diễn
+        fetch('http://localhost:8080/api/v1/movies')
             .then(response => response.json())
             .then(data => {
-                // Kiểm tra dữ liệu trả về có phải là mảng hay không
-                if (Array.isArray(data)) {
-                    // Xóa hết option cũ trước khi thêm mới
-                    $('#movieSelect').empty().append('<option value="">Select Movie</option>');
+                // Chuyển đổi dữ liệu thành định dạng mảng đối tượng
+                const directorsData = data.map(director => ({
+                    text: director.name,
+                    value: director.id
+                }));
 
-                    // Thêm các option vào Select2
-                    data.forEach(movie => {
-                        let option = new Option(movie.name, movie.id, false, false);
-                        $('#movieSelect').append(option);
-                    });
+                console.log('Directors Data:', directorsData);
 
-                    // Refresh lại Select2 để nhận diện các option mới
-                    $('#movieSelect').trigger('change');
-                } else {
-                    console.error('Invalid data format:', data);
-                }
+                // Cập nhật data cho SlimSelect instance đã tạo
+                select1.setData(directorsData);
             })
-            .catch(error => console.error('Error fetching movies:', error));
+            .catch(error => console.error('Error fetching directors:', error));
     });
+
     document.addEventListener('DOMContentLoaded', function() {
         document.getElementById('publishBtn').addEventListener('click', function() {
             // Lấy thông tin từ các trường nhập liệu
-            const movieId = document.getElementById('movieSelect').value; // Giá trị của Select Movie
+            const movieId = document.getElementById('movieSelects').value; // Giá trị của Select Movie
             const episodeNumber = document.getElementById('episodeNumber').value;
             const linkSource = document.getElementById('linksource').value;
             const duration = document.getElementById('duration').value;

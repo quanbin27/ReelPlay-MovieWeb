@@ -32,6 +32,20 @@ func (h *Handler) RegisterRoutes(e *echo.Group) {
 	e.PUT("/user/:id/password", h.UpdateUserPasswordHandler, auth.WithJWTAdminAuth(h.store))
 	e.GET("/user/:id", h.GetUserByIDHandler, auth.WithJWTAdminAuth(h.store))
 	e.PUT("/user/:id/unlock", h.UnlockUserHandler, auth.WithJWTAdminAuth(h.store))
+	e.PUT("/me/info", h.UpdateSelfInfoHandler, auth.WithJWTAuth(h.store))
+	e.PUT("/me/password", h.ChangePasswordHandler, auth.WithJWTAuth(h.store))
+	e.GET("/me/info", h.GetInfoHandler, auth.WithJWTAuth(h.store))
+}
+func (h *Handler) GetInfoHandler(c echo.Context) error {
+	userID, err := auth.GetUserIDFromContext(c)
+	if err != nil {
+		return c.JSON(http.StatusBadRequest, map[string]string{"error": "Invalid user ID"})
+	}
+	user, err := h.store.GetUserByID(userID)
+	if err != nil {
+		return c.JSON(http.StatusBadRequest, map[string]string{"error": err.Error()})
+	}
+	return c.JSON(http.StatusOK, user)
 }
 
 // Trong file handler.go hoặc tương tự
@@ -97,6 +111,40 @@ func (h *Handler) UpdateUserInfoHandler(c echo.Context) error {
 	return c.JSON(http.StatusOK, map[string]string{"message": "User info updated successfully"})
 }
 
+func (h *Handler) ChangePasswordHandler(c echo.Context) error {
+	// Lấy userID từ param
+	userID, err := auth.GetUserIDFromContext(c)
+	if err != nil {
+		return c.JSON(http.StatusBadRequest, map[string]string{"error": "Invalid user ID"})
+	}
+
+	// Parse dữ liệu JSON từ request body
+	requestData := struct {
+		OldPassword     string `json:"old_password"`
+		Password        string `json:"new_password"`
+		ConfirmPassWord string `json:"confirm_password"`
+	}{}
+
+	if err := c.Bind(&requestData); err != nil || requestData.Password == "" || requestData.OldPassword == "" || requestData.ConfirmPassWord == "" {
+		return c.JSON(http.StatusBadRequest, map[string]string{"error": "Invalid request data or empty password"})
+	}
+	if requestData.ConfirmPassWord != requestData.Password {
+		return c.JSON(http.StatusBadRequest, map[string]string{"error": "Confirm passwords do not match"})
+	}
+	user, err := h.store.GetUserByID(userID)
+	if err != nil {
+		return c.JSON(http.StatusInternalServerError, map[string]string{"error": "Error retrieving user"})
+	}
+	if !auth.CheckPassword(user.Password, []byte(requestData.OldPassword)) {
+		return c.JSON(http.StatusUnauthorized, map[string]string{"error": "Invalid old password"})
+	}
+	err = h.store.UpdateUserPassword(userID, requestData.Password)
+	if err != nil {
+		return c.JSON(http.StatusInternalServerError, map[string]string{"error": "Error updating password"})
+	}
+	return c.JSON(http.StatusOK, map[string]string{"message": "Password updated successfully"})
+}
+
 func (h *Handler) UpdateUserPasswordHandler(c echo.Context) error {
 	// Lấy userID từ param
 	userID, err := strconv.Atoi(c.Param("id"))
@@ -158,6 +206,38 @@ func (h *Handler) ResetPassword(c echo.Context) error {
 	}
 
 	return c.JSON(http.StatusOK, map[string]string{"message": "Password updated successfully"})
+}
+func (h *Handler) UpdateSelfInfoHandler(c echo.Context) error {
+	// Lấy userID từ JWT (do người dùng tự cập nhật thông tin của chính họ)
+	userID, err := auth.GetUserIDFromContext(c) // Giả sử bạn đã có hàm getUserIDFromJWT để lấy userID từ token
+	if err != nil {
+		return c.JSON(http.StatusInternalServerError, map[string]string{"error": "Error get user id"})
+	}
+	requestData := struct {
+		FirstName string `json:"first_name"`
+		LastName  string `json:"last_name"`
+		Email     string `json:"email"`
+	}{}
+
+	if err := c.Bind(&requestData); err != nil {
+		return c.JSON(http.StatusBadRequest, map[string]string{"error": "Invalid request data"})
+	}
+
+	// Tạo map chứa dữ liệu cập nhật từ các trường đã parse
+	updatedData := map[string]interface{}{
+		"first_name": requestData.FirstName,
+		"last_name":  requestData.LastName,
+		"email":      requestData.Email,
+	}
+
+	// Gọi hàm cập nhật thông tin người dùng từ Store
+	err = h.store.UpdateInfo(userID, updatedData)
+	if err != nil {
+		return c.JSON(http.StatusInternalServerError, map[string]string{"error": "Error updating user info"})
+	}
+
+	// Trả về phản hồi thành công
+	return c.JSON(http.StatusOK, map[string]string{"message": "User info updated successfully"})
 }
 
 func (h *Handler) handleLogin(c echo.Context) error {

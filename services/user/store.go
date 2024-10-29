@@ -55,6 +55,27 @@ func (s *Store) UpdateUserInfo(userID int, updatedData map[string]interface{}) e
 	}
 	return nil
 }
+func (s *Store) UpdateInfo(userID int, updatedData map[string]interface{}) error {
+	// Chỉ cho phép cập nhật firstName, lastName và email
+	allowedFields := map[string]bool{
+		"first_name": true,
+		"last_name":  true,
+		"email":      true,
+	}
+
+	for key := range updatedData {
+		if !allowedFields[key] {
+			delete(updatedData, key) // Xóa các trường không hợp lệ
+		}
+	}
+
+	// Cập nhật thông tin người dùng
+	result := s.db.Model(&types.User{}).Where("id = ?", userID).Updates(updatedData)
+	if result.Error != nil {
+		return result.Error
+	}
+	return nil
+}
 
 func (store *Store) GetUserByEmail(email string) (*types.User, error) {
 	var user types.User

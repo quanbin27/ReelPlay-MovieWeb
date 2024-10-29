@@ -1,9 +1,9 @@
 /*----------------------------------------
 [Master Stylesheet]
 
-Project:	HotFlix
+Project:	ReelPlay
 Version:	3.0
-Primary use:	HotFlix Template
+
 ----------------------------------------*/
 /*----------------------------------------
 [Table of contents]
@@ -242,6 +242,75 @@ body::-webkit-scrollbar-thumb {
 .header__nav-link:hover,
 .header__nav-link[aria-expanded="true"] {
   color: #f9ab00;
+}
+/* Style mới cho dropdown dạng lưới */
+.header__dropdown-menu-grid {
+  display: none; /* Ẩn dropdown mặc định */
+  grid-template-columns: repeat(6, minmax(120px, 1fr));
+  gap: 15px;
+  padding: 20px;
+  min-width: 800px;
+  background-color: #222028;
+  position: absolute; /* Đảm bảo dropdown nổi lên trên */
+  top: 100%; /* Hiển thị ngay dưới nút toggle */
+  left: 0;
+  z-index: 1000; /* Đảm bảo hiển thị trên các phần tử khác */
+}
+
+/* Hiển thị dropdown khi có class show */
+.header__dropdown-menu-grid.show {
+  display: grid;
+}
+
+.header__dropdown-menu-grid li {
+  width: auto;
+  margin-bottom: 0;
+}
+
+.header__dropdown-menu-grid a {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  font-size: 16px;
+  line-height: 24px;
+  color: #fff;
+  font-weight: 400;
+  padding: 4px 0;
+}
+
+.header__dropdown-menu-grid a i {
+  font-size: 20px;
+  line-height: 24px;
+  margin-right: 8px;
+}
+
+.header__dropdown-menu-grid a:hover {
+  color: #f9ab00;
+}
+
+/* Responsive */
+@media (max-width: 1200px) {
+  .header__dropdown-menu-grid {
+    grid-template-columns: repeat(4, minmax(120px, 1fr));
+    min-width: 600px;
+  }
+}
+
+@media (max-width: 768px) {
+  .header__dropdown-menu-grid {
+    grid-template-columns: repeat(3, minmax(100px, 1fr));
+    min-width: 400px;
+  }
+}
+
+@media (max-width: 576px) {
+  .header__dropdown-menu-grid {
+    grid-template-columns: repeat(2, minmax(100px, 1fr));
+    min-width: 300px;
+    padding: 15px;
+    gap: 10px;
+  }
 }
 .header__dropdown-menu {
   position: absolute;

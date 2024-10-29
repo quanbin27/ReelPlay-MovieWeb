@@ -5,7 +5,6 @@ import (
 	"github.com/quanbin27/ReelPlay/config"
 	"github.com/quanbin27/ReelPlay/services/actor"
 	"github.com/quanbin27/ReelPlay/services/bookmark"
-	"github.com/quanbin27/ReelPlay/services/category"
 	"github.com/quanbin27/ReelPlay/services/category_fit"
 	"github.com/quanbin27/ReelPlay/services/comment"
 	"github.com/quanbin27/ReelPlay/services/director"
@@ -34,15 +33,12 @@ func NewAPIServer(addr string, db *gorm.DB) *APIServer {
 }
 func (s *APIServer) Run() error {
 	e := echo.New()
-	//e.Static("/static", "templates")
 	movieStore := movie.NewStore(s.db)
 	subrouter := e.Group("/api/v1")
 	userStore := user.NewStore(s.db)
 	viewHandler := view_routes.NewHandler(userStore)
 	viewHandler.RegisterRoutes(e)
-
 	episodeStore := episode.NewStore(s.db)
-	categoryStore := category.NewStore(s.db)
 	actorStore := actor.NewStore(s.db)
 	cmtStore := comment.NewStore(s.db)
 	bookmarkStore := bookmark.NewStore(s.db)
@@ -55,7 +51,7 @@ func (s *APIServer) Run() error {
 	directorHandler := director.NewHandler(directorStore, userStore)
 	actorHandler := actor.NewHandler(actorStore, userStore)
 	userWatchedHandler := user_watched.NewHandler(userStore, userWatchedStore, episodeStore, movieStore)
-	movieHandler := movie.NewHandler(userStore, movieStore, categoryStore, actorStore, directorStore, categoryFitStore)
+	movieHandler := movie.NewHandler(userStore, movieStore, categoryFitStore)
 	episodeHandler := episode.NewHandler(episodeStore, userStore, movieStore)
 	cmtHandler := comment.NewHandler(cmtStore, userStore)
 	categoryFitHandler := category_fit.NewHandler(categoryFitStore, userStore)

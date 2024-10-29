@@ -330,12 +330,12 @@
                         const selectedDirectorDatas=data.director;
                         const selectedActorDatas=data.actor;
                         const seledtedCategoryDatas=data.category;
-                        const selectedCategoryValues = select_genres.getData().filter(option =>
+                        const selectedCategoryValues = select_genres.getData().filter(option => seledtedCategoryDatas &&
                             seledtedCategoryDatas.includes(option.text)
                         ).map(option => option.value);
                         select_genres.setSelected(selectedCategoryValues);
                         const selectedCountryData=data.country;
-                        const selectedCountryValue = select_country.getData().filter(option =>
+                        const selectedCountryValue = select_country.getData().filter(option => selectedCountryData &&
                             selectedCountryData.includes(option.text)
                         ).map(option => option.value);
                         select_country.setSelected(selectedCountryValue);
@@ -351,7 +351,7 @@
                             .then(response => response.json())
                             .then(directorsData => {
                                 select_director.setData(directorsData.map(d => ({ text: d.name+" "+d.year.toString(), value: d.id })));
-                                const selecteDirectorValues = select_director.getData().filter(option =>
+                                const selecteDirectorValues = select_director.getData().filter(option =>selectedDirectorDatas&&
                                     selectedDirectorDatas.includes(option.text)
                                 ).map(option => option.value);
                                 select_director.setSelected(selecteDirectorValues);
@@ -361,7 +361,7 @@
                             .then(response => response.json())
                             .then(actorsData => {
                                 select_actor.setData(actorsData.map(a => ({ text: a.name+" "+a.year.toString(), value: a.id })));
-                                const selectedActorValues = select_actor.getData().filter(option =>
+                                const selectedActorValues = select_actor.getData().filter(option =>selectedActorDatas &&
                                     selectedActorDatas.includes(option.text)
                                 ).map(option => option.value);
 
@@ -391,7 +391,7 @@
             const categoryIds = Array.from(document.querySelector('#sign__genres').selectedOptions).map(option => parseInt(option.value));
             const actorIds = Array.from(document.querySelector('#sign__actor').selectedOptions).map(option => parseInt(option.value));
             const directorIds = Array.from(document.querySelector('#sign__directors').selectedOptions).map(option => parseInt(option.value));
-
+            console.log(actorIds,directorIds,categoryIds);
             // Chuẩn bị dữ liệu để gửi
             const movieData = {
                 name,

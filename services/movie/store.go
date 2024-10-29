@@ -1,6 +1,7 @@
 package movie
 
 import (
+	"fmt"
 	"github.com/quanbin27/ReelPlay/types"
 	"gorm.io/gorm"
 	"strconv"
@@ -131,6 +132,7 @@ func (s *Store) UpdateMovie(id int, updateReq *types.UpdateMovieRequest) error {
 	}
 
 	// Cập nhật các mối quan hệ
+	// Cập nhật Diễn viên (Actor)
 	if len(updateReq.ActorIds) > 0 {
 		var actors []types.Actor
 		if err := s.db.Find(&actors, updateReq.ActorIds).Error; err != nil {
@@ -139,8 +141,14 @@ func (s *Store) UpdateMovie(id int, updateReq *types.UpdateMovieRequest) error {
 		if err := s.db.Model(&existingMovie).Association("Actor").Replace(actors); err != nil {
 			return err
 		}
+	} else {
+		// Xóa tất cả liên kết diễn viên nếu không có ActorIds
+		if err := s.db.Model(&existingMovie).Association("Actor").Clear(); err != nil {
+			return err
+		}
 	}
 
+	// Cập nhật Đạo diễn (Director)
 	if len(updateReq.DirectorIds) > 0 {
 		var directors []types.Director
 		if err := s.db.Find(&directors, updateReq.DirectorIds).Error; err != nil {
@@ -149,14 +157,25 @@ func (s *Store) UpdateMovie(id int, updateReq *types.UpdateMovieRequest) error {
 		if err := s.db.Model(&existingMovie).Association("Director").Replace(directors); err != nil {
 			return err
 		}
+	} else {
+		// Xóa tất cả liên kết đạo diễn nếu không có DirectorIds
+		if err := s.db.Model(&existingMovie).Association("Director").Clear(); err != nil {
+			return err
+		}
 	}
 
+	// Cập nhật Thể loại (Category)
 	if len(updateReq.CategoryIds) > 0 {
 		var categories []types.Category
 		if err := s.db.Find(&categories, updateReq.CategoryIds).Error; err != nil {
 			return err
 		}
 		if err := s.db.Model(&existingMovie).Association("Category").Replace(categories); err != nil {
+			return err
+		}
+	} else {
+		// Xóa tất cả liên kết thể loại nếu không có CategoryIds
+		if err := s.db.Model(&existingMovie).Association("Category").Clear(); err != nil {
 			return err
 		}
 	}
@@ -310,7 +329,7 @@ func (s *Store) GetMostViewMovies(limit int) ([]types.MovieItemResponse, error) 
 }
 func (s *Store) GetNewMovies(limit int) ([]types.MovieItemResponse, error) {
 	var movies []types.Movie
-	if err := s.db.Preload("Category").Order("updated_at DESC").Limit(limit).Find(&movies).Error; err != nil {
+	if err := s.db.Preload("Category").Order("created_at DESC").Limit(limit).Find(&movies).Error; err != nil {
 		return nil, err
 	}
 	var movieItemResponses []types.MovieItemResponse
@@ -330,6 +349,86 @@ func (s *Store) GetNewMovies(limit int) ([]types.MovieItemResponse, error) {
 
 	return movieItemResponses, nil
 }
+func (s *Store) GetFeaturesMovies(limit int) ([]types.MovieItemResponse, error) {
+	var movies []types.Movie
+	if err := s.db.Preload("Category").Where("num_episodes = ?", 1).Order("created_at DESC").Limit(limit).Find(&movies).Error; err != nil {
+		return nil, err
+	}
+	var movieItemResponses []types.MovieItemResponse
+	for _, movie := range movies {
+		var movieItemResponse types.MovieItemResponse
+		movieItemResponse.ID = movie.ID
+		movieItemResponse.Name = movie.Name
+		movieItemResponse.Thumbnail = movie.Thumbnail
+		movieItemResponse.Rate = movie.Rate
+		movieItemResponse.View = movie.View
+
+		for _, category := range movie.Category {
+			movieItemResponse.Category = append(movieItemResponse.Category, category.Name)
+		}
+		movieItemResponses = append(movieItemResponses, movieItemResponse)
+	}
+
+	return movieItemResponses, nil
+}
+func (s *Store) GetSeriesMovies(limit int) ([]types.MovieItemResponse, error) {
+	var movies []types.Movie
+	if err := s.db.Preload("Category").Where("num_episodes > ?", 1).Order("created_at DESC").Limit(limit).Find(&movies).Error; err != nil {
+		return nil, err
+	}
+	var movieItemResponses []types.MovieItemResponse
+	for _, movie := range movies {
+		var movieItemResponse types.MovieItemResponse
+		movieItemResponse.ID = movie.ID
+		movieItemResponse.Name = movie.Name
+		movieItemResponse.Thumbnail = movie.Thumbnail
+		movieItemResponse.Rate = movie.Rate
+		movieItemResponse.View = movie.View
+
+		for _, category := range movie.Category {
+			movieItemResponse.Category = append(movieItemResponse.Category, category.Name)
+		}
+		movieItemResponses = append(movieItemResponses, movieItemResponse)
+	}
+
+	return movieItemResponses, nil
+}
+func (s *Store) GetBookMarkMovies(userID int) ([]types.MovieItemResponse, error) {
+	var bookmarkedMovies []types.Movie
+
+	// Lấy danh sách các bộ phim đã bookmark của người dùng
+	err := s.db.Joins("JOIN bookmarks ON bookmarks.movie_id = movies.id").
+		Where("bookmarks.user_id = ?", userID).
+		Preload("Category").
+		Find(&bookmarkedMovies).Error
+
+	if err != nil {
+		return nil, err
+	}
+
+	// Chuyển đổi từ []Movie sang []MovieItemResponse
+	var result []types.MovieItemResponse
+	for _, movie := range bookmarkedMovies {
+		// Lấy tên các danh mục
+		var categories []string
+		for _, category := range movie.Category {
+			categories = append(categories, category.Name)
+		}
+
+		// Tạo MovieItemResponse
+		result = append(result, types.MovieItemResponse{
+			ID:        movie.ID,
+			Name:      movie.Name,
+			Rate:      movie.Rate,
+			Category:  categories,
+			View:      movie.View,
+			Thumbnail: movie.Thumbnail,
+		})
+	}
+
+	return result, nil
+}
+
 func (s *Store) CountMovies() (int, error) {
 	var count int64                                                  // Thử dùng int64 thay cho int
 	if err := s.db.Table("movies").Count(&count).Error; err != nil { // Chỉ định tên bảng trực tiếp
@@ -346,11 +445,14 @@ func (s *Store) SumRates() (int, error) {
 }
 
 func (s *Store) CountViews() (int, error) {
-	var count int64                                                         // Thử dùng int64 thay cho int
-	if err := s.db.Table("user_watcheds").Count(&count).Error; err != nil { // Chỉ định tên bảng trực tiếp
-		return 0, err
+	var totalViews int64
+
+	// Tính tổng views từ tất cả các phim trong bảng movie
+	if err := s.db.Table("movies").Select("COALESCE(SUM(view), 0)").Scan(&totalViews).Error; err != nil {
+		return 0, fmt.Errorf("failed to count total movie views: %w", err)
 	}
-	return int(count), nil
+
+	return int(totalViews), nil
 }
 
 func (s *Store) GetMostViewRates(limit int) ([]types.MovieItemResponse, error) {
@@ -374,6 +476,40 @@ func (s *Store) GetMostViewRates(limit int) ([]types.MovieItemResponse, error) {
 	}
 
 	return movieItemResponses, nil
+}
+func (s *Store) GetWatchingList(userId int) ([]types.MovieItemResponse, error) {
+	var watchedMovies []types.Movie
+
+	// Truy vấn để lấy thông tin phim mà người dùng đã xem, bao gồm cả các phim không tồn tại trong bảng `movies`
+	err := s.db.Unscoped().Table("user_watcheds").
+		Joins("LEFT JOIN episodes ON user_watcheds.episode_id = episodes.id").
+		Joins("LEFT JOIN movies ON episodes.movie_id = movies.id").
+		Where("user_watcheds.user_id = ?", userId).
+		Where("movies.deleted_at IS NULL").
+		Preload("Category").
+		Select("movies.*").
+		Find(&watchedMovies).Error
+
+	if err != nil {
+		return nil, err
+	}
+	var movieItemResponses []types.MovieItemResponse
+	for _, movie := range watchedMovies {
+		var movieItemResponse types.MovieItemResponse
+		movieItemResponse.ID = movie.ID
+		movieItemResponse.Name = movie.Name
+		movieItemResponse.Thumbnail = movie.Thumbnail
+		movieItemResponse.Rate = movie.Rate
+		movieItemResponse.View = movie.View
+
+		for _, category := range movie.Category {
+			movieItemResponse.Category = append(movieItemResponse.Category, category.Name)
+		}
+		movieItemResponses = append(movieItemResponses, movieItemResponse)
+	}
+
+	return movieItemResponses, nil
+
 }
 func (s *Store) GetNewRecommendedMovies(userId, cate1Id, cate2Id, cate3Id int) ([]types.MovieItemResponse, error) {
 	var movies []types.Movie

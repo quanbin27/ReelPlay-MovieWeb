@@ -58,12 +58,23 @@ func WithJWTAuth(store types.UserStore) echo.MiddlewareFunc {
 			}
 
 			// Lưu thông tin người dùng vào context
-			c.Set("user", &u)
+			c.Set("user", u)
 			// Gọi hàm tiếp theo
 			return next(c) // Tiếp tục xử lý yêu cầu
 		}
 	}
 }
+func GetUserIDFromContext(c echo.Context) (int, error) {
+
+	user, ok := c.Get("user").(*types.User) // Giả sử types.User là kiểu dữ liệu của bạn
+	if !ok || user == nil {
+		return 0, echo.NewHTTPError(http.StatusUnauthorized, "User not found in context")
+	}
+
+	// Trả về userID
+	return user.ID, nil // Giả sử user.ID là trường chứa userID
+}
+
 func WithJWTAdminAuth(store types.UserStore) echo.MiddlewareFunc {
 	return func(next echo.HandlerFunc) echo.HandlerFunc {
 		return func(c echo.Context) error {

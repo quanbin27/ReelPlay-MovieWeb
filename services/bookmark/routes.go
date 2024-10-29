@@ -16,10 +16,12 @@ func NewHandler(store types.BookmarkStore, userStore types.UserStore) *Handler {
 	return &Handler{store, userStore}
 }
 func (h *Handler) RegisterRoutes(e *echo.Group) {
-	e.POST("/movie/:id/bookmark", h.Create, auth.WithJWTAuth(h.userStore))
-	e.DELETE("/movie/:id/bookmark", h.CancelBookmark, auth.WithJWTAuth(h.userStore))
+	e.POST("/movie/bookmark", h.Create, auth.WithJWTAuth(h.userStore))
+	e.DELETE("/movie/bookmark", h.CancelBookmark, auth.WithJWTAuth(h.userStore))
 	e.POST("/bookmark/exist", h.IsBookmark, auth.WithJWTAuth(h.userStore))
+
 }
+
 func (h *Handler) Create(c echo.Context) error {
 	req := new(types.CreateBookmarkRequest)
 

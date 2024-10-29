@@ -15,32 +15,46 @@ import (
 type Handler struct {
 	UserStore        types.UserStore
 	MovieStore       types.MovieStore
-	CategoryStore    types.CategoryStore
-	ActorStore       types.ActorStore
-	DirectorStore    types.DirectorStore
 	CategoryFitStore types.CategoryFitStore
 }
 
-func NewHandler(userStore types.UserStore, moviestore types.MovieStore, categorystore types.CategoryStore, actorstore types.ActorStore, directorstore types.DirectorStore, categoryFitStore types.CategoryFitStore) *Handler {
-	return &Handler{userStore, moviestore, categorystore, actorstore, directorstore, categoryFitStore}
+func NewHandler(userStore types.UserStore, moviestore types.MovieStore, categoryFitStore types.CategoryFitStore) *Handler {
+	return &Handler{userStore, moviestore, categoryFitStore}
 }
 func (h *Handler) RegisterRoutes(e *echo.Group) {
-	e.GET("/movies", h.GetAllMovies)
-	e.GET("/dashboard", h.GetDashBoardIndex, auth.WithJWTAdminAuth(h.UserStore))
+
 	//	e.GET("/movie", h.GetMovies)
 	e.GET("/movie/:id", h.GetMovieByID)
 	e.GET("/movie/:id/category", h.GetCategoryID)
 	e.GET("/movie/search", h.MovieSearch)
 	e.GET("/movie/most-views/:limit", h.GetMostViewMovies)
 	e.GET("/movie/most-rates/:limit", h.GetMostViewRates)
-	e.GET("/movie/user/:user_id/recommend", h.GetRecommendedMoviesByCategory, auth.WithJWTAuth(h.UserStore))
-	e.GET("/movie/user/:user_id/new-recommend", h.GetNewRecommendedMovies, auth.WithJWTAuth(h.UserStore))
+	e.GET("/movie/new/:limit", h.NewMovie)
+	e.GET("/movie/new/series/:limit", h.GetSeriesMovies)
+	e.GET("/movie/new/features/:limit", h.GetFeaturesMovies)
+	e.GET("/movies", h.GetAllMovies)
+	e.GET("/movie/user/recommend", h.GetRecommendedMoviesByCategory, auth.WithJWTAuth(h.UserStore))
+	e.GET("/movie/user/new-recommend", h.GetNewRecommendedMovies, auth.WithJWTAuth(h.UserStore))
+	e.GET("/movie/new-user/recommend", h.GetRecommendedMoviesByCategoryNew)
+	e.GET("/movie/new-user/new-recommend", h.GetNewRecommendedMoviesNew)
+	e.PUT("/movie/:id", h.UpdateMovieHandler, auth.WithJWTAdminAuth(h.UserStore))
+	e.GET("/dashboard", h.GetDashBoardIndex, auth.WithJWTAdminAuth(h.UserStore))
 	e.POST("/movie", h.CreateMovie, auth.WithJWTAdminAuth(h.UserStore))
 	e.DELETE("/movie/:id", h.DeleteMovieHandler, auth.WithJWTAdminAuth(h.UserStore))
-	e.PUT("/movie/:id", h.UpdateMovieHandler, auth.WithJWTAdminAuth(h.UserStore))
-
+	e.GET("/me/bookmarks", h.GetBookMarkList, auth.WithJWTAuth(h.UserStore))
+	e.GET("/me/watching", h.getWatching, auth.WithJWTAuth(h.UserStore))
 }
-
+func (h *Handler) getWatching(c echo.Context) error {
+	userId, err := auth.GetUserIDFromContext(c)
+	if err != nil {
+		return c.JSON(http.StatusInternalServerError, echo.Map{"error": "Can't get userId from context"})
+	}
+	watchingList, err := h.MovieStore.GetWatchingList(userId)
+	if err != nil {
+		return c.JSON(http.StatusInternalServerError, echo.Map{"error": "Can't get watching list"})
+	}
+	return c.JSON(http.StatusOK, watchingList)
+}
 func (h *Handler) UpdateMovieHandler(c echo.Context) error {
 	// Lấy ID từ path parameter
 	id, err := strconv.Atoi(c.Param("id"))
@@ -54,7 +68,6 @@ func (h *Handler) UpdateMovieHandler(c echo.Context) error {
 		return c.JSON(http.StatusBadRequest, map[string]string{"error": "invalid data"})
 	}
 
-	// Gọi hàm cập nhật trong store
 	if err := h.MovieStore.UpdateMovie(id, &updateReq); err != nil {
 		if errors.Is(err, gorm.ErrRecordNotFound) {
 			return c.JSON(http.StatusNotFound, map[string]string{"error": "movie not found"})
@@ -126,7 +139,7 @@ func (h *Handler) DeleteMovieHandler(c echo.Context) error {
 	return c.NoContent(http.StatusNoContent) // 204 No Content
 }
 func (h *Handler) GetRecommendedMoviesByCategory(c echo.Context) error {
-	userId, err := strconv.Atoi(c.Param("user_id"))
+	userId, err := auth.GetUserIDFromContext(c)
 	if err != nil {
 		return c.JSON(http.StatusBadRequest, echo.Map{"error": "Invalid user ID"})
 	}
@@ -153,10 +166,28 @@ func (h *Handler) GetRecommendedMoviesByCategory(c echo.Context) error {
 
 	return c.JSON(http.StatusOK, movies)
 }
+func (h *Handler) GetRecommendedMoviesByCategoryNew(c echo.Context) error {
+	movies, err := h.MovieStore.GetMoviesByCategories(0, 0, 0, 0)
+	if err != nil {
+		return c.JSON(http.StatusInternalServerError, echo.Map{"error": "Error fetching movies"})
+	}
+	return c.JSON(http.StatusOK, movies)
+}
+func (h *Handler) GetBookMarkList(c echo.Context) error {
+	userId, err := auth.GetUserIDFromContext(c)
+	if err != nil {
+		return c.JSON(http.StatusBadRequest, map[string]string{"error": "Can't get user Id"})
+	}
+	bookmarkMovieList, err := h.MovieStore.GetBookMarkMovies(userId)
+	if err != nil {
+		return c.JSON(http.StatusBadRequest, map[string]string{"error": "Can't get bookmarks list"})
+	}
+	return c.JSON(http.StatusOK, bookmarkMovieList)
+}
 
 // Route cho lấy danh sách các phim mới được đề xuất
 func (h *Handler) GetNewRecommendedMovies(c echo.Context) error {
-	userId, err := strconv.Atoi(c.Param("user_id"))
+	userId, err := auth.GetUserIDFromContext(c)
 	if err != nil {
 		return c.JSON(http.StatusBadRequest, echo.Map{"error": "Invalid user ID"})
 	}
@@ -187,6 +218,15 @@ func (h *Handler) GetNewRecommendedMovies(c echo.Context) error {
 
 	return c.JSON(http.StatusOK, movies)
 }
+func (h *Handler) GetNewRecommendedMoviesNew(c echo.Context) error {
+
+	movies, err := h.MovieStore.GetNewRecommendedMovies(0, 0, 0, 0)
+	if err != nil {
+		return c.JSON(http.StatusInternalServerError, echo.Map{"error": "Error fetching new recommended movies"})
+	}
+
+	return c.JSON(http.StatusOK, movies)
+}
 
 func (h *Handler) GetCategoryID(c echo.Context) error {
 	id, err := strconv.Atoi(c.Param("id"))
@@ -207,6 +247,18 @@ func (h *Handler) GetMovieByID(c echo.Context) error {
 		return c.JSON(http.StatusInternalServerError, err)
 	}
 	return c.JSON(http.StatusOK, movieResponse)
+}
+func (h *Handler) NewMovie(c echo.Context) error {
+	limitParam := c.Param("limit")
+	limit, err := strconv.Atoi(limitParam)
+	if err != nil || limit < 1 {
+		limit = 18
+	}
+	movies, err := h.MovieStore.GetNewMovies(limit)
+	if err != nil {
+		return c.JSON(http.StatusInternalServerError, echo.Map{"error": "Could not get new movies"})
+	}
+	return c.JSON(http.StatusOK, movies)
 }
 func (h *Handler) MovieSearch(c echo.Context) error {
 	query := c.QueryParam("q")
@@ -317,6 +369,22 @@ func (h *Handler) GetMostViewMovies(c echo.Context) error {
 func (h *Handler) GetMostViewRates(c echo.Context) error {
 	limit, _ := strconv.Atoi(c.Param("limit"))
 	movies, err := h.MovieStore.GetMostViewRates(limit)
+	if err != nil {
+		return err
+	}
+	return c.JSON(http.StatusOK, movies)
+}
+func (h *Handler) GetFeaturesMovies(c echo.Context) error {
+	limit, _ := strconv.Atoi(c.Param("limit"))
+	movies, err := h.MovieStore.GetFeaturesMovies(limit)
+	if err != nil {
+		return err
+	}
+	return c.JSON(http.StatusOK, movies)
+}
+func (h *Handler) GetSeriesMovies(c echo.Context) error {
+	limit, _ := strconv.Atoi(c.Param("limit"))
+	movies, err := h.MovieStore.GetSeriesMovies(limit)
 	if err != nil {
 		return err
 	}

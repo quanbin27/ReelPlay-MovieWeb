@@ -17,10 +17,10 @@ func NewHandler(fitStore types.CategoryFitStore, userStore types.UserStore) *Han
 	return &Handler{fitStore, userStore}
 }
 func (h *Handler) RegisterRoutes(e *echo.Group) {
-	e.POST("/user/:userId/category-fit", h.CategoryFit, auth.WithJWTAuth(h.userStore))
+	e.POST("/user/category-fit", h.CategoryFit, auth.WithJWTAuth(h.userStore))
 }
 func (h *Handler) CategoryFit(c echo.Context) error {
-	userId, err := strconv.Atoi(c.Param("userId"))
+	userId, err := auth.GetUserIDFromContext(c)
 	if err != nil {
 		return c.JSON(http.StatusBadRequest, echo.Map{"error": "Invalid user ID"})
 	}
