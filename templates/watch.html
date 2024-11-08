@@ -188,40 +188,19 @@
 				<div class="col-12">
 					<h1 class="section__title section__title--head" id="movie-title">Movie Title</h1>
 				</div>
+				<!-- player -->
+				<div class="col-12 col-xl-8">
+					<div class="section__player">
 
-				<div class="col-12 col-xl-4">
-					<div class="item item--details">
-						<div class="row">
-							<div class="col-12 col-sm-5 col-md-5 col-lg-4 col-xl-6 col-xxl-5">
-								<div class="item__cover">
-									<img id="movie-thumbnail" src="" alt="">
-									<span class="item__rate item__rate--green" id="movie-rate"></span>
-									<button id="bookmarkBtn" class="item__favorite unbookmarked" type="button">
-										<i class="ti ti-bookmark"></i>
-									</button>
+						<video id="video-player" controls width="100%" height="100%">
+							Your browser does not support the video tag.
+						</video>
 
-								</div>
-							</div>
+					</div>
 
-							<div class="col-12 col-md-7 col-lg-8 col-xl-6 col-xxl-7">
-								<div class="item__content">
-									<ul class="item__meta">
-										<li><span>Director:</span> <span id="movie-director"></span></li>
-										<li><span>Actor:</span> <span id="movie-actor"></span></li>
-										<li><span>Category:</span> <span id="movie-category"></span></li>
-										<li><span>Release Year:</span> <span id="movie-year"></span></li>
-										<li><span>Language:</span> <span id="movie-language"></span></li>
-										<li><span>Number of episodes:</span> <span id="movie-num-episodes"></span></li>
-										<li><span>Country:</span> <span id="movie-country"></span></li>
-										<li><span>Views:</span> <span id="movie-view"></span></li>
-									</ul>
 
-									<div class="item__description">
-										<p id="movie-description"></p>
-									</div>
-								</div>
-							</div>
-						</div>
+					<div class="episode-buttons" id="episode-buttons-container">
+						<!-- Các nút cho từng tập sẽ được thêm vào đây -->
 					</div>
 					<div class="rating-container">
 						<h3 class="rating-header">Rate this movie</h3>
@@ -242,7 +221,7 @@
 						</div>
 					</div>
 					<div class="rating-fit-container">
-						<h3 class="rating-header">How Well Does the Category Fit?</h3>
+						<h3 class="rating-header" style="text-align: center">How Well Does the Category Fit?</h3>
 						<div class="star-rating-wrapper">
 							<div class="star-fit-rating">
 								<span class="star-fit" data-value="1">&#9733;</span>
@@ -259,27 +238,74 @@
 							<button id="submit-fit-rating" class="submit-rating-btn">Submit Rating</button>
 						</div>
 					</div>
+					<div class="comments">
+						<ul class="comments__list">
+							<!-- Bình luận sẽ được thêm vào đây bởi JavaScript -->
+						</ul>
+
+						<!-- Button "More comments" -->
+						<div class="load-more-comments">
+							<button id="more-comments" class="sign__btn sign__btn--small">More comments</button>
+						</div>
+
+						<form id="comment-form" class="sign__form sign__form--comments">
+							<div class="sign__group">
+								<textarea id="comment-content" name="text" class="sign__textarea" placeholder="Add comment" required></textarea>
+							</div>
+							<button type="submit" id="submit-comment" class="sign__btn sign__btn--small">Send</button>
+						</form>
+
+
+					</div>
 
 				</div>
-				<!-- end content -->
-
-				<!-- player -->
-				<div class="col-12 col-xl-8">
-					<div class="section__player">
-
-						<video id="video-player" controls width="100%" height="100%">
-							Your browser does not support the video tag.
-						</video>
-
-					</div>
-
-
-					<div class="episode-buttons" id="episode-buttons-container">
-							<!-- Các nút cho từng tập sẽ được thêm vào đây -->
-					</div>
-
-					</div>
 				<!-- end player -->
+				<div class="col-12 col-lg-4">
+					<div class="row" id="mostview">
+
+					</div>
+
+				</div>
+				<div class="col-12 col-xl-3">
+<!--					<div class="item item--details">-->
+<!--						<div class="row">-->
+<!--							<div class="col-12 col-sm-5 col-md-5 col-lg-4 col-xl-6 col-xxl-5">-->
+<!--								<div class="item__cover">-->
+<!--									<img id="movie-thumbnail" src="" alt="">-->
+<!--									<span class="item__rate item__rate--green" id="movie-rate"></span>-->
+<!--									<button id="bookmarkBtn" class="item__favorite unbookmarked" type="button">-->
+<!--										<i class="ti ti-bookmark"></i>-->
+<!--									</button>-->
+
+<!--								</div>-->
+<!--							</div>-->
+
+<!--							<div class="col-12 col-md-7 col-lg-8 col-xl-6 col-xxl-7">-->
+<!--								<div class="item__content">-->
+<!--									<ul class="item__meta">-->
+<!--										<li><span>Director:</span> <span id="movie-director"></span></li>-->
+<!--										<li><span>Actor:</span> <span id="movie-actor"></span></li>-->
+<!--										<li><span>Category:</span> <span id="movie-category"></span></li>-->
+<!--										<li><span>Release Year:</span> <span id="movie-year"></span></li>-->
+<!--										<li><span>Language:</span> <span id="movie-language"></span></li>-->
+<!--										<li><span>Number of episodes:</span> <span id="movie-num-episodes"></span></li>-->
+<!--										<li><span>Country:</span> <span id="movie-country"></span></li>-->
+<!--										<li><span>Views:</span> <span id="movie-view"></span></li>-->
+<!--									</ul>-->
+
+<!--									<div class="item__description">-->
+<!--										<p id="movie-description"></p>-->
+<!--									</div>-->
+<!--								</div>-->
+<!--							</div>-->
+<!--						</div>-->
+<!--					</div>-->
+
+
+				</div>
+				 end content
+
+
 			</div>
 		</div>
 		<!-- end details content -->
@@ -317,32 +343,14 @@
 
 		<div class="container">
 			<div class="row">
-				<div class="col-12 col-lg-8">
+				<div class="col-12 ">
 					<!-- content tabs -->
 					<div class="tab-content">
 						<div class="tab-pane fade show active" id="tab-1" role="tabpanel" aria-labelledby="1-tab" tabindex="0">
 							<div class="row">
 								<!-- comments -->
 								<div class="col-12">
-									<div class="comments">
-										<ul class="comments__list">
-											<!-- Bình luận sẽ được thêm vào đây bởi JavaScript -->
-										</ul>
 
-										<!-- Button "More comments" -->
-										<div class="load-more-comments">
-											<button id="more-comments" class="sign__btn sign__btn--small">More comments</button>
-										</div>
-
-										<form id="comment-form" class="sign__form sign__form--comments">
-											<div class="sign__group">
-												<textarea id="comment-content" name="text" class="sign__textarea" placeholder="Add comment" required></textarea>
-											</div>
-											<button type="submit" id="submit-comment" class="sign__btn sign__btn--small">Send</button>
-										</form>
-
-
-									</div>
 								</div>
 								<!-- end comments -->
 							</div>
@@ -353,11 +361,7 @@
 				</div>
 
 				<!-- sidebar -->
-				<div class="col-12 col-lg-4">
-					<div class="row" id="mostview">
 
-					</div>
-				</div>
 				<!-- end sidebar -->
 			</div>
 		</div>
@@ -633,37 +637,29 @@
 		// Hàm để hiển thị dữ liệu phim
 		function displayMovieData(movie) {
 			document.getElementById('movie-title').innerText = movie.name;
-			document.getElementById('movie-thumbnail').src = movie.thumbnail;
-			document.getElementById('movie-rate').innerText = movie.rate;
-			document.getElementById('movie-year').innerText = movie.year;
-			document.getElementById('movie-num-episodes').innerText = movie.numEpisodes;
-			document.getElementById('movie-description').innerText = movie.description;
-			document.getElementById('movie-language').innerText = movie.language; // Bạn cần thêm trường này vào HTML nếu cần
-			document.getElementById('movie-country').innerText = movie.country;
-			document.getElementById('movie-view').innerText = movie.view;
-			document.getElementById('movie-actor').innerText = movie.actor ? movie.actor.join(', ') : 'Updating';
-			document.getElementById('movie-director').innerText = movie.director ? movie.director.join(', ') : 'Updating';
-			document.getElementById('movie-category').innerText = movie.category ? movie.category.join(', ') : 'Updating';
 			const movieId = getMovieIdFromURL(); // Hàm lấy movieId từ URL
 			const episodeURL=parseInt(getEpisodeNumberFromURL(), 10);
 			console.log(episodeURL);
 			// Chọn container để thêm các nút
 			const buttonsContainer = document.getElementById('episode-buttons-container');
-			for (let episode = 1; episode <= movie.numEpisodes; episode++) {
-				const button = document.createElement('button');
-				button.textContent = `Episode ${episode}`;
-				button.classList.add('section__item-buttons');
-				if (episode === episodeURL ) {
-					button.classList.add('playing-episode');
-				}
-				// Thêm sự kiện click cho nút để chuyển tới trang xem phim
-				button.addEventListener('click', () => {
-					window.location.href = `/watch?movieId=${movieId}&episode=${episode}`;
-				});
+			if (movie.numEpisodes>1){
+				for (let episode = 1; episode <= movie.numEpisodes; episode++) {
+					const button = document.createElement('button');
+					button.textContent = `Episode ${episode}`;
+					button.classList.add('section__item-buttons');
+					if (episode === episodeURL ) {
+						button.classList.add('playing-episode');
+					}
+					// Thêm sự kiện click cho nút để chuyển tới trang xem phim
+					button.addEventListener('click', () => {
+						window.location.href = `/watch?movieId=${movieId}&episode=${episode}`;
+					});
 
-				// Thêm nút vào container
-				buttonsContainer.appendChild(button);
+					// Thêm nút vào container
+					buttonsContainer.appendChild(button);
+				}
 			}
+
 
 		}
 
@@ -832,111 +828,111 @@
 		});
 		// Giả sử bạn có một hàm để lấy User ID
 		// Hàm tạo bookmark
-		async function createBookmark(movieId) {
-			const userId = parseInt(getUserIdFromToken(),10);
-			const body = {
-				user_id: userId,
-				movie_id: movieId
-			};
-
-			try {
-				const response = await fetch(`http://localhost:8080/api/v1/movie/bookmark`, {
-					method: 'POST',
-					headers: {
-						'Content-Type': 'application/json',
-						'Authorization': `Bearer ${localStorage.getItem('token')}`
-					},
-					body: JSON.stringify(body)
-				});
-
-				if (response.ok) {
-					document.getElementById('bookmarkBtn').classList.add('bookmarked');
-					document.getElementById('bookmarkBtn').classList.remove('unbookmarked');
-					showMessage("Bookmark added!");
-				} else {
-					const errorResponse = await response.json();
-					showMessage(errorResponse.message);
-				}
-			} catch (error) {
-				console.error("Error creating bookmark:", error);
-				showMessage("An error occurred while adding bookmark.");
-			}
-		}
+		// async function createBookmark(movieId) {
+		// 	const userId = parseInt(getUserIdFromToken(),10);
+		// 	const body = {
+		// 		user_id: userId,
+		// 		movie_id: movieId
+		// 	};
+		//
+		// 	try {
+		// 		const response = await fetch(`http://localhost:8080/api/v1/movie/bookmark`, {
+		// 			method: 'POST',
+		// 			headers: {
+		// 				'Content-Type': 'application/json',
+		// 				'Authorization': `Bearer ${localStorage.getItem('token')}`
+		// 			},
+		// 			body: JSON.stringify(body)
+		// 		});
+		//
+		// 		if (response.ok) {
+		// 			document.getElementById('bookmarkBtn').classList.add('bookmarked');
+		// 			document.getElementById('bookmarkBtn').classList.remove('unbookmarked');
+		// 			showMessage("Bookmark added!");
+		// 		} else {
+		// 			const errorResponse = await response.json();
+		// 			showMessage(errorResponse.message);
+		// 		}
+		// 	} catch (error) {
+		// 		console.error("Error creating bookmark:", error);
+		// 		showMessage("An error occurred while adding bookmark.");
+		// 	}
+		// }
 
 		// Hàm hủy bookmark
-		async function cancelBookmark(movieId) {
-			const userId = parseInt(getUserIdFromToken(),10);
-			const body = {
-				user_id: userId,
-				movie_id: movieId
-			};
-
-			try {
-				const response = await fetch(`http://localhost:8080/api/v1/movie/bookmark`, {
-					method: 'DELETE',
-					headers: {
-						'Content-Type': 'application/json',
-						'Authorization': `Bearer ${localStorage.getItem('token')}`
-					},
-					body: JSON.stringify(body)
-				});
-
-				if (response.ok) {
-					const bookmarkBtn = document.getElementById('bookmarkBtn');
-					document.getElementById('bookmarkBtn').classList.add('unbookmarked');
-					document.getElementById('bookmarkBtn').classList.remove('bookmarked');
-					showMessage("Bookmark removed!");
-				} else {
-					const errorResponse = await response.json();
-					showMessage(errorResponse.message);
-				}
-			} catch (error) {
-				console.error("Error cancelling bookmark:", error);
-				showMessage("An error occurred while removing bookmark.");
-			}
-		}
+		// async function cancelBookmark(movieId) {
+		// 	const userId = parseInt(getUserIdFromToken(),10);
+		// 	const body = {
+		// 		user_id: userId,
+		// 		movie_id: movieId
+		// 	};
+		//
+		// 	try {
+		// 		const response = await fetch(`http://localhost:8080/api/v1/movie/bookmark`, {
+		// 			method: 'DELETE',
+		// 			headers: {
+		// 				'Content-Type': 'application/json',
+		// 				'Authorization': `Bearer ${localStorage.getItem('token')}`
+		// 			},
+		// 			body: JSON.stringify(body)
+		// 		});
+		//
+		// 		if (response.ok) {
+		// 			const bookmarkBtn = document.getElementById('bookmarkBtn');
+		// 			document.getElementById('bookmarkBtn').classList.add('unbookmarked');
+		// 			document.getElementById('bookmarkBtn').classList.remove('bookmarked');
+		// 			showMessage("Bookmark removed!");
+		// 		} else {
+		// 			const errorResponse = await response.json();
+		// 			showMessage(errorResponse.message);
+		// 		}
+		// 	} catch (error) {
+		// 		console.error("Error cancelling bookmark:", error);
+		// 		showMessage("An error occurred while removing bookmark.");
+		// 	}
+		// }
 
 		// Hàm kiểm tra trạng thái bookmark
-		async function checkBookmarkStatus(movieId) {
-			const userId = getUserIdFromToken();
-			if (!userId) {
-				// Nếu người dùng chưa đăng nhập, hiển thị chưa bookmark và dừng xử lý
-				const bookmarkBtn = document.getElementById('bookmarkBtn');
-				bookmarkBtn.classList.add('unbookmarked');
-				return;
-			}
-
-			try {
-				const response = await fetch(`http://localhost:8080/api/v1/bookmark/exist`, {
-					method: 'POST',
-					headers: {
-						'Content-Type': 'application/json',
-						'Authorization': `Bearer ${localStorage.getItem('token')}` // Gửi token nếu có
-					},
-					body: JSON.stringify({
-						movie_id: movieId,
-						user_id: parseInt(userId,10)
-					})
-				});
-
-				if (!response.ok) {
-					throw new Error('Failed to check bookmark status');
-				}
-
-				const result = await response.json();
-				const bookmarkBtn = document.getElementById('bookmarkBtn');
-
-				if (result) {
-					bookmarkBtn.classList.remove('unbookmarked');
-					bookmarkBtn.classList.add('bookmarked');
-				} else {
-					bookmarkBtn.classList.remove('bookmarked');
-					bookmarkBtn.classList.add('unbookmarked');
-				}
-			} catch (error) {
-				console.error('Error checking bookmark status:', error);
-			}
-		}
+		// async function checkBookmarkStatus(movieId) {
+		// 	const userId = getUserIdFromToken();
+		// 	if (!userId) {
+		// 		// Nếu người dùng chưa đăng nhập, hiển thị chưa bookmark và dừng xử lý
+		// 		const bookmarkBtn = document.getElementById('bookmarkBtn');
+		// 		bookmarkBtn.classList.add('unbookmarked');
+		// 		return;
+		// 	}
+		//
+		// 	try {
+		// 		const response = await fetch(`http://localhost:8080/api/v1/bookmark/exist`, {
+		// 			method: 'POST',
+		// 			headers: {
+		// 				'Content-Type': 'application/json',
+		// 				'Authorization': `Bearer ${localStorage.getItem('token')}` // Gửi token nếu có
+		// 			},
+		// 			body: JSON.stringify({
+		// 				movie_id: movieId,
+		// 				user_id: parseInt(userId,10)
+		// 			})
+		// 		});
+		//
+		// 		if (!response.ok) {
+		// 			throw new Error('Failed to check bookmark status');
+		// 		}
+		//
+		// 		const result = await response.json();
+		// 		const bookmarkBtn = document.getElementById('bookmarkBtn');
+		//
+		// 		if (result) {
+		// 			bookmarkBtn.classList.remove('unbookmarked');
+		// 			bookmarkBtn.classList.add('bookmarked');
+		// 		} else {
+		// 			bookmarkBtn.classList.remove('bookmarked');
+		// 			bookmarkBtn.classList.add('unbookmarked');
+		// 		}
+		// 	} catch (error) {
+		// 		console.error('Error checking bookmark status:', error);
+		// 	}
+		// }
 
 
 		// Hàm hiển thị thông báo
@@ -951,34 +947,34 @@
 		}
 
 		// Thêm sự kiện cho nút bookmark
-		document.getElementById('bookmarkBtn').addEventListener('click', async () => {
-			const movieId = parseInt(getMovieIdFromURL(),10); // Thay đổi giá trị này cho ID phim bạn muốn
-
-			const userId = getUserIdFromToken();
-			console.log('User ID:', userId);
-			console.log('Movie ID:', movieId);
-			if (!userId) {
-				// Nếu người dùng chưa đăng nhập, chuyển đến trang đăng nhập
-				window.location.href = '/signin'; // Đường dẫn đến trang đăng nhập của bạn
-				return;
-			}
-
-			const bookmarkBtn = document.getElementById('bookmarkBtn');
-
-			if (bookmarkBtn.classList.contains('unbookmarked')) {
-				// Nếu chưa bookmark, thực hiện tạo bookmark
-				await createBookmark(movieId);
-			} else {
-				// Nếu đã bookmark, thực hiện hủy bookmark
-				await cancelBookmark(movieId);
-			}
-		});
-
-		// Kiểm tra trạng thái bookmark khi tải trang
-		document.addEventListener('DOMContentLoaded', () => {
-			const movieId = parseInt(getMovieIdFromURL(),10);
-			checkBookmarkStatus(movieId);
-		});
+		// document.getElementById('bookmarkBtn').addEventListener('click', async () => {
+		// 	const movieId = parseInt(getMovieIdFromURL(),10); // Thay đổi giá trị này cho ID phim bạn muốn
+		//
+		// 	const userId = getUserIdFromToken();
+		// 	console.log('User ID:', userId);
+		// 	console.log('Movie ID:', movieId);
+		// 	if (!userId) {
+		// 		// Nếu người dùng chưa đăng nhập, chuyển đến trang đăng nhập
+		// 		window.location.href = '/signin'; // Đường dẫn đến trang đăng nhập của bạn
+		// 		return;
+		// 	}
+		//
+		// 	const bookmarkBtn = document.getElementById('bookmarkBtn');
+		//
+		// 	if (bookmarkBtn.classList.contains('unbookmarked')) {
+		// 		// Nếu chưa bookmark, thực hiện tạo bookmark
+		// 		await createBookmark(movieId);
+		// 	} else {
+		// 		// Nếu đã bookmark, thực hiện hủy bookmark
+		// 		await cancelBookmark(movieId);
+		// 	}
+		// });
+		//
+		// // Kiểm tra trạng thái bookmark khi tải trang
+		// document.addEventListener('DOMContentLoaded', () => {
+		// 	const movieId = parseInt(getMovieIdFromURL(),10);
+		// 	checkBookmarkStatus(movieId);
+		// });
 		document.addEventListener('DOMContentLoaded', function () {
 			const stars = document.querySelectorAll('.star');
 			let selectedRating = 0;
@@ -1167,7 +1163,29 @@
 				console.error('Error fetching movies:', error);
 			}
 		});
+		document.addEventListener('DOMContentLoaded', function() {
+			const searchBtn = document.getElementById('search-btn');
+			const searchInput = document.getElementById('search-input');
 
+			// Sự kiện khi người dùng nhấn nút tìm kiếm
+			searchBtn.addEventListener('click', function() {
+				const query = searchInput.value.trim(); // Lấy giá trị từ input
+
+				if (query === '') {
+					alert('Please enter a search term');
+					return;
+				}
+
+				const page = 1;
+				const limit = 18;
+
+				// Tạo URL với query parameters
+				const searchUrl = `/search?q=${encodeURIComponent(query)}&page=${page}&limit=${limit}`;
+
+				// Chuyển hướng đến trang kết quả tìm kiếm
+				window.location.href = searchUrl;
+			});
+		});
 	</script>
 </body>
 

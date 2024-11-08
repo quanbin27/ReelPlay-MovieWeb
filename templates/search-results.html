@@ -503,6 +503,29 @@ ${movie.category ? movie.category.map(genre => `<a href="#">${genre}</a>`).join(
 			profileLink.href = '/signin';
 			profileText.textContent = 'SIGN IN';
 		}
+		document.addEventListener('DOMContentLoaded', function() {
+			const searchBtn = document.getElementById('search-btn');
+			const searchInput = document.getElementById('search-input');
+
+			// Sự kiện khi người dùng nhấn nút tìm kiếm
+			searchBtn.addEventListener('click', function() {
+				const query = searchInput.value.trim(); // Lấy giá trị từ input
+
+				if (query === '') {
+					alert('Please enter a search term');
+					return;
+				}
+
+				const page = 1;
+				const limit = 18;
+
+				// Tạo URL với query parameters
+				const searchUrl = `/search?q=${encodeURIComponent(query)}&page=${page}&limit=${limit}`;
+
+				// Chuyển hướng đến trang kết quả tìm kiếm
+				window.location.href = searchUrl;
+			});
+		});
 	</script>
 </body>
 

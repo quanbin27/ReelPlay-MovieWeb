@@ -480,14 +480,13 @@ func (s *Store) GetMostViewRates(limit int) ([]types.MovieItemResponse, error) {
 func (s *Store) GetWatchingList(userId int) ([]types.MovieItemResponse, error) {
 	var watchedMovies []types.Movie
 
-	// Truy vấn để lấy thông tin phim mà người dùng đã xem, bao gồm cả các phim không tồn tại trong bảng `movies`
 	err := s.db.Unscoped().Table("user_watcheds").
 		Joins("LEFT JOIN episodes ON user_watcheds.episode_id = episodes.id").
 		Joins("LEFT JOIN movies ON episodes.movie_id = movies.id").
 		Where("user_watcheds.user_id = ?", userId).
 		Where("movies.deleted_at IS NULL").
 		Preload("Category").
-		Select("movies.*").
+		Select("DISTINCT movies.*").
 		Find(&watchedMovies).Error
 
 	if err != nil {
@@ -570,6 +569,20 @@ func (s *Store) GetNewRecommendedMovies(userId, cate1Id, cate2Id, cate3Id int) (
 	// Kiểm tra lỗi từ kết quả truy vấn
 	if query.Error != nil {
 		return nil, query.Error
+	}
+	if len(movies) < 5 {
+		var additionalMovies []types.Movie
+		// Truy vấn bổ sung để lấy các phim mới không bị xem, không cần điều kiện theo category
+		s.db.Preload("Category").
+			Where("movies.is_recommended = ?", 1).
+			Where("movies.created_at >= ?", time.Now().AddDate(0, 0, -30)).
+			Not("movies.id", watchedMovieIds).
+			Order("movies.predict_rate DESC").
+			Limit(5 - len(movies)). // Lấy số lượng phim cần thêm để đạt ít nhất 5
+			Find(&additionalMovies)
+
+		// Thêm các phim bổ sung vào danh sách
+		movies = append(movies, additionalMovies...)
 	}
 
 	// Chuyển đổi kết quả phim sang dạng MovieItemResponse
