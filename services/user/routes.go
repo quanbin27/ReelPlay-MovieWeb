@@ -1,15 +1,19 @@
 package user
 
 import (
+	"errors"
 	"fmt"
 	"github.com/go-playground/validator/v10"
 	"github.com/golang-jwt/jwt"
 	"github.com/labstack/echo/v4"
+	"github.com/markbates/goth/gothic"
 	"github.com/quanbin27/ReelPlay/config"
 	"github.com/quanbin27/ReelPlay/services/auth"
 	"github.com/quanbin27/ReelPlay/types"
 	"github.com/quanbin27/ReelPlay/utils"
+	"gorm.io/gorm"
 	"net/http"
+	"net/url"
 	"strconv"
 )
 
@@ -35,7 +39,64 @@ func (h *Handler) RegisterRoutes(e *echo.Group) {
 	e.PUT("/me/info", h.UpdateSelfInfoHandler, auth.WithJWTAuth(h.store))
 	e.PUT("/me/password", h.ChangePasswordHandler, auth.WithJWTAuth(h.store))
 	e.GET("/me/info", h.GetInfoHandler, auth.WithJWTAuth(h.store))
+	e.GET("/auth/:provider", h.signInWithProvider)
+	e.GET("/auth/:provider/callback", h.callbackHandler)
 }
+func (h *Handler) signInWithProvider(c echo.Context) error {
+
+	provider := c.Param("provider")
+	q := c.Request().URL.Query()
+	q.Add("provider", provider)
+	c.Request().URL.RawQuery = q.Encode()
+	gothic.BeginAuthHandler(c.Response(), c.Request())
+	return nil
+}
+func (h *Handler) callbackHandler(c echo.Context) error {
+	// Lấy provider từ URL parameter
+	provider := c.Param("provider")
+
+	// Thêm provider vào query params để gothic có thể đọc
+	q := c.Request().URL.Query()
+	q.Add("provider", provider)
+	c.Request().URL.RawQuery = q.Encode()
+
+	// Lấy user từ gothic
+	gothUser, err := gothic.CompleteUserAuth(c.Response(), c.Request())
+	if err != nil {
+		return echo.NewHTTPError(http.StatusUnauthorized, "Authentication failed: "+err.Error())
+	}
+	existingUser, err := h.store.GetUserByEmail(gothUser.Email)
+	if err != nil {
+		if errors.Is(err, gorm.ErrRecordNotFound) {
+			// User chưa tồn tại, tạo mới
+			newUser := &types.User{
+				Email:     gothUser.Email,
+				FirstName: gothUser.FirstName,
+				LastName:  gothUser.LastName,
+				RoleID:    1,
+				// Thêm các trường khác nếu cần
+			}
+
+			if err := h.store.CreateUser(newUser); err != nil {
+				return echo.NewHTTPError(http.StatusInternalServerError, "Failed to create user: "+err.Error())
+			}
+			existingUser = newUser
+		} else {
+			return echo.NewHTTPError(http.StatusInternalServerError, "Database error: "+err.Error())
+		}
+	}
+	secret := []byte(config.Envs.JWTSecret)
+	token, err := auth.CreateJWT(secret, existingUser.ID, config.Envs.JWTExpirationInSeconds)
+	if err != nil {
+		return echo.NewHTTPError(http.StatusInternalServerError, "Failed to generate token: "+err.Error())
+	}
+
+	// Trả về token cho client
+	return c.Redirect(http.StatusTemporaryRedirect,
+		fmt.Sprintf("/signin?token=%s",
+			url.QueryEscape(token)))
+}
+
 func (h *Handler) GetInfoHandler(c echo.Context) error {
 	userID, err := auth.GetUserIDFromContext(c)
 	if err != nil {

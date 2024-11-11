@@ -166,7 +166,7 @@ type User struct {
 	Password  string         `json:"password"`
 	CreatedAt time.Time      `gorm:"autoCreateTime" json:"created_at"`
 	DeletedAt gorm.DeletedAt `gorm:"index" json:"deleted_at,omitempty"`
-	RoleID    int            `json:"role_id"` // Không cần dùng foreignKey ở đây
+	RoleID    int            `json:"role_id"`
 	Role      Role           `gorm:"foreignKey:RoleID" json:"role"`
 }
 

@@ -58,9 +58,7 @@
 							<span class="sign__delimiter">or</span>
 
 							<div class="sign__social">
-								<a class="fb" href="#">Sign in with<i class="ti ti-brand-facebook"></i></a>
-								<a class="tw" href="#">Sign in with<i class="ti ti-brand-x"></i></a>
-								<a class="gl" href="#">Sign in with<i class="ti ti-brand-google"></i></a>
+								<a class="gl" href="/api/v1/auth/google">Sign in with<i class="ti ti-brand-google"></i></a>
 							</div>
 
 							<span class="sign__text">Don't have an account? <a href="/signup">Sign up!</a></span>
@@ -83,6 +81,20 @@
 	<script src="js/photoswipe.min.js"></script>
 	<script src="js/photoswipe-ui-default.min.js"></script>
 	<script src="js/main.js"></script>
+	<script>
+		const urlParams = new URLSearchParams(window.location.search);
+		const token = urlParams.get('token');
+		if (token ) {
+			// Lưu token và user vào localStorage
+			localStorage.setItem('token', token);
+
+			// Xóa params khỏi URL (optional)
+			window.history.replaceState({}, document.title, "/signin");
+
+			// Redirect về trang chủ hoặc dashboard
+			window.location.href = "/";
+		}
+	</script>
 	<script>
 		document.getElementById('loginForm').addEventListener('submit', async function(e) {
 			e.preventDefault();

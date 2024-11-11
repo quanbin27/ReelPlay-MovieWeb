@@ -15,6 +15,9 @@ type Config struct {
 	EmailUsername          string
 	Emailpassword          string
 	Emailfrom              string
+	GgClientID             string
+	GgClientSecret         string
+	GgClientCallBackURL    string
 }
 
 var Envs = initConfig()
@@ -30,6 +33,9 @@ func initConfig() Config {
 		EmailUsername:          getEnv("EMAIL_USERNAME", ""),
 		Emailpassword:          getEnv("EMAIL_PASSWORD", ""),
 		Emailfrom:              getEnv("EMAIL_FROM", ""),
+		GgClientID:             getEnv("CLIENT_ID", ""),
+		GgClientSecret:         getEnv("CLIENT_SECRET", ""),
+		GgClientCallBackURL:    getEnv("CLIENT_CALLBACK_URL", "http://localhost:8080/auth/google/callback"),
 	}
 }
 func getEnv(key, fallback string) string {
