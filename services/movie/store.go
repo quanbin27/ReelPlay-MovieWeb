@@ -571,17 +571,27 @@ func (s *Store) GetNewRecommendedMovies(userId, cate1Id, cate2Id, cate3Id int) (
 		return nil, query.Error
 	}
 	if len(movies) < 5 {
+		print("Fetching additional movies")
 		var additionalMovies []types.Movie
-		// Truy vấn bổ sung để lấy các phim mới không bị xem, không cần điều kiện theo category
-		s.db.Preload("Category").
+		aMonthAgo := time.Now().AddDate(0, 0, -30)
+		query := s.db.Table("movies").
+			Preload("Category").
 			Where("movies.is_recommended = ?", 1).
-			Where("movies.created_at >= ?", time.Now().AddDate(0, 0, -30)).
-			Not("movies.id", watchedMovieIds).
+			Where("movies.created_at >= ?", aMonthAgo).
 			Order("movies.predict_rate DESC").
-			Limit(5 - len(movies)). // Lấy số lượng phim cần thêm để đạt ít nhất 5
-			Find(&additionalMovies)
+			Limit(5 - len(movies)) // Số lượng phim cần thêm để đạt ít nhất 5
 
-		// Thêm các phim bổ sung vào danh sách
+		// Kiểm tra nếu watchedMovieIds có giá trị
+		if len(watchedMovieIds) > 0 {
+			query = query.Where("movies.id NOT IN ?", watchedMovieIds)
+		}
+
+		err := query.Find(&additionalMovies).Error
+		if err != nil {
+			print("Lỗi khi lấy phim bổ sung:", err)
+		}
+
+		// Thêm phim bổ sung vào danh sách
 		movies = append(movies, additionalMovies...)
 	}
 

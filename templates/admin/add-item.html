@@ -139,7 +139,7 @@
 										</div>
 									</div>
 
-									<div class="col-12 col-md-6">
+									<div class="col-12 ">
 										<div class="sign__group">
 
 											<div class="sign__group">
@@ -148,7 +148,7 @@
 										</div>
 									</div>
 
-									<div class="col-12 col-md-6">
+									<div class="col-12 ">
 										<div class="sign__group">
 											<input type="text" class="sign__input" placeholder="Link to the background ">
 										</div>
@@ -165,21 +165,43 @@
 											</div>
 										</div>
 									</div>
+									<div class="col-12 col-md-6">
+										<div class="sign__group">
+											<div class="sign__group">
+												<input type="text" class="sign__input" placeholder="Number of Episodes">
+											</div>
+										</div>
+									</div>
+									<div class="col-12 col-md-6">
+										<div class="sign__group">
+											<div class="sign__group">
+												<input type="text" class="sign__input" placeholder="Average time per episode">
+											</div>
+										</div>
+									</div>
 
 
 									<div class="col-12">
 										<div class="sign__group">
-											<select class="sign__selectjs" id="sign__genre" multiple >
+											<select class="sign__selectjs" id="sign__genre" multiple  >
 												<option value="1">Action</option>
 												<option value="2">Adventure</option>
-												<option value="3">Comedy</option>
-												<option value="4">Document</option>
-												<option value="5">Drama</option>
-												<option value="6">Family</option>
-												<option value="7">Horror</option>
-												<option value="8">Romance</option>
-												<option value="9">Science-fiction</option>
-												<option value="10">Sport</option>
+												<option value="3">Animation</option>
+												<option value="4">Biography</option>
+												<option value="5">Comedy</option>
+												<option value="6">Crime</option>
+												<option value="7">Drama</option>
+												<option value="8">Fantasy</option>
+												<option value="9">History</option>
+												<option value="10">Horror</option>
+												<option value="11">Music</option>
+												<option value="12">Mystery</option>
+												<option value="13">Romance</option>
+												<option value="14">Sci-Fi</option>
+												<option value="15">Sport</option>
+												<option value="16">Thriller</option>
+												<option value="17">War</option>
+
 											</select>
 										</div>
 									</div>
@@ -193,42 +215,34 @@
 									<div class="col-12">
 										<div class="sign__group">
 											<select class="sign__selectjs" id="sign__country" >
-												<option value="1">China</option>
-												<option value="2">South Korea</option>
-												<option value="3">Japan</option>
-												<option value="4">Thailand</option>
-												<option value="5">Western Countries</option>
-												<option value="6">Taiwan</option>
-												<option value="7">Hong Kong</option>
-												<option value="8">India</option>
-												<option value="9">United Kingdom</option>
-												<option value="10">France</option>
+												<option value="1">USA</option>
+												<option value="2">United Kingdom</option>
+												<option value="3">South Korea</option>
+												<option value="4">China</option>
+												<option value="5">Japan</option>
+												<option value="6">India</option>
+												<option value="7">France</option>
+												<option value="8">Germany</option>
+												<option value="9">Turkey</option>
+												<option value="10">Spain</option>
 												<option value="11">Canada</option>
-												<option value="12">Other Countries</option>
-												<option value="13">Germany</option>
-												<option value="14">Spain</option>
-												<option value="15">Turkey</option>
-												<option value="16">Netherlands</option>
-												<option value="17">Indonesia</option>
-												<option value="18">Russia</option>
-												<option value="19">Mexico</option>
-												<option value="20">Poland</option>
-												<option value="21">Australia</option>
-												<option value="22">Sweden</option>
-												<option value="23">Malaysia</option>
-												<option value="24">Brazil</option>
-												<option value="25">Philippines</option>
-												<option value="26">Portugal</option>
-												<option value="27">Italy</option>
-												<option value="28">Denmark</option>
-												<option value="29">UAE</option>
-												<option value="30">Norway</option>
-												<option value="31">Switzerland</option>
-												<option value="32">Africa</option>
-												<option value="33">South Africa</option>
-												<option value="34">Ukraine</option>
-												<option value="35">Saudi Arabia</option>
-												<option value="36">Others</option>
+												<option value="12">Australia</option>
+												<option value="13">Russia</option>
+												<option value="14">Brazil</option>
+												<option value="15">Italy</option>
+												<option value="16">Philippines</option>
+												<option value="17">Netherlands</option>
+												<option value="18">Thailand</option>
+												<option value="19">Hong Kong</option>
+												<option value="20">Mexico</option>
+												<option value="21">Denmark</option>
+												<option value="22">Portugal</option>
+												<option value="23">Poland</option>
+												<option value="24">Norway</option>
+												<option value="25">Taiwan</option>
+												<option value="26">Ukraine</option>
+												<option value="27">Other country</option>
+
 											</select>
 										</div>
 									</div>
@@ -241,7 +255,6 @@
 
 
 									</select>
-									\
 								</div>
 							</div>
 
@@ -255,9 +268,9 @@
 
 							<div class="col-12">
 								<div class="sign__group">
-									<button type="button" class="sign__btn sign__btn--small"><span>Predict Rate</span></button>
+									<button type="button" class="sign__btn sign__btn--small" id="predict__btn"><span>Predict Rate</span></button>
 									<div class="sign__group">
-										<input type="text" class="sign__input" placeholder="Predict Rate" >
+										<input type="text" class="sign__input" id="predictRateOutput" placeholder="Predict Rate" >
 									</div>
 									<label class="sign__label"> Recommend:</label>
 									<ul class="sign__radio">
@@ -420,6 +433,74 @@
 					});
 		});
 	});
+	document.querySelector("#predict__btn").addEventListener("click", async () => {
+		// Collecting data
+		const nationId = parseInt(document.getElementById("sign__country").value);
+		const directorElements = document.querySelector("#sign__directors").selectedOptions;
+		const directors = Array.from(directorElements).map(option => parseInt(option.value));
+		const releasedYear = parseInt(document.querySelector('input[placeholder="Release year"]').value);
+		const numofeps = parseInt(document.querySelector('input[placeholder="Number of Episodes"]').value);
+		const epLength = parseInt(document.querySelector('input[placeholder="Average time per episode"]').value);
+
+		// Collect up to three genres (or fewer if not selected)
+		const genreElements = document.querySelector("#sign__genre").selectedOptions;
+		const genres = Array.from(genreElements).slice(0, 3).map(option => parseInt(option.value));
+
+		// Set genres, defaulting to null if not enough are selected
+		const genre1 = genres[0] || 0;
+		const genre2 = genres[1] || 0;
+		const genre3 = genres[2] || 0;
+
+		// Variables to calculate the average predicted rating
+		let totalRating = 0;
+		let count = 0;
+
+		// Loop through each director and send a POST request
+		for (const directorId of directors) {
+			// JSON data to send
+			const data = {
+				nationId,
+				directorId,
+				releasedYear,
+				numofeps,
+				epLength,
+				genre1,
+				genre2,
+				genre3
+			};
+
+			try {
+				// Sending POST request
+				const response = await fetch("http://localhost:5000/predict", {
+					method: "POST",
+					headers: {
+						"Content-Type": "application/json"
+					},
+					body: JSON.stringify(data)
+				});
+
+				// Parsing response and adding to totalRating
+				const result = await response.json();
+				if (result.predicted_rating !== undefined) {
+					totalRating += result.predicted_rating;
+					count++;
+				}
+			} catch (error) {
+				console.error("Error:", error);
+			}
+		}
+
+		// Calculate and display the average rating
+		const averageRating = count > 0 ? (totalRating / count).toFixed(2) : "N/A";
+		document.getElementById("predictRateOutput").value = averageRating;
+		if (averageRating !== "N/A") {
+			document.getElementById("type1").checked = averageRating > 5;
+			document.getElementById("type2").checked = averageRating <= 5;
+		}
+	});
+
+
+
 
 </script>
 
