@@ -81,7 +81,7 @@ func (s *Store) GetMoviesByCategories(userId, cate1Id, cate2Id, cate3Id int) ([]
 				WHEN COUNT(DISTINCT movie_category.category_id) = 3 THEN 1
 				WHEN COUNT(DISTINCT movie_category.category_id) = 2 THEN 2
 				ELSE 3 
-			END, movies.rate DESC`).Find(&movies)
+			END, movies.rate,movies.predict_rate DESC`).Find(&movies)
 	}
 
 	// Kiểm tra lỗi từ kết quả truy vấn
@@ -528,7 +528,7 @@ func (s *Store) GetNewRecommendedMovies(userId, cate1Id, cate2Id, cate3Id int) (
 	query = query.Where("movies.is_recommended = ?", 1)
 
 	// Xác định khoảng thời gian phim mới được tạo (trong vòng 10 ngày)
-	tenDaysAgo := time.Now().AddDate(0, 0, -10)
+	tenDaysAgo := time.Now().AddDate(0, 0, -150)
 	query = query.Where("movies.created_at >= ?", tenDaysAgo)
 
 	// Thêm điều kiện loại bỏ phim đã xem nếu danh sách watchedMovieIds không rỗng
@@ -573,7 +573,7 @@ func (s *Store) GetNewRecommendedMovies(userId, cate1Id, cate2Id, cate3Id int) (
 	if len(movies) < 5 {
 		print("Fetching additional movies")
 		var additionalMovies []types.Movie
-		aMonthAgo := time.Now().AddDate(0, 0, -30)
+		aMonthAgo := time.Now().AddDate(0, 0, -150)
 		query := s.db.Table("movies").
 			Preload("Category").
 			Where("movies.is_recommended = ?", 1).

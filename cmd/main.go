@@ -27,7 +27,7 @@ func main() {
 		google.New(GgClientID, GgClientSecret, GgClientCallBackURL, "profile", "email"))
 	initStorage(db)
 	db.AutoMigrate(&types.User{}, types.Movie{}, types.Country{}, types.Episode{}, types.Bookmark{}, types.Comment{}, types.Rate{}, types.Director{}, types.Actor{}, types.Category{}, types.UserWatched{}, types.CategoryFit{}, types.Role{})
-	server := api.NewAPIServer(":8080", db)
+	server := api.NewAPIServer("0.0.0.0:8080", db)
 	if err := server.Run(); err != nil {
 		log.Fatal(err)
 	}

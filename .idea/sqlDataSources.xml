@@ -5,4 +5,19 @@
       <data-sources db="881ef9b6-5c69-4e78-92d4-99ab42e40dce" />
     </mapping>
   </component>
+  <component name="SqlDataSourceStorage">
+    <option name="dataSources">
+      <list>
+        <State>
+          <option name="id" value="a655ca07-7d02-48d3-900a-2c7f3edb05e8" />
+          <option name="name" value="ReelPlay (DDL)" />
+          <option name="dbmsName" value="MYSQL" />
+          <option name="urls">
+            <array />
+          </option>
+          <option name="outLayout" value="File per object by schema.groovy" />
+        </State>
+      </list>
+    </option>
+  </component>
 </project>

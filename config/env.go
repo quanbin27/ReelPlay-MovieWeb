@@ -26,8 +26,8 @@ func initConfig() Config {
 	godotenv.Load()
 	return Config{
 		PublicHost:             getEnv("PUBLIC_HOST", "http://localhost"),
-		Port:                   getEnv("PORT", "8080"),
-		DSN:                    getEnv("DSN", "root:27052002@tcp(127.0.0.1:3306)/ReelPlay?charset=utf8mb4&parseTime=True&loc=Local"),
+		Port:                   getEnv("PORT", ""),
+		DSN:                    getEnv("DSN", ""),
 		JWTExpirationInSeconds: getEnvAsInt("JWT_EXPIRATION", 3600*24*7),
 		JWTSecret:              getEnv("JWT_SECRET", "not-secret-anymore?"),
 		EmailUsername:          getEnv("EMAIL_USERNAME", ""),
