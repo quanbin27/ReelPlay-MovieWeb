@@ -1,0 +1,47 @@
+version: "3.8"
+
+services:
+  mysql:
+    platform: linux/amd64
+    image: mysql/mysql-server:8.0.23
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: 27052002
+      MYSQL_DATABASE: ReelPlay
+    ports:
+      - "3306:3306"
+    networks:
+      - mynetwork
+    volumes:
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+  migration:
+    build: .
+    depends_on:
+      - mysql
+    entrypoint: [ "/app/start.sh" ]
+    environment:
+      DB_USER: root
+      DB_PASSWORD: 27052002
+      DB_HOST: mysql
+      DB_PORT: 3306
+      DB_NAME: ReelPlay
+    networks:
+      - mynetwork
+  app:
+    build: .
+    depends_on:
+      - mysql
+    environment:
+      DB_USER: root
+      DB_PASSWORD: 27052002
+      DB_HOST: mysql
+      DB_PORT: 3306
+      DB_NAME: ReelPlay
+    ports:
+      - "8080:8080"
+    networks:
+      - mynetwork
+
+networks:
+  mynetwork:
+    driver: bridge
